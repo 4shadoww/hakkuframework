@@ -10,7 +10,6 @@ commands = OrderedDict((
 ('version', 'show '+ '\xb5' +'Sploit version'),
 ('t '+bcolors.END+'(command)','run terminal command'),
 ('ifconfig', 'run terminal command ifconfig'),
-('install requirements', 'install required softwares'),
 ('sudo install requirements', 'install required softwares with sudo'),
 ('about', 'information about '+ '\xb5' +'Sploit'),
 ('changelog', 'show changelog'),
