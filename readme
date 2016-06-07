@@ -1,6 +1,6 @@
 µSploit Framework
 
-µSploit framework is very basic exploit/peneration test tool framework.
+µSploit framework is very basic exploit/penetration test tool framework.
 Inspirited by websploit and metasploit. Websploits development has been sadly ended years ago so i decided to write my own.
 I have been focused to make µSploit easy (user friendly) and simple to use as possible.
 µSploit is written in python 3, and developed on ubuntu.
