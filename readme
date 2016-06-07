@@ -43,6 +43,8 @@ list of modules:
 dependencies: ethtool aircrack-ng ettercap-text-only dsniff xterm driftnet (ubuntu/debian) and of course you will need python 3
 
 
+Official wiki: https://github.com/4shadoww/usploit/wiki
+
 
 µSploit is under MIT license
 
