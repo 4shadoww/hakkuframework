@@ -1,0 +1,9 @@
+# Sample hosts file for dns_spoof module
+
+31.192.117.132	*.google.com
+31.192.117.132	*.facebook.com
+31.192.117.132	*.youtube.com
+31.192.117.132	*.twitch.tv
+31.192.117.132	*.microsoft.com
+31.192.117.132	*.ebay.com
+31.192.117.132	www.microsoft.com

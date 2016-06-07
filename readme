@@ -1,0 +1,49 @@
+µSploit Framework
+
+µSploit framework is very basic exploit/peneration test tool framework.
+Inspirited by websploit and metasploit. Websploits development has been sadly ended years ago so i decided to write my own.
+I have been focused to make µSploit easy (user friendly) and simple to use as possible.
+µSploit is written in python 3, and developed on ubuntu.
+
+OS support:
+
+Linux       supported, and developed on/for linux
+OSX         isn't supported (yet), because i don't own mac
+Windows     i think that windows will never get support from me, because mikkisofta sucks
+
+Basic features:
+
+-Run exploits
+-Simple UI
+-Includes scapy
+-Easy to use
+-Easy to write your own exploit (module)
+-Scripting
+
+available modules: 15
+
+list of modules:
+
+[+] apache_users
+[+] arp_dos
+[+] arp_spoof
+[+] bluetooth_pod
+[+] cloudflare_resolver
+[+] dir_scanner
+[+] dns_spoof
+[+] email_bomber
+[+] mac_spoof
+[+] mitm
+[+] network_kill
+[+] pma_scanner
+[+] port_scanner
+[+] web_killer
+[+] wifi_jammer
+
+dependencies: ethtool aircrack-ng ettercap-text-only dsniff xterm driftnet (ubuntu/debian) and of course you will need python 3
+
+
+
+µSploit is under mit license
+
+email & bug reports here: 4shadoww0@gmail.com

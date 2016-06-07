@@ -1,0 +1,5 @@
+use test
+show options
+set value 2
+run
+make exit

@@ -1,0 +1,62 @@
+#        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+import sys
+from core import bcolors
+from collections import OrderedDict
+
+#info about module
+#modules name (must be same as filename)
+#modulename = "module_name"
+#module version
+version = "1.0"
+#description
+desc = "modules_description"
+#creator's github
+github = "mygithub"
+#created by (creators name)
+createdby = "creators_name"
+#email
+email = "creators@email.com"
+#alert user if root permissions not available (remove variable below if root permissions needed)
+needroot = 1
+
+#list of variables
+variables = OrderedDict((
+('option1', 'none1'),
+('option2', 'none2'),
+))
+
+#description for variables
+vdesc = [
+'description1',
+'description2',
+]
+
+#help for customcommands (remove if you will not use customcommands)
+mhelp = OrderedDict((
+('example', 'help'),
+))
+
+#additional help notes
+help_notes = "help notes"
+
+#additional notes to options
+option_notes = 'option note'
+
+#custom commands (remove this if you will not use custom commands)
+customcommands = (
+'example'
+)
+
+#used with custom commands (remove this if you will not use custom commands)
+termial = None
+
+#simple changelog
+changelog = bcolors.YEL+"Version 1.0:\nrelease"+bcolors.END
+
+def run():
+	#run
+	print(variables)
+
+#just example of custom command "example" (remove this function below)
+def example():
+	print(terminal)
