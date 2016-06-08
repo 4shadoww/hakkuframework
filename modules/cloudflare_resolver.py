@@ -1,18 +1,20 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
 import sys
-import socket
 import os
 from core import bcolors
 from collections import OrderedDict
 from core.alert import alert
+from dns import resolver
+import dns
+
 
 
 #info about module
 #modules name
 modulename = "cloudflare_resolver"
 #version
-version = "1.0"
+version = "2.0"
 #description
 desc = "Tries to resolve ip from subdomains"
 #created by
@@ -36,31 +38,34 @@ vdesc = [
 ]
 
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\nrelease"+bcolors.END
+changelog = bcolors.YEL+"Version 1.0:\nrelease\n\nVersion 2.0:\n+ fixed timeout bug\n+ module is now using dns library"+bcolors.END
 
 #run function
 def run():
+	ipresolver = resolver.Resolver()
+	ipresolver.timeout = 1
+	ipresolver.lifetime = 1
+
 	variables['target'] = variables['target'].replace("http://", "")
 	variables['target'] = variables['target'].replace("https://", "")
-	socket.setdefaulttimeout(1)
 	sub = ('mail', 'webmail', 'email', 'direct-connect-mail',
 	'direct', 'direct-connect', 'cpanel', 'phpmyadmin', 'ftp', 'forum', 'blog',
 	'm', 'dev', 'record', 'ssl', 'dns', 'help', 'ns', 'ns1', 'ns2',
 	'ns3', 'ns4', 'irc', 'server', 'status', 'portal', 'beta',
 	'admin', 'alpha', 'imap', 'smtp', 'test')
 	try:
-		orgip = socket.gethostbyname(variables['target'])
+		orgip = ipresolver.query(variables['target'], 'A')
 		print(bcolors.OKGREEN+"[-------------------------]"+bcolors.END)
-		print(bcolors.OKGREEN+"[+] Default IP Address : %s"%orgip+bcolors.END)
+		print(bcolors.OKGREEN+"[+] Default IP Address : %s"%orgip[0]+bcolors.END)
 		print(bcolors.OKGREEN+"[-------------------------]"+bcolors.END)
-	except(socket.gaierror):
+	except(dns.exception.Timeout):
 		print(bcolors.WARNING+"[-] Error : Host is Down !"+bcolors.END)
 	for i in sub:
 		host = i+'.'+variables['target']
 		try:
-			ip = socket.gethostbyname(host)
-			print(bcolors.OKGREEN+"[+] %s : %s"%(host, ip)+bcolors.END)
-		except(socket.gaierror):
+			query = ipresolver.query(host, 'A')
+			print(bcolors.OKGREEN+"[+] %s : %s"%(host, query[0])+bcolors.END)
+		except(dns.exception.Timeout):
 			if variables['pos'] != 'true':
 				print(bcolors.WARNING+"[-] %s : N/A"%host+bcolors.END)
 	if variables['alert'] == 'true':

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # 			 --------------------------------------------------
-#							µSploit Framework
+#					µSploit Framework
 # 			 --------------------------------------------------
 #		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
@@ -25,6 +25,8 @@
 #		 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 try:
+
+
 	#python built in modules
 	import sys
 	import os
@@ -58,7 +60,8 @@ try:
 	from core import check_module
 
 	print(bcolors.OKBLUE+"[*] loading modules..."+bcolors.END)
-
+	#append libs path
+	sys.path.append('core/libs')
 	#modules
 	from modules import *
 

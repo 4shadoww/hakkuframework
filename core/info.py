@@ -1,3 +1,3 @@
-version = "1.0-alpha"
-update_date = "4.3.2016"
+version = "1.0.1-alpha"
+update_date = "8.6.2016"
 codename = "New Beginning"

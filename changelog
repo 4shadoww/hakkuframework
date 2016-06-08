@@ -1,5 +1,10 @@
 CHANGELOG:
 
 	VERSION 1.0-alpha:
-public repository released on github
++ public repository released on github
 
+
+	VERSION 1.0.1-alpha:
++ updated cloudflare_resolver module
++ added dns lib
++ fixed append libs bug
