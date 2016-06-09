@@ -20,7 +20,7 @@ Basic features:
 -Easy to write your own exploit (module)
 -Scripting
 
-available modules: 15
+available modules: 16
 
 list of modules:
 
@@ -32,6 +32,7 @@ list of modules:
 [+] dir_scanner
 [+] dns_spoof
 [+] email_bomber
+[+] hostname_resolver
 [+] mac_spoof
 [+] mitm
 [+] network_kill
