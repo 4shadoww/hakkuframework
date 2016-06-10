@@ -436,6 +436,7 @@ try:
 							print(bcolors.YEL + "[*] module " + funcname.modulename + " loaded" + bcolors.END)
 
 							try:
+								funcname.init()
 								print('[*] '+funcname.message+bcolors.END)
 
 							except(AttributeError):
