@@ -437,6 +437,11 @@ try:
 
 							try:
 								funcname.init()
+
+							except(AttributeError):
+								pass
+							
+							try:
 								print('[*] '+funcname.message+bcolors.END)
 
 							except(AttributeError):
