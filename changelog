@@ -8,3 +8,10 @@ CHANGELOG:
 + updated cloudflare_resolver module
 + added dns lib
 + fixed append libs bug
+
+
+	VERSION 1.1-alpha:
++ module hostname_resolver added
++ added new feature "init"
++ cloudflare_resolver module updated
++ updated modules simple changelog "standard"

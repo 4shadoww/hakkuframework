@@ -186,7 +186,7 @@ try:
 
 				elif terminal == 'changelog':
 					try:
-						print(funcname.changelog)
+						print(bcolors.YEL+funcname.changelog+bcolors.END)
 					except Exception as error:
 						print(bcolors.WARNING+"error: module is corrupted\n")
 						traceback.print_exc(file=sys.stdout)
