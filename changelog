@@ -15,3 +15,4 @@ CHANGELOG:
 + added new feature "init"
 + cloudflare_resolver module updated
 + updated modules simple changelog "standard"
++ added colors to µSploit changelog
