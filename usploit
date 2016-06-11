@@ -343,7 +343,7 @@ try:
 					try:
 						f = open('changelog', 'r')
 						file_contents = f.read()
-						print (file_contents)
+						print (bcolors.YEL+file_contents+bcolors.END)
 						f.close()
 					except(IOError):
 						print(bcolors.WARNING + "error: changelog file not found (have you removed it?)" + bcolors.END)
