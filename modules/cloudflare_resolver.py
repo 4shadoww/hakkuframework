@@ -14,7 +14,7 @@ import dns
 #modules name
 modulename = "cloudflare_resolver"
 #version
-version = "2.0"
+version = "2.1"
 #description
 desc = "Tries to resolve ip from subdomains"
 #created by
@@ -38,7 +38,7 @@ vdesc = [
 ]
 
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\nrelease\n\nVersion 2.0:\n+ fixed timeout bug\n+ module is now using dns library"+bcolors.END
+changelog = "Version 1.0:\nrelease\n\nVersion 2.0:\n+ fixed timeout bug\n+ module is now using dns library\n\nVersion 2.1:\n+ added more colors"
 
 #run function
 def run():
@@ -64,7 +64,10 @@ def run():
 		host = i+'.'+variables['target']
 		try:
 			query = ipresolver.query(host, 'A')
-			print(bcolors.OKGREEN+"[+] %s : %s"%(host, query[0])+bcolors.END)
+			if query[0] == orgip[0]:
+				print(bcolors.YEL+"[+] %s : %s"%(host, query[0])+bcolors.END)
+			else:
+				print(bcolors.OKGREEN+"[+] %s : %s"%(host, query[0])+bcolors.END)
 		except(dns.exception.Timeout):
 			if variables['pos'] != 'true':
 				print(bcolors.WARNING+"[-] %s : N/A"%host+bcolors.END)
