@@ -33,7 +33,7 @@ vdesc = [
 ]
 
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\nrelease"+bcolors.END
+changelog = "Version 1.0:\nrelease"
 
 
 

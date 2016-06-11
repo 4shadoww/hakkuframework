@@ -58,7 +58,7 @@ customcommands = (
 termial = None
 
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\n\trelease"+bcolors.END
+changelog = "Version 1.0:\n\trelease"
 
 
 def run():

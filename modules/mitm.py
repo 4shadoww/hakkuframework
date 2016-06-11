@@ -45,7 +45,7 @@ option_notes = bcolors.OKGREEN+' sniffers\t description'+bcolors.END+'\n -------
 help_notes = bcolors.WARNING+"this module will not work without root permission!\n this module will not work without xterm, dsniff, driftnet!"+bcolors.END
 
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\nrelease"+bcolors.END
+changelog = "Version 1.0:\nrelease"
 
 def run():
 	if not os.geteuid() == 0:

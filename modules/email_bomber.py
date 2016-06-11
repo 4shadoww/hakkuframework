@@ -65,7 +65,7 @@ infinitives = ["to make a pie.", "for no apparent reason.", "because the sky is 
 
 option_notes = bcolors.YEL+" this module will not work with gmail, yahoo, yandex\n please run your own smtp!"+bcolors.END
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\nrelease"+bcolors.END
+changelog = "Version 1.0:\nrelease"
 
 def run():
 	fromaddr = variables['my_username']

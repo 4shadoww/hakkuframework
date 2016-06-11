@@ -57,7 +57,7 @@ help_notes = bcolors.WARNING+"This module will not work without root permissions
 option_notes = bcolors.YEL+" you can generate fake_mac using 'random_mac' command\n use 'reset' command to end mac spoof"+bcolors.END
 
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\nrelease"+bcolors.END
+changelog = "Version 1.0:\nrelease"
 
 def run():
 	xterm1 = "service network-manager stop"

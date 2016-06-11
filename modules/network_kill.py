@@ -53,7 +53,7 @@ customcommands = (
 )
 
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\nrelease"+bcolors.END
+changelog = "Version 1.0:\nrelease"
 
 def run():
 	print(bcolors.OKBLUE + "[*] arp poisoning has been started!" + bcolors.END)

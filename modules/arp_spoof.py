@@ -39,7 +39,7 @@ vdesc = [
 help_notes = bcolors.WARNING+"This module will not work without root permission!"+bcolors.END
 
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\nrelease"+bcolors.END
+changelog = "Version 1.0:\nrelease"
 
 def run():
 	print (bcolors.OKBLUE + "[*]Setting Up ..." + bcolors.END)

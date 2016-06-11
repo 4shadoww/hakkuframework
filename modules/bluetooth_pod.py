@@ -49,7 +49,7 @@ mhelp = OrderedDict((
 terminal = None
 
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\nrelease"+bcolors.END
+changelog = "Version 1.0:\nrelease"
 
 def run():
 	print(bcolors.OKBLUE + "[*]Bluetooth Ping Of Death Attack Started ..." + bcolors.END)

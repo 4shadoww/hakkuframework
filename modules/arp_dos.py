@@ -40,7 +40,7 @@ vdesc = [
 help_notes = bcolors.WARNING+"This module will not work without root permissions!"+bcolors.END
 
 #simple changelog
-changelog = bcolors.YEL+"Version 1.0:\nrelease"+bcolors.END
+changelog = "Version 1.0:\nrelease"
 
 def run():
 	print(bcolors.BOLD + bcolors.OKBLUE + "[*]attack has been started ..." + bcolors.END)
