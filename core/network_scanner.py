@@ -39,7 +39,7 @@ def scan_and_print_neighbors(net, interface, timeout=1):
 				pass
 	except socket.error as e:
 		if e.errno == errno.EPERM:	 # Operation not permitted
-			logger.error("%s. Did you run as root?", e.strerror)
+			logger.error("%s. did you run as root?", e.strerror)
 		else:
 			raise
 

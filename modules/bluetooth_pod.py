@@ -13,7 +13,7 @@ modulename = "bluetooth_pod"
 #version
 version = "1.0"
 #description
-desc = "Bluetooth ping of death"
+desc = "bluetooth ping of death"
 #created by
 createdby = "4shadoww"
 #email

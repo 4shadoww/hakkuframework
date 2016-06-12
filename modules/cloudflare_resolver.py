@@ -16,7 +16,7 @@ modulename = "cloudflare_resolver"
 #version
 version = "2.1"
 #description
-desc = "Tries to resolve ip from subdomains"
+desc = "tries to resolve ip from subdomains"
 #created by
 createdby = "4shadoww"
 #creator's github

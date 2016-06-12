@@ -51,7 +51,7 @@ mhelp =  OrderedDict((
 ))
 
 #additional help notes
-help_notes = bcolors.WARNING+"This module will not work without root permissions!"+bcolors.END
+help_notes = bcolors.WARNING+"this module will not work without root permissions!"+bcolors.END
 
 #additional notes to options
 option_notes = bcolors.YEL+" you can generate fake_mac using 'random_mac' command\n use 'reset' command to end mac spoof"+bcolors.END

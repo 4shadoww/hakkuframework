@@ -17,7 +17,7 @@ modulename = "network_kill"
 #version
 version = "1.0"
 #description
-desc = "Kicks out target device from network with arp calls"
+desc = "kicks out target device from network with arp calls"
 #created by
 createdby = "4shadoww"
 #creator's github
@@ -45,7 +45,7 @@ mhelp = OrderedDict((
 ))
 
 #additional help notes
-help_notes = bcolors.WARNING+"This module will not work without root permission!\n This will not work alway because some devices can refuse from arp request!"+bcolors.END
+help_notes = bcolors.WARNING+"this module will not work without root permission!\n this will not work alway because some devices can refuse from arp request!"+bcolors.END
 
 #custom commands
 customcommands = (

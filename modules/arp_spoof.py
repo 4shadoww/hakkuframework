@@ -36,7 +36,7 @@ vdesc = [
 ]
 
 #additional help notes
-help_notes = bcolors.WARNING+"This module will not work without root permission!"+bcolors.END
+help_notes = bcolors.WARNING+"this module will not work without root permission!"+bcolors.END
 
 #simple changelog
 changelog = "Version 1.0:\nrelease"

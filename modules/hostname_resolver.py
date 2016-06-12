@@ -11,7 +11,7 @@ modulename = "hostname_resolver"
 #module version
 version = "1.0"
 #description
-desc = "resolver hostname using ip"
+desc = "resolve hostname using ip"
 #creator's github
 github = "4shadoww"
 #created by (creators name)
