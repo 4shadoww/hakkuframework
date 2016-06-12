@@ -16,3 +16,7 @@ CHANGELOG:
 + cloudflare_resolver module updated
 + updated modules simple changelog "standard"
 + added colors to µSploit changelog
+
+	VERSION 1.1.1-alpha:
++ updated cloudflare_resolver module
++ updated readme
