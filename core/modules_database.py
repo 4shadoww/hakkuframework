@@ -20,7 +20,7 @@ database = OrderedDict((
 ('pma_scanner', 'PHPMyAdmin login page scanner'),
 ('port_scanner', 'scan open ports'),
 ('email_bomber', 'spam emails'),
-('hostname_resolver', 'resolver hostname using ip'),
+('hostname_resolver', 'resolve hostname using ip'),
 #end
 ('  ',''),
 #network modules
