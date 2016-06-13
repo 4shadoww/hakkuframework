@@ -17,6 +17,9 @@ CHANGELOG:
 + updated modules simple changelog "standard"
 + added colors to µSploit changelog
 
-	VERSION 1.1.1-alpha:
+	VERSION 1.2-alpha:
 + updated cloudflare_resolver module
++ updated network_scanner
++ added netifaces library
++ scapy library replaced to core/libs
 + updated readme
