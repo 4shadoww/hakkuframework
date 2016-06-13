@@ -1,63 +1,44 @@
-from __future__ import absolute_import, division, print_function
-import logging
-import scapy.config
-import scapy.layers.l2
-import scapy.route
-import socket
-import math
-import errno
-
-logging.basicConfig(format='%(asctime)s %(levelname)-5s %(message)s', datefmt='%Y-%m-%d %H:%M:%S', level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
-
-def long2net(arg):
-	if (arg <= 0 or arg >= 0xFFFFFFFF):
-		raise ValueError("illegal netmask value", hex(arg))
-	return 32 - int(round(math.log(0xFFFFFFFF - arg, 2)))
-
-
-def to_CIDR_notation(bytes_network, bytes_netmask):
-	network = scapy.utils.ltoa(bytes_network)
-	netmask = long2net(bytes_netmask)
-	net = "%s/%s" % (network, netmask)
-	if netmask < 16:
-		logger.warn("%s is too big. skipping" % net)
-		return None
-
-	return net
-
-
-def scan_and_print_neighbors(net, interface, timeout=1):
-	logger.info("scanning %s on %s" % (net, interface))
-	try:
-		ans, unans = scapy.layers.l2.arping(net, iface=interface, timeout=timeout, verbose=True)
-		for s, r in ans.res:
-			try:
-				hostname = socket.gethostbyaddr(r.psrc)
-			except socket.herror:
-				pass
-	except socket.error as e:
-		if e.errno == errno.EPERM:	 # Operation not permitted
-			logger.error("%s. did you run as root?", e.strerror)
-		else:
-			raise
+import sys
+import os
+from scapy.all import srp,Ether,ARP,conf
+from datetime import datetime
+import netifaces
+from core import bcolors
 
 def scan():
-	for network, netmask, _, interface, address in scapy.config.conf.route.routes:
+	print(bcolors.OKBLUE+"interfaces:"+bcolors.END)
+	try:
+		for iface in netifaces.interfaces():
+			print(bcolors.YEL+iface+bcolors.END)
+	except(ValueError):
+		print(bcolors.WARNING+"error: invalid range"+bcolors.END)
+		return
+	print("")
+	interface = input(bcolors.HEADER+"interface: "+bcolors.END)
+	print(bcolors.OKBLUE+"\n[*] default range 24"+bcolors.END)
+	iprange = input(bcolors.HEADER+"range: "+bcolors.END)
+	try:
+		ip = netifaces.ifaddresses(interface)[2][0]['addr']
+	except(ValueError):
+		print(bcolors.WARNING+"error: invalid interface"+bcolors.END)
+		return
+	ips = ip+"/"+iprange
+	print(bcolors.OKGREEN+"\n[*] scanning...\n"+bcolors.END)
 
-		# skip loopback network and default gw
-		if network == 0 or interface == 'lo' or address == '127.0.0.1' or address == '0.0.0.0':
-			continue
+	start_time = datetime.now()
 
-		if netmask <= 0 or netmask == 0xFFFFFFFF:
-			continue
+	conf.verb = 0
+	try:
+		ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst = ips), timeout = 2,iface=interface,inter=0.1)
+	except(ValueError):
+		print(bcolors.WARNING+"error: invalid range"+bcolors.END)
+		return
 
-		net = to_CIDR_notation(network, netmask)
+	print(bcolors.OKBLUE+"MAC - IP"+bcolors.END)
 
-		if interface != scapy.config.conf.iface:
-			logger.warn("skipping %s because scapy currently doesn't support arping on non-primary network interfaces", net)
-			continue
-
-		if net:
-			scan_and_print_neighbors(net, interface)
+	for snd,rcv in ans:
+		print(rcv.sprintf(bcolors.YEL+"r%Ether.src% - %ARP.psrc%"+bcolors.END))
+	stop_time = datetime.now()
+	total_time = stop_time - start_time
+	print(bcolors.OKGREEN+"\n[*] scan completed")
+	print("[*] scan duration:",total_time,bcolors.END)
