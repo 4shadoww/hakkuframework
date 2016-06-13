@@ -14,7 +14,7 @@ import dns
 #modules name
 modulename = "cloudflare_resolver"
 #version
-version = "2.1"
+version = "2.2"
 #description
 desc = "tries to resolve ip from subdomains"
 #created by
