@@ -26,7 +26,6 @@
 
 try:
 
-
 	#python built in modules
 	import sys
 	import os
@@ -40,6 +39,9 @@ try:
 	import logging
 	import csv
 	import getopt
+
+	#append libs path
+	sys.path.append('core/libs')
 
 	#core
 	from core import bcolors
@@ -60,8 +62,6 @@ try:
 	from core import check_module
 
 	print(bcolors.OKBLUE+"[*] loading modules..."+bcolors.END)
-	#append libs path
-	sys.path.append('core/libs')
 	#modules
 	from modules import *
 
