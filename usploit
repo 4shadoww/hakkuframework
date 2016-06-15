@@ -60,6 +60,7 @@ try:
 	from core import dsag
 	from core.alert import alert
 	from core import check_module
+	from core import usftest
 
 	print(bcolors.OKBLUE+"[*] loading modules..."+bcolors.END)
 	#modules
@@ -481,11 +482,19 @@ try:
 				print(bcolors.WARNING+bcolors.BOLD+bcolors.UNDERLINE+"\nFATAL ERROR:\n"+bcolors.END+bcolors.WARNING)
 				traceback.print_exc(file=sys.stdout)
 				print(bcolors.END)
+				exit(1)
 
 	if __name__=='__main__':
 		try:
-			opts, args = getopt.getopt(sys.argv[1:], 's:')
+			opts, args = getopt.getopt(sys.argv[1:], 's:t:')
 			for opt, arg in opts:
+
+				if opt in ('-t'):
+					if arg == 'challenge':
+						usftest.challenge()
+					else:
+						print(bcolors.WARNING+'[!] invalid arguments'+bcolors.END)
+
 				if opt in ('-s'):
 					try:
 						scriptfile = open('core/scripts/'+arg+'.usf', 'r')
@@ -496,10 +505,11 @@ try:
 					except FileNotFoundError:
 						print(bcolors.WARNING+'[!] script not found'+bcolors.END)
 		except getopt.GetoptError:
-			print(bcolors.WARNING+'[!] invalid arguments')
+			print(bcolors.WARNING+'[!] invalid arguments'+bcolors.END)
 		main()
 
 except Exception as error:
 	print(bcolors.WARNING+bcolors.BOLD+bcolors.UNDERLINE+"\nFATAL ERROR:\n"+bcolors.END+bcolors.WARNING)
 	traceback.print_exc(file=sys.stdout)
 	print(bcolors.END)
+	exit(1)
