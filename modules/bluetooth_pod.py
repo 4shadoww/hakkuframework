@@ -14,6 +14,8 @@ modulename = "bluetooth_pod"
 version = "1.0"
 #description
 desc = "bluetooth ping of death"
+#creator's github
+github = "4shadoww"
 #created by
 createdby = "4shadoww"
 #email
