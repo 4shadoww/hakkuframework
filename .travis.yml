@@ -9,4 +9,4 @@ python:
  - "3.4"
  - "3.5"
   
-script: python3 usploit -t challenge
+script: python3 --version && python3 usploit -t challenge
