@@ -13,4 +13,4 @@ install:
 python:
  - "3.5"
   
-script: python3.5 --version && python3.5 usploit -t challenge
+script: python3.5 --version && python3 usploit -t challenge
