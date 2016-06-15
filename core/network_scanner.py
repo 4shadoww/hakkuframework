@@ -2,8 +2,9 @@ import sys
 import os
 from scapy.all import srp,Ether,ARP,conf
 from datetime import datetime
-import netifaces
 from core import bcolors
+import netifaces
+
 
 def scan():
 	print(bcolors.OKBLUE+"interfaces:"+bcolors.END)
