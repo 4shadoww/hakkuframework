@@ -40,6 +40,12 @@ try:
 	import csv
 	import getopt
 
+	#checking python version
+	req_version = (3,5)
+	cur_version = sys.version_info
+	if cur_version < req_version:
+		print('python3.5 or greather is recommended')
+
 	#append libs path
 	sys.path.append('core/libs')
 
