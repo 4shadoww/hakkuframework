@@ -4,7 +4,6 @@ install:
  - sudo apt-get install python3
 
 python:
- - "3.2"
  - "3.3"
  - "3.4"
  - "3.5"
