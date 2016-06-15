@@ -42,31 +42,37 @@ try:
 
 	#append libs path
 	sys.path.append('core/libs')
+	try:
+		#core
+		from core import bcolors
+		from core import header
+		from core import modules_database
+		from core.info import version
+		from core import help_main
+		from core import help_module
+		from core import about
+		from core.prettytable import PrettyTable
+		from core import matrix
+		logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
+		from scapy.all import *
+		from core import network_scanner
+		from core.cowsay import cowsay
+		from core import dsag
+		from core.alert import alert
+		from core import check_module
+		from core import usftest
 
-	#core
-	from core import bcolors
-	from core import header
-	from core import modules_database
-	from core.info import version
-	from core import help_main
-	from core import help_module
-	from core import about
-	from core.prettytable import PrettyTable
-	from core import matrix
-	logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
-	from scapy.all import *
-	from core import network_scanner
-	from core.cowsay import cowsay
-	from core import dsag
-	from core.alert import alert
-	from core import check_module
-	from core import usftest
+		print(bcolors.OKBLUE+"[*] loading modules..."+bcolors.END)
+		#modules
+		from modules import *
 
-	print(bcolors.OKBLUE+"[*] loading modules..."+bcolors.END)
-	#modules
-	from modules import *
+		print(bcolors.OKBLUE+"[*] done!"+bcolors.END)
 
-	print(bcolors.OKBLUE+"[*] done!"+bcolors.END)
+	except ImportError:
+		print(bcolors.WARNING)
+		traceback.print_exc()
+		print(bcolors.END)
+		pass
 
 
 	print(bcolors.CYAN+header.sploit+bcolors.END)
