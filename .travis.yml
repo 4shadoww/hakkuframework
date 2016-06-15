@@ -1,0 +1,12 @@
+langueage: python
+
+install:
+ - sudo apt-get install python3
+
+python:
+ - "3.2"
+ - "3.3"
+ - "3.4"
+ - "3.5"
+  
+script: python3 usploit -t challenge
