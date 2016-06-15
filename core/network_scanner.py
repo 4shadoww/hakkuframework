@@ -2,8 +2,14 @@ import sys
 import os
 from scapy.all import srp,Ether,ARP,conf
 from datetime import datetime
+import traceback
 from core import bcolors
-import netifaces
+try:
+	import netifaces
+except ImportError:
+	print(bcolors.WARNING+'netifaces import error:\n')
+	traceback.print_exc()
+	print(bcolors.END)
 
 
 def scan():
