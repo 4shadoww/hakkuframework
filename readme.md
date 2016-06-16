@@ -1,4 +1,4 @@
-#µSploit Framework   [![Build Status](https://travis-ci.org/4shadoww/usploit.svg?branch=master)](https://travis-ci.org/4shadoww/usploit)
+#µSploit Framework   [![Build Status](https://travis-ci.org/4shadoww/usploit.svg?branch=master)](https://travis-ci.org/4shadoww/usploit) [![Code Climate](https://codeclimate.com/github/4shadoww/usploit/badges/gpa.svg)](https://codeclimate.com/github/4shadoww/usploit)
 
 
 ####What is µSploit Framework?
