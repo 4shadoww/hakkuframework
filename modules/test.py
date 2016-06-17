@@ -25,11 +25,10 @@ message = "hello!"
 #list
 variables = OrderedDict((
 ('value', 0),
-
 ))
 #description for variables
 vdesc = [
-'description1',
+'description',
 ]
 
 #simple changelog
