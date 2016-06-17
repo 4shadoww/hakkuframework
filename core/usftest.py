@@ -10,10 +10,7 @@ def check_customcommands():
     try:
         funcname.mhelp
     except AttributeError:
-        print(bcolors.WARNING+"\n[!] test failed\n")
-        traceback.print_exc()
-        print(bcolors.END)
-        sys.exit(1)
+        testfailed()
 
 def challenge():
     try:
@@ -31,11 +28,22 @@ def challenge():
             if module != '__init__':
                 funcname = globals()[module]
                 print(bcolors.YEL+'checking',funcname.modulename+bcolors.END)
+                if funcname.modulename != module:
+                    print(bcolors.WARNING+"\nmodules name doesn't match")
+                    testfailed()
                 funcname.version
-                funcname.desc
-                funcname.github
-                funcname.createdby
-                funcname.email
+                if funcname.desc == 'modules_description':
+                    print(bcolors.WARNING+'\ndesc variable has default value'+bcolors.END)
+                    testfailed()
+                if funcname.github == 'mygithub':
+                     print(bcolors.WARNING+'\ngithub variable has default value'+bcolors.END)
+                     testfailed()
+                if funcname.createdby == 'creators_name':
+                    print(bcolors.WARNING+'\ncreatedby variable has default value'+bcolors.END)
+                    testfailed()
+                if funcname.email == 'creators@email.com':
+                    print(bcolors.WARNING+'\nemail variable has default value'+bcolors.END)
+                    testfailed()
                 funcname.variables
                 funcname.vdesc
                 funcname.changelog
@@ -61,6 +69,16 @@ def challenge():
             print(bcolors.YEL+'compiling',lib+bcolors.END)
             py_compile.compile(lib)
 
+        print(bcolors.OKGREEN+'\n[*] testing '+'\xb5'+'Sploit'+bcolors.END)
+
+        from __main__ import module
+        from __main__ import terminal
+        from __main__ import modulename
+        from __main__ import funcname
+        from __main__ import scoml
+        from __main__ import scripting
+        from __main__ import scriptline
+
 
 
         print(bcolors.OKGREEN+"\n[*] test passed"+bcolors.END)
@@ -71,7 +89,10 @@ def challenge():
         sys.exit(e)
 
     except:
-        print(bcolors.WARNING+"\n[!] test failed\n")
-        traceback.print_exc()
-        print(bcolors.END)
-        sys.exit(1)
+       testfailed()
+
+def testfailed():
+    print(bcolors.WARNING+"\n[!] test failed\n")
+    traceback.print_exc()
+    print(bcolors.END)
+    sys.exit(1)
