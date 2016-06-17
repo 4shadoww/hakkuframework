@@ -74,6 +74,14 @@ try:
 
 	print(bcolors.OKBLUE+"[*] done!"+bcolors.END)
 
+	#init variables
+	terminal = 0
+	module = 0
+	modulename = 0
+	funcname = 0
+	scoml = 0
+	scripting = 0
+	scriptline = 0
 
 	print(bcolors.CYAN+header.sploit+bcolors.END)
 	print("\n")
@@ -85,6 +93,7 @@ try:
 
 
 	def main():
+		global terminal
 		global module
 		global modulename
 		global funcname
