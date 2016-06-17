@@ -54,7 +54,8 @@ vdesc = [
 'amount of emails(0 = infinite/must be int)',
 'use starttls(0 = no/1 =yes)',
 'use login(0 = no/1 = yes)',
-'generate random email'
+'generate random email(0 = no/1 = yes)',
+'generate random message(0 = no/1 = yes)',
 ]
 
 s_nouns = ["A dude", "My mom", "The king", "Some guy", "A cat with rabies", "A sloth", "Your homie", "This cool guy my gardener met yesterday", "Superman", "Super Mario", "Human", "Robot", "Boy"]
