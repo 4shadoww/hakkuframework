@@ -3,7 +3,7 @@ import sys
 from core import bcolors
 from collections import OrderedDict
 import http.client
-from core.errormessage import printerror
+from core.message import *
 import socket
 
 #info about module
@@ -24,11 +24,13 @@ email = "4shadoww0@gmail.com"
 #list of variables
 variables = OrderedDict((
 ('target', 'google.com'),
+('timeout', '1'),
 ))
 
 #description for variables
 vdesc = [
 'target address',
+'timeout',
 ]
 
 
@@ -37,6 +39,7 @@ changelog = "Version 1.0:\nrelease"
 
 def run():
 	try:
+		socket.setdefaulttimeout(int(variables['timeout']))
 		conn = http.client.HTTPConnection(variables['target'])
 		conn.request("HEAD","/index.html")
 		res = conn.getresponse()
@@ -49,3 +52,5 @@ def run():
 		printerror('invalid url')
 	except socket.gaierror:
 		printerror('name or service not known')
+	except socket.timeout:
+		printerror('timeout')
