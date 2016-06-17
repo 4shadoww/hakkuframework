@@ -44,8 +44,20 @@ def challenge():
                 if funcname.email == 'creators@email.com':
                     print(bcolors.WARNING+'\nemail variable has default value'+bcolors.END)
                     testfailed()
-                funcname.variables
-                funcname.vdesc
+
+                for item in funcname.variables.items():
+                    if item[0] == 'option1' or item[0] == 'option2' or item[1] == 'none1' or item[1] == 'none2':
+                        print(bcolors.WARNING+'\nvariables has default value')
+                        testfailed()
+
+                for desc in funcname.vdesc:
+                    if desc == 'description1' or desc == 'description2':
+                        print(bcolors.WARNING+'\ndesc list has default value'+bcolors.END)
+                        testfailed()
+                if len(funcname.variables) != len(funcname.vdesc):
+                    print(bcolors.WARNING+'\nvdesc has not same amount of items than variables')
+                    testfailed()
+
                 funcname.changelog
                 funcname.run
                 try:
