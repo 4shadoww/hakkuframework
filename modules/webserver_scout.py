@@ -28,7 +28,7 @@ variables = OrderedDict((
 
 #description for variables
 vdesc = [
-'description1',
+'target address',
 ]
 
 
