@@ -65,12 +65,14 @@ def challenge():
                     check_customcommands()
                 except AttributeError:
                     pass
+        #testing core
         print(bcolors.OKGREEN+'\n[*] testing core\n'+bcolors.END)
 
         for item in core:
             print(bcolors.YEL+'compiling',item+bcolors.END)
             py_compile.compile(item)
-
+        
+        #testing libs
         print(bcolors.OKGREEN+'\n[*] testing libs\n'+bcolors.END)
 
         for lib in libs1:
@@ -81,6 +83,7 @@ def challenge():
             print(bcolors.YEL+'compiling',lib+bcolors.END)
             py_compile.compile(lib)
 
+        #testing µsploit
         print(bcolors.OKGREEN+'\n[*] testing '+'\xb5'+'Sploit'+bcolors.END)
 
         from __main__ import module
