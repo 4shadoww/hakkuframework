@@ -30,7 +30,7 @@ variables = OrderedDict((
 #description for variables
 vdesc = [
 'target address',
-'timeout',
+'timeout (default: 1)',
 ]
 
 
