@@ -3,7 +3,7 @@ import sys
 from core import bcolors
 from collections import OrderedDict
 import http.client
-from core.message import *
+from core.messages import *
 import socket
 
 #info about module
