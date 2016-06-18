@@ -39,7 +39,10 @@ changelog = "Version 1.0:\nrelease"
 
 def run():
 	try:
-		socket.setdefaulttimeout(int(variables['timeout']))
+		try:
+			socket.setdefaulttimeout(float(variables['timeout']))
+		except ValueError:
+			printerror('invalid timeout')
 		conn = http.client.HTTPConnection(variables['target'])
 		conn.request("HEAD","/index.html")
 		res = conn.getresponse()
