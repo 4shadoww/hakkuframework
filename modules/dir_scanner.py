@@ -7,6 +7,7 @@ from core import bcolors
 from collections import OrderedDict
 from core.alert import alert
 import socket
+from core.messages import *
 
 #info about module
 #modules name
@@ -25,12 +26,14 @@ email = "4shadoww0@gmail.com"
 #list
 variables = OrderedDict((
 ('target', 'google.com'),
+('timeout', '10'),
 ('alert', 'false'),
 ('pos', 'false'),
 ))
 
 vdesc = [
 'target address',
+'timeout (default: 10)'
 'alert when done(beep)[true/false]',
 'print only success[true/false]',
 ]
@@ -220595,7 +220598,10 @@ def run():
 			for path in paths:
 				path = path.replace("\n", "")
 				conn = http.client.HTTPConnection(variables['target'])
-				conn.timeout = 2
+				try:
+					conn.timeout = float(variables['timeout'])
+				except ValueError:
+					printerror('invalid timeout')
 				conn.request("GET", path)
 				res = conn.getresponse()
 				if(res.status==200):
@@ -220616,4 +220622,4 @@ def run():
 	except (socket.gaierror):
 		print (bcolors.WARNING+"target "+variables['target']+" not found"+bcolors.END)
 	except (socket.timeout):
-		print (bcolors.WARNING+"timed out "+variables['target']+bcolors.END)
+		printerror("time out "+variables['target'])
