@@ -33,7 +33,7 @@ variables = OrderedDict((
 
 vdesc = [
 'target address',
-'timeout (default: 10)'
+'timeout (default: 10)',
 'alert when done(beep)[true/false]',
 'print only success[true/false]',
 ]
