@@ -409,7 +409,7 @@ try:
 						mod = "modules."+commandList[1]
 						reload(sys.modules[mod])
 						sys.modules[mod]
-						print (bcolors.OKGREEN+"module "+ commandList[1] +" reloaded"+bcolors.END)
+						print (bcolors.OKGREEN+"[*] module "+ commandList[1] +" reloaded"+bcolors.END)
 					except(IndexError):
 						print (bcolors.WARNING+"please enter module's name"+bcolors.END)
 					except(KeyError):
