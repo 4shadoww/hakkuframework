@@ -369,7 +369,7 @@ try:
 					commandList = re.sub(" ", " ",  terminal).split()
 					try:
 						funcname = globals()[commandList[2]]
-						print(bcolors.OKGREEN+"module found"+bcolors.END)
+						print(bcolors.OKGREEN+"[*] module found"+bcolors.END)
 						check_module.funcname = funcname
 						check_module.check()
 
