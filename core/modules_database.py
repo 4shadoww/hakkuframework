@@ -22,6 +22,7 @@ database = OrderedDict((
 ('email_bomber', 'spam emails'),
 ('hostname_resolver', 'resolve hostname using ip'),
 ('webserver_scout', 'get information from webserver'),
+('proxy_scout', 'scan http proxy from ip'),
 #end
 ('  ',''),
 #network modules
