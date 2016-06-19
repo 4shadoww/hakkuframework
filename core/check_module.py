@@ -1,90 +1,47 @@
 from core import bcolors
+import sys
+from glob import glob
+from core.messages import *
 
 def check():
 	global funcname
 
-	try:
-		funcname.modulename
-		print(bcolors.OKGREEN+"[OK] modulename variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.WARNING + "[FAIL] modulename variable does't exists" + bcolors.END)
-	try:
-		funcname.version
-		print(bcolors.OKGREEN+"[OK] version variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.WARNING + "[FAIL] version variable does't exists" + bcolors.END)
-	try:
-		funcname.desc
-		print(bcolors.OKGREEN+"[OK] desc variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.WARNING + "[FAIL] desc variable does't exists" + bcolors.END)
-	try:
-		funcname.github
-		print(bcolors.OKGREEN+"[OK] github variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.WARNING + "[FAIL] github variable does't exists" + bcolors.END)
-	try:
-		funcname.createdby
-		print(bcolors.OKGREEN+"[OK] createdby variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.WARNING + "[FAIL] createdby variable does't exists" + bcolors.END)
-	try:
-		funcname.email
-		print(bcolors.OKGREEN+"[OK] email variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.WARNING + "[FAIL] email variable does't exists" + bcolors.END)
-	try:
-		funcname.variables
-		print(bcolors.OKGREEN+"[OK] variables list exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.WARNING + "[FAIL] variables list does't exists" + bcolors.END)
-	try:
-		funcname.vdesc
-		print(bcolors.OKGREEN+"[OK] variables description list exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.WARNING + "[FAIL] variables description list does't exists" + bcolors.END)
-	try:
-		funcname.changelog
-		print(bcolors.OKGREEN+"[OK] changelog variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.WARNING + "[FAIL] changelog variable does't exists" + bcolors.END)
-	try:
-		funcname.run
-		print(bcolors.OKGREEN+"[OK] run function exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.WARNING + "[FAIL] run function does't exists" + bcolors.END)
-	try:
-		funcname.message
-		print(bcolors.OKGREEN+"[OK] message variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.YEL + "[?] message variable does't exists" + bcolors.END)
-	try:
-		funcname.help_notes
-		print(bcolors.OKGREEN+"[OK] help_notes variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.YEL + "[?] help_notes variable does't exists" + bcolors.END)
-	try:
-		funcname.mhelp
-		print(bcolors.OKGREEN+"[OK] mhelp list exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.YEL + "[?] mhelp list does't exists" + bcolors.END)
+	print(bcolors.YEL+'\nchecking',funcname.modulename+bcolors.END)
+
+	funcname.version
+	if funcname.desc == 'modules_description':
+		print(bcolors.WARNING+'\ndesc variable has default value'+bcolors.END)
+		testfailed()
+	if funcname.github == 'mygithub':
+			print(bcolors.WARNING+'\ngithub variable has default value'+bcolors.END)
+			testfailed()
+	if funcname.createdby == 'creators_name':
+		print(bcolors.WARNING+'\ncreatedby variable has default value'+bcolors.END)
+		testfailed()
+	if funcname.email == 'creators@email.com':
+		print(bcolors.WARNING+'\nemail variable has default value'+bcolors.END)
+		testfailed()
+
+	for item in funcname.variables.items():
+		if item[0] == 'option1' or item[0] == 'option2' or item[1] == 'none1' or item[1] == 'none2':
+			print(bcolors.WARNING+'\nvariables has default value')
+			testfailed()
+
+	for desc in funcname.vdesc:
+		if desc == 'description1' or desc == 'description2':
+			print(bcolors.WARNING+'\ndesc list has default value'+bcolors.END)
+			testfailed()
+	if len(funcname.variables) != len(funcname.vdesc):
+		print(bcolors.WARNING+'\nvdesc has not same amount of items than variables')
+		testfailed()
+
+	funcname.changelog
+	funcname.run
+
+	print(bcolors.OKGREEN+'\n[*] test passed'+bcolors.END)
+
 	try:
 		funcname.customcommands
-		print(bcolors.OKGREEN+"[OK] customcommands list exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.YEL + "[?] customcommands list does't exists" + bcolors.END)
-	try:
-		funcname.terminal
-		print(bcolors.OKGREEN+"[OK] terminal variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.YEL + "[?] terminal variable does't exists" + bcolors.END)
-	try:
-		funcname.needroot
-		print(bcolors.OKGREEN+"[OK] needroot variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.YEL + "[?] needroot variable does't exists" + bcolors.END)
-	try:
-		funcname.outdated
-		print(bcolors.OKGREEN+"[OK] outdated variable exists"+bcolors.END)
-	except(AttributeError):
-		print(bcolors.YEL + "[?] outdated variable does't exists" + bcolors.END)
+		check_customcommands()
+	except AttributeError:
+		pass
