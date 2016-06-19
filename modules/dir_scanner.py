@@ -13,7 +13,7 @@ from core.messages import *
 #modules name
 modulename = "dir_scanner"
 #version
-version = "1.0"
+version = "1.1"
 #description
 desc = "scans dirs from website"
 #created by
@@ -39,7 +39,7 @@ vdesc = [
 ]
 
 #simple changelog
-changelog = "Version 1.0:\nrelease"
+changelog = "Version 1.0:\nrelease\n\nVersion 1.1:\n+ added timeout variable"
 
 def run():
 	variables['target'] = variables['target'].replace("http://", "")
