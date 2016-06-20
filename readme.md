@@ -35,7 +35,7 @@ Official wiki: https://github.com/4shadoww/usploit/wiki
 * Easy to write your own exploit (module)
 * Scripting
 
-available modules: 16
+available modules: 18
 
 list of modules:
 
