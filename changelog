@@ -24,3 +24,13 @@ CHANGELOG:
 + scapy library replaced to core/libs
 + updated readme
 + fixed bug from usploit
+
+
+VERSION 1.3-alpha:
++ fixed bug from bluetooth_pod module
++ added new build system (error checking)
++ added module webserver_scout
++ added core module messages
++ updated check module command
++ updated dir_scanner
++ minor changes µsploit
