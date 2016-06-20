@@ -53,7 +53,9 @@ list of modules:
 * network_kill
 * pma_scanner
 * port_scanner
+* proxy_scout
 * web_killer
+* web_scout
 * wifi_jammer
 
 dependencies: ethtool aircrack-ng ettercap-text-only dsniff xterm driftnet (ubuntu/debian) and of course you will need python 3
