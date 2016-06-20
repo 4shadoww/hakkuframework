@@ -28,6 +28,7 @@ CHANGELOG:
 
 VERSION 1.3-alpha:
 + fixed bug from bluetooth_pod module
++ fixed bug from email_bomber module
 + added new build system (error checking)
 + added module webserver_scout
 + added core module messages
