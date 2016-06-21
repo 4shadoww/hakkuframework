@@ -497,6 +497,10 @@ try:
 				print(bcolors.WARNING+bcolors.BOLD+bcolors.UNDERLINE+"\nFATAL ERROR:\n"+bcolors.END+bcolors.WARNING)
 				traceback.print_exc(file=sys.stdout)
 				print(bcolors.END)
+				print('Something went wrong.')
+				forcetokr = input('Do you want try to keep running '+'\xb5'+'Sploit Framework? ')
+				if forcetokr == 'yes':
+					main()
 				exit(1)
 
 	if __name__=='__main__':
@@ -527,4 +531,8 @@ except Exception as error:
 	print(bcolors.WARNING+bcolors.BOLD+bcolors.UNDERLINE+"\nFATAL ERROR:\n"+bcolors.END+bcolors.WARNING)
 	traceback.print_exc(file=sys.stdout)
 	print(bcolors.END)
+	print('Something went wrong.')
+	forcetokr = input('Do you want try to keep running '+'\xb5'+'Sploit Framework? ')
+	if forcetokr == 'yes':
+		main()
 	exit(1)
