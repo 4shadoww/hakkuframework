@@ -62,13 +62,10 @@ dependencies: ethtool aircrack-ng ettercap-text-only dsniff xterm driftnet (ubun
 NOTE: PLEASE USE PYTHON 3.5 OR GREATER
 
 
-Official website: http://usploitproject.xyz
-
-Official wiki: https://github.com/4shadoww/usploit/wiki/
-
-Github page: https://github.com/4shadoww/usploit/
-
-SourceForge page: https://sourceforge.net/projects/usploit/
+* Official website: http://usploitproject.xyz
+* Official wiki: https://github.com/4shadoww/usploit/wiki/
+* Github page: https://github.com/4shadoww/usploit/
+* SourceForge page: https://sourceforge.net/projects/usploit/
 
 
 µSploit Framework is under MIT license
