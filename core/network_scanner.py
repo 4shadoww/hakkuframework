@@ -30,7 +30,11 @@ def scan():
 	start_time = datetime.now()
 
 	conf.verb = 0
-	ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst = ips), timeout = 2,iface=interface,inter=0.1)
+	try:
+		ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst = ips), timeout = 2,iface=interface,inter=0.1)
+	except PermissionError:
+		print(bcolors.WARNING+'error: root permissions required')
+		return
 
 	for snd,rcv in ans:
 		print(rcv.sprintf(bcolors.YEL+"r%Ether.src% - %ARP.psrc%"+bcolors.END))
