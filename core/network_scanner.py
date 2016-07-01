@@ -24,7 +24,7 @@ def scan():
 		print(bcolors.WARNING+"error: invalid interface"+bcolors.END)
 		return
 	ips = ip+"/24"
-	print(bcolors.OKGREEN+"\n[*] scanning...\n"+bcolors.END)
+	print(bcolors.OKGREEN+"\n[*] scanning please wait...\n"+bcolors.END)
 	print(bcolors.OKBLUE+"MAC - IP"+bcolors.END)
 
 	start_time = datetime.now()
