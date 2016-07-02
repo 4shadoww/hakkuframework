@@ -93,6 +93,7 @@ try:
 
 
 	def main():
+		#global variables
 		global terminal
 		global module
 		global modulename
@@ -493,6 +494,7 @@ try:
 			except (KeyboardInterrupt, SystemExit):
 				sys.exit( bcolors.OKGREEN+"\n[*] Thank you for using "+ '\xb5'+"Sploit Framework =)"+ bcolors.END)
 
+			#fatal error
 			except Exception as error:
 				print(bcolors.WARNING+bcolors.BOLD+bcolors.UNDERLINE+"\nFATAL ERROR:\n"+bcolors.END+bcolors.WARNING)
 				traceback.print_exc(file=sys.stdout)
@@ -527,6 +529,7 @@ try:
 			print(bcolors.WARNING+'[!] invalid arguments'+bcolors.END)
 		main()
 
+#fatal error
 except Exception as error:
 	print(bcolors.WARNING+bcolors.BOLD+bcolors.UNDERLINE+"\nFATAL ERROR:\n"+bcolors.END+bcolors.WARNING)
 	traceback.print_exc(file=sys.stdout)
