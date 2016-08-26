@@ -58,7 +58,7 @@ list of modules:
 [+] web_scout
 [+] wifi_jammer
 
-dependencies: ethtool aircrack-ng ettercap-text-only dsniff xterm driftnet (ubuntu/debian) and of course you will need python 3
+dependencies: ethtool aircrack-ng ettercap-text-only dsniff xterm driftnet tcpdump (ubuntu/debian) and of course you will need python 3
 NOTE: PLEASE USE PYTHON 3.5 OR GREATER
 
 
