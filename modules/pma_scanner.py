@@ -1,31 +1,31 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
-from core import bcolors
+from core import colors
 from collections import OrderedDict
 import http.client
 from time import sleep
 import socket
 
-#info about module
-#modules name (must be same as filename)
-modulename = "pma_scanner"
-#module version
+# Info about the module
+# Module's name (should be same as file's name)
+name = "pma_scanner"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "PHPMyAdmin login page scanner"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#created by (creators name)
+# Creator's name
 createdby = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('target', 'google.com'),
 ))
 
-#description for variables
+# Description for variables
 vdesc = [
 'target address',
 ]
@@ -36,8 +36,8 @@ changelog = "Version 1.0:\nrelease"
 def run():
 	variables['target'] = variables['target'].replace("http://", "")
 	variables['target'] = variables['target'].replace("https://", "")
-	print(bcolors.OKGREEN + "[*]Your Target : " + variables['target'] + bcolors.END)
-	print(bcolors.OKBLUE + "[*]Loading Path List ... Please Wait ..." + bcolors.END)
+	print(colors.green + "[*]Your Target : " + variables['target'] + colors.end)
+	print(colors.blue + "[*]Loading Path List ... Please Wait ..." + colors.end)
 	sleep(2)
 	paths = ['/phpMyAdmin/',
 '/phpmyadmin/',
@@ -125,7 +125,7 @@ def run():
 '/webdb/',
 '/mysqladmin/',
 '/mysql-admin/',]
-	print(bcolors.OKBLUE+"[*]Starting scan..."+bcolors.END)
+	print(colors.blue+"[*]Starting scan..."+colors.end)
 	try:
 		for path in paths:
 			path = path.replace("\n", "")
@@ -133,8 +133,8 @@ def run():
 			conn.request("GET", path)
 			res = conn.getresponse()
 			if(res.status==200):
-				print(bcolors.BOLD + bcolors.OKGREEN + "[%s] ... [%s %s]" % (path, res.status, res.reason) + bcolors.END)
+				print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
 			else:
-				print(bcolors.YEL + "[%s] ... [%s %s]" % (path, res.status, res.reason) + bcolors.END)
+				print(colors.yellow + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
 	except(socket.gaierror):
-		print(bcolors.WARNING+"[!]Host is down!"+bcolors.END)
+		print(colors.red+"[!]Host is down!"+colors.end)

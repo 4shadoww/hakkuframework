@@ -1,33 +1,33 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
-from core import bcolors
+from core import colors
 from collections import OrderedDict
 import http.client
 from core.messages import *
 import socket
 
-#info about module
-#modules name (must be same as filename)
-modulename = "webserver_scout"
-#module version
+# Info about the module
+# Module's name (should be same as file's name)
+name = "webserver_scout"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "get information from webserver"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#created by (creators name)
+# Creator's name
 createdby = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
-#alert user if root permissions not available (remove variable below if root permissions needed)
+# Alert user if root permissions not available (remove variable below if root permissions not needed)
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('target', 'google.com'),
 ('timeout', '1'),
 ))
 
-#description for variables
+# Description for variables
 vdesc = [
 'target address',
 'timeout (default: 1)',
@@ -49,7 +49,7 @@ def run():
 		results = res.getheaders()
 		print('')
 		for item in results:
-			print(bcolors.YEL+item[0], item[1]+bcolors.END)
+			print(colors.yellow+item[0], item[1]+colors.end)
 		print('')
 	except http.client.InvalidURL:
 		printerror('invalid url')

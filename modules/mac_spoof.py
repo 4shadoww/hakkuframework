@@ -1,7 +1,7 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
 import os
-from core import bcolors
+from core import colors
 from collections import OrderedDict
 from scapy.all import *
 from core import network_scanner
@@ -9,20 +9,20 @@ import random
 from core import getpath
 from core.setvar import setvar
 
-#info about module
-#modules name (must be same as filename)
-modulename = "mac_spoof"
-#module version
+# Info about the module
+# Module's name (should be same as file's name)
+name = "mac_spoof"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "mac spoof"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#created by (creators name)
+# Creator's name
 createdby = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
-#alert user if root permissions not available (remove variable below if root permissions needed)
+# Alert user if root permissions not available (remove variable below if root permissions not needed)
 needroot = 1
 
 #custom commands
@@ -32,13 +32,13 @@ customcommands = (
 'reset',
 )
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('fake_mac', '02:a0:04:d3:00:11'),
 ('interface', 'eth0'),
 ))
 
-#description for variables
+# Description for variables
 vdesc = [
 'fake mac',
 'network interface',
@@ -50,11 +50,11 @@ mhelp =  OrderedDict((
 ('reset', 'end mac spoof'),
 ))
 
-#additional help notes
-help_notes = bcolors.WARNING+"this module will not work without root permissions!"+bcolors.END
+# Additional help notes
+help_notes = colors.red+"this module will not work without root permissions!"+colors.end
 
-#additional notes to options
-option_notes = bcolors.YEL+" you can generate fake_mac using 'random_mac' command\n use 'reset' command to end mac spoof"+bcolors.END
+# Additional notes to options
+option_notes = colors.yellow+" you can generate fake_mac using 'random_mac' command\n use 'reset' command to end mac spoof"+colors.end
 
 #simple changelog
 changelog = "Version 1.0:\nrelease"
@@ -63,12 +63,12 @@ def run():
 	xterm1 = "service network-manager stop"
 	xterm2 = "ifconfig "+variables['interface']+" hw ether "+variables['fake_mac']
 	xterm3 = "service network-manager start"
-	print(bcolors.OKBLUE+"[*] starting mac spoof"+bcolors.YEL)
+	print(colors.blue+"[*] starting mac spoof"+colors.yellow)
 	os.system(xterm1)
-	print(bcolors.OKGREEN+"trying to set fake mac address..."+bcolors.YEL)
+	print(colors.green+"trying to set fake mac address..."+colors.yellow)
 	os.system(xterm2)
 	os.system(xterm3)
-	print(bcolors.OKGREEN+"done!"+bcolors.END)
+	print(colors.green+"done!"+colors.end)
 
 def scan():
 	network_scanner.scan()
@@ -89,15 +89,15 @@ def reset():
 	realmac = realmac.replace("'", "")
 	realmac =  realmac[:-2]
 	if not realmac:
-		print(bcolors.WARNING+"[!] error"+bcolors.END)
+		print(colors.red+"[!] error"+colors.end)
 	else:
-		print(bcolors.OKBLUE+"realmac: "+realmac)
+		print(colors.blue+"realmac: "+realmac)
 		xterm1a = "service network-manager stop"
 		xterm2a = "ifconfig "+variables['interface']+" hw ether "+realmac
 		xterm3a = "service network-manager start"
-		print("[*] setting real mac"+bcolors.YEL)
+		print("[*] setting real mac"+colors.yellow)
 		os.system(xterm1a)
-		print(bcolors.OKGREEN+"trying to set real mac address..."+bcolors.YEL)
+		print(colors.green+"trying to set real mac address..."+colors.yellow)
 		os.system(xterm2a)
 		os.system(xterm3a)
-		print(bcolors.OKGREEN+"done!"+bcolors.END)
+		print(colors.green+"done!"+colors.end)

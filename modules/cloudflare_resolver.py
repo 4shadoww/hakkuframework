@@ -2,39 +2,36 @@
 
 import sys
 import os
-from core import bcolors
+from core import colors
 from collections import OrderedDict
-from core.alert import alert
 from dns import resolver
 import dns
 
 
 
-#info about module
+# Info about the module
 #modules name
-modulename = "cloudflare_resolver"
+name = "cloudflare_resolver"
 #version
 version = "2.2"
-#description
+# Description
 desc = "tries to resolve ip from subdomains"
 #created by
 createdby = "4shadoww"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
 
 #list
 variables = OrderedDict((
 ('target', 'google.com'),
-('alert', 'false'),
 ('pos', 'false'),
 ('timeout', '0.5')
 ))
 
 vdesc = [
 'target address',
-'alert when done(beep)[true/false]',
 'print only success[true/false]',
 'timeout',
 ]
@@ -42,7 +39,7 @@ vdesc = [
 #simple changelog
 changelog = "Version 1.0:\nrelease\n\nVersion 2.0:\n+ fixed timeout bug\n+ module is now using dnspython library\n\nVersion 2.1:\n+ added more colors\n\nVersion 2.2:\n+ added ? when resolved is same than default ip\n+ added timeout variable"
 
-#run function
+# Run function
 def run():
 	ipresolver = resolver.Resolver()
 	ipresolver.timeout = float(variables['timeout'])
@@ -57,21 +54,19 @@ def run():
 	'admin', 'alpha', 'imap', 'smtp', 'test')
 	try:
 		orgip = ipresolver.query(variables['target'], 'A')
-		print(bcolors.OKGREEN+"[-------------------------]"+bcolors.END)
-		print(bcolors.OKGREEN+"[+] Default IP Address : %s"%orgip[0]+bcolors.END)
-		print(bcolors.OKGREEN+"[-------------------------]"+bcolors.END)
+		print(colors.green+"[-------------------------]"+colors.end)
+		print(colors.green+"[+] Default IP Address : %s"%orgip[0]+colors.end)
+		print(colors.green+"[-------------------------]"+colors.end)
 	except(dns.exception.Timeout):
-		print(bcolors.WARNING+"[-] Error : Host is Down !"+bcolors.END)
+		print(colors.red+"[-] Error : Host is Down !"+colors.end)
 	for i in sub:
 		host = i+'.'+variables['target']
 		try:
 			query = ipresolver.query(host, 'A')
 			if query[0] == orgip[0]:
-				print(bcolors.YEL+"[?] %s : %s"%(host, query[0])+bcolors.END)
+				print(colors.yellow+"[?] %s : %s"%(host, query[0])+colors.end)
 			else:
-				print(bcolors.OKGREEN+"[+] %s : %s"%(host, query[0])+bcolors.END)
+				print(colors.green+"[+] %s : %s"%(host, query[0])+colors.end)
 		except(dns.exception.Timeout):
 			if variables['pos'] != 'true':
-				print(bcolors.WARNING+"[-] %s : N/A"%host+bcolors.END)
-	if variables['alert'] == 'true':
-			alert('scanning ended')
+				print(colors.red+"[-] %s : N/A"%host+colors.end)

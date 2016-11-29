@@ -3,38 +3,35 @@
 import http.client
 import os
 import sys
-from core import bcolors
+from core import colors
 from collections import OrderedDict
-from core.alert import alert
 import socket
 from core.messages import *
 
-#info about module
+# Info about the module
 #modules name
-modulename = "dir_scanner"
+name = "dir_scanner"
 #version
 version = "1.1"
-#description
+# Description
 desc = "scans dirs from website"
 #created by
 createdby = "4shadoww"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
 
 #list
 variables = OrderedDict((
 ('target', 'google.com'),
 ('timeout', '10'),
-('alert', 'false'),
 ('pos', 'false'),
 ))
 
 vdesc = [
 'target address',
 'timeout (default: 10)',
-'alert when done(beep)[true/false]',
 'print only success[true/false]',
 ]
 
@@ -44,7 +41,7 @@ changelog = "Version 1.0:\nrelease\n\nVersion 1.1:\n+ added timeout variable"
 def run():
 	variables['target'] = variables['target'].replace("http://", "")
 	variables['target'] = variables['target'].replace("https://", "")
-	print (bcolors.OKGREEN + "[*] Your Target : " + variables['target'] + bcolors.END)
+	print (colors.green + "[*] Your Target : " + variables['target'] + colors.end)
 	paths = ['index',
 'images',
 'download',
@@ -151864,7 +151861,7 @@ def run():
 'tax-exempt',
 'wirexfer',
 'zeomega',
-'straktlogo_webcolors',
+'straktlogo_wecolors',
 'opsware',
 'p6summary',
 '27393',
@@ -220605,7 +220602,7 @@ def run():
 				conn.request("GET", path)
 				res = conn.getresponse()
 				if(res.status==200):
-					print(bcolors.BOLD + bcolors.OKGREEN + "[%s] ... [%s %s]" % (path, res.status, res.reason) + bcolorss.END)
+					print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colorss.end)
 		else:
 			for path in paths:
 				path = path.replace("\n", "")
@@ -220614,12 +220611,10 @@ def run():
 				conn.request("GET", path)
 				res = conn.getresponse()
 				if(res.status==200):
-					print(bcolors.BOLD + bcolors.OKGREEN + "[%s] ... [%s %s]" % (path, res.status, res.reason) + bcolorss.END)
+					print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colorss.end)
 				else:
-					print(bcolors.YEL + "[%s] ... [%s %s]" % (path, res.status, res.reason) + bcolors.END)
-		if variables['alert'] == 'true':
-			alert('scanning ended')
+					print(colors.yellow + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
 	except (socket.gaierror):
-		print (bcolors.WARNING+"target "+variables['target']+" not found"+bcolors.END)
+		print (colors.red+"target "+variables['target']+" not found"+colors.end)
 	except (socket.timeout):
 		printerror("time out "+variables['target'])

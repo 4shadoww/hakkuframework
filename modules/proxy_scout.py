@@ -1,6 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
-from core import bcolors
+from core import colors
 from collections import OrderedDict
 import urllib.request
 import socket
@@ -8,21 +8,21 @@ from core.messages import *
 import http.client
 import re
 
-#info about module
-#modules name (must be same as filename)
-modulename = "proxy_scout"
-#module version
+# Info about the module
+# Module's name (should be same as file's name)
+name = "proxy_scout"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "scan http proxy from ip"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#created by (creators name)
+# Creator's name
 createdby = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('target', '192.168.1.2'),
 ('port', '80'),
@@ -32,7 +32,7 @@ variables = OrderedDict((
 ('scan_common', '0'),
 ))
 
-#description for variables
+# Description for variables
 vdesc = [
 'target address',
 'target port',
@@ -67,7 +67,7 @@ def run():
 		if variables['scan_common'] == '1':
 			for port in commonports:
 				try:
-					status = bcolors.YEL+'[*] scanning port '+ port+bcolors.END
+					status = colors.yellow+'[*] scanning port '+ port+colors.end
 					sys.stdout.write("\r%s" % status)
 					sys.stdout.flush()
 					proxy_support = urllib.request.ProxyHandler({"http":variables['target']+':'+port})
@@ -75,7 +75,7 @@ def run():
 					urllib.request.install_opener(opener)
 
 					html = urllib.request.urlopen("http://www.google.com").read()
-					print(' :'+bcolors.OKGREEN+' proxy detected'+bcolors.END)
+					print(' :'+colors.green+' proxy detected'+colors.end)
 
 				except http.client.BadStatusLine:
 					printsuccess('\nproxy server detected')
@@ -88,14 +88,14 @@ def run():
 					pass
 				
 				except ConnectionResetError:
-					print(' :'+bcolors.OKGREEN+' proxy detected'+bcolors.END)
+					print(' :'+colors.green+' proxy detected'+colors.end)
 			printsuccess('\ndone')
 
 		if variables['use_range'] == '1':
 			ports = re.sub("-", " ",  variables['port_range']).split()
 			for port in range(int(ports[0]), int(ports[1])):
 				try:
-					status = bcolors.YEL+'[*] scanning port '+ str(port)+bcolors.END
+					status = colors.yellow+'[*] scanning port '+ str(port)+colors.end
 					sys.stdout.write("\r%s" % status)
 					sys.stdout.flush()
 					proxy_support = urllib.request.ProxyHandler({"http":variables['target']+':'+str(port)})
@@ -103,7 +103,7 @@ def run():
 					urllib.request.install_opener(opener)
 
 					html = urllib.request.urlopen("http://www.google.com").read()
-					print(' :'+bcolors.OKGREEN+' proxy detected'+bcolors.END)
+					print(' :'+colors.green+' proxy detected'+colors.end)
 
 				except http.client.BadStatusLine:
 					printsuccess('\nproxy server detected')
@@ -116,7 +116,7 @@ def run():
 					pass
 				
 				except ConnectionResetError:
-					print(' :'+bcolors.OKGREEN+' proxy detected'+bcolors.END)
+					print(' :'+colors.green+' proxy detected'+colors.end)
 			printsuccess('\ndone')
 			
 			

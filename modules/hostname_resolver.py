@@ -1,30 +1,30 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
-from core import bcolors
+from core import colors
 from collections import OrderedDict
 import socket
 
 
-#info about module
-#modules name (must be same as filename)
-modulename = "hostname_resolver"
-#module version
+# Info about the module
+# Module's name (should be same as file's name)
+name = "hostname_resolver"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "resolve hostname using ip"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#created by (creators name)
+# Creator's name
 createdby = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('target', '192.168.1.1'),
 ))
 
-#description for variables
+# Description for variables
 vdesc = [
 'target ip address',
 ]
@@ -36,8 +36,8 @@ changelog = "Version 1.0:\nrelease"
 def run():
 	try:
 		querly = socket.gethostbyaddr(variables['target'])
-		print(bcolors.YEL+"resolved hostname:", querly[0]+bcolors.END)
+		print(colors.yellow+"resolved hostname:", querly[0]+colors.end)
 	except(socket.herror):
-		print(bcolors.WARNING+"unknown host"+bcolors.END)
+		print(colors.red+"unknown host"+colors.end)
 	except(socket.gaierror):
-		print(bcolors.WARNING+"name or service not known"+bcolors.END)
+		print(colors.red+"name or service not known"+colors.end)

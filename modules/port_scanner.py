@@ -1,33 +1,33 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
-from core import bcolors
+from core import colors
 from collections import OrderedDict
 import socket
 import subprocess
 from datetime import datetime
 
-#info about module
-#modules name (must be same as filename)
-modulename = "port_scanner"
-#module version
+# Info about the module
+# Module's name (should be same as file's name)
+name = "port_scanner"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "scan open ports"
-#creator's github
+# Creator's github
 github = "4shadoww"
-#created by (creators name)
+# Creator's name
 createdby = "4shadoww"
-#email
+# Email
 email = "4shadoww0@gmail.com"
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('target', 'google.com'),
 ('first', 1),
 ('last', 100),
 ))
 
-#description for variables
+# Description for variables
 vdesc = [
 'target address',
 'first port which will be scanned',
@@ -43,14 +43,14 @@ def run():
 	try:
 		targetip = socket.gethostbyname(variables['target'])
 	except(socket.gaierror):
-		print(bcolors.WARNING+'Hostname could not be resolved'+bcolors.END)
+		print(colors.red+'Hostname could not be resolved'+colors.end)
 		return
 
 	socket.setdefaulttimeout(0.5)
 
-	print(bcolors.OKBLUE+"-" * 60)
+	print(colors.blue+"-" * 60)
 	print("Please wait, scanning target", targetip)
-	print("-" * 60+bcolors.END)
+	print("-" * 60+colors.end)
 
 	t1 = datetime.now()
 
@@ -61,21 +61,21 @@ def run():
 			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			result = sock.connect_ex((targetip, port))
 			if result == 0:
-				print(bcolors.OKGREEN+"Port {}: Open".format(port)+bcolors.END)
+				print(colors.green+"Port {}: Open".format(port)+colors.end)
 			else:
-				print(bcolors.WARNING+"Port {}: Closed".format(port)+bcolors.END)
+				print(colors.red+"Port {}: Closed".format(port)+colors.end)
 
 			sock.close()
 
 	except(socket.gaierror):
-		print(bcolors.WARNING+'Hostname could not be resolved'+bcolors.END)
+		print(colors.red+'Hostname could not be resolved'+colors.end)
 		sys.exit()
 
 	except(socket.error):
-		print(bcolors.WARNING+"Couldn't connect to server"+bcolors.END)
+		print(colors.red+"Couldn't connect to server"+colors.end)
 		sys.exit()
 	except(ValueError):
-		print(bcolors.WARNING+"Port value must be integer"+bcolors.END)
+		print(colors.red+"Port value must be integer"+colors.end)
 
 	# Checking the time again
 	t2 = datetime.now()
@@ -84,4 +84,4 @@ def run():
 	total =  t2 - t1
 
 	# Printing the information to screen
-	print(bcolors.OKBLUE+'Scanning Completed in: ', total, bcolors.END)
+	print(colors.blue+'Scanning Completed in: ', total, colors.end)
