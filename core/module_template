@@ -1,62 +1,62 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
-from core import bcolors
+from core import colors
 from collections import OrderedDict
 
-#info about module
-#modules name (must be same as filename)
-#modulename = "module_name"
-#module version
+# Info about module
+# Module's name (must be same as file name)
+#name = "module_name"
+# Module version
 version = "1.0"
-#description
+# Description
 desc = "modules_description"
-#creator's github
+# Creator's github
 github = "mygithub"
-#created by (creators name)
+# Creator's name
 createdby = "creators_name"
-#email
+# Email
 email = "creators@email.com"
-#alert user if root permissions not available (remove variable below if root permissions needed)
+# Alert user if root permissions not available (remove variable below if root permissions not needed)
 needroot = 1
 
-#list of variables
+# List of the variables
 variables = OrderedDict((
 ('option1', 'none1'),
 ('option2', 'none2'),
 ))
 
-#description for variables
+# Description for the variables
 vdesc = [
 'description1',
 'description2',
 ]
 
-#help for customcommands (remove if you will not use customcommands)
+# Help for custom commands (remove if you will not use custom commands)
 mhelp = OrderedDict((
 ('example', 'help'),
 ))
 
-#additional help notes
+# Additional help notes
 help_notes = "help notes"
 
-#additional notes to options
+# Additional notes to options
 option_notes = 'option note'
 
-#custom commands (remove this if you will not use custom commands)
+# Custom commands (remove this if you will not use custom commands)
 customcommands = (
 'example'
 )
 
-#used with custom commands (remove this if you will not use custom commands)
+# Used with custom commands (remove this if are not using custom commands)
 termial = None
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	#run
+	# Run
 	print(variables)
 
-#just example of custom command "example" (remove this function below)
+# Just example of custom command "example" (remove this function below)
 def example():
 	print(terminal)
