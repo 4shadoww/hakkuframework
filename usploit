@@ -3,7 +3,7 @@
 # 			 --------------------------------------------------
 #							µSploit Framework
 # 			 --------------------------------------------------
-#		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+#		 Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
 # 		 Permission is hereby granted, free of charge, to any person obtaining
 #		 a copy of this software and associated documentation files (the
@@ -26,516 +26,108 @@
 
 try:
 
-	#python built in modules
-	import sys
-	import os
-	import readline, rlcompleter
-	import re
-	from imp import reload
+	# Import python modules
+	import readline
 	import traceback
-	import itertools
-	import time
-	import curses
+	import sys
 	import logging
-	import csv
 	import getopt
+	import csv
+	import os
 
-	#checking python version
+	# Check python version
 	req_version = (3,5)
 	cur_version = sys.version_info
 	if cur_version < req_version:
 		print('python3.5 or greater is recommended')
 
-	#append libs path
+	# Append libs path
 	sys.path.append('core/libs')
 
-	#core
-	from core import bcolors
-	from core import header
-	from core import modules_database
-	from core.info import version
-	from core import help_main
-	from core import help_module
-	from core import about
-	from core.prettytable import PrettyTable
-	from core import matrix
+	# Disable scapy warning
 	logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
-	from scapy.all import *
-	from core import network_scanner
-	from core.cowsay import cowsay
-	from core import dsag
-	from core.alert import alert
-	from core import check_module
+
+	# Import core modules
+	from core import colors
+	from core import header
 	from core import usftest
 
-	print(bcolors.OKBLUE+"[*] loading modules..."+bcolors.END)
-	#modules
-	from modules import *
+	print("loading modules...")
 
-	print(bcolors.OKBLUE+"[*] done!"+bcolors.END)
+	# Import modules
+	from core import shell
 
-	#init variables
-	terminal = 0
-	module = 0
-	modulename = 0
-	funcname = 0
-	scoml = 0
-	scripting = 0
-	scriptline = 0
+	print("done!")
 
-	print(bcolors.CYAN+header.sploit+bcolors.END)
-	print("\n")
+	# Print header
+	print(colors.cyan+header.sploit+colors.end)
 	header.print_info()
-	module = 0
-	scripting = 0
-	if not os.geteuid() == 0:
-		print(bcolors.WARNING+'[!] some modules will not work without root permission!\n[!] recommended to login as root!'+bcolors.END)
 
+except KeyboardInterrupt:
+	sys.exit(0)
 
-	def main():
-		#global variables
-		global terminal
-		global module
-		global modulename
-		global funcname
-		global scoml
-		global scripting
-		global scriptline
+if not os.geteuid() == 0:
+	print(colors.red+'some modules will not work without root permission!\nrecommended to login as root!'+colors.end)
 
-		#module loaded
-		while module == 1:
-			try:
-				#scripting
-				if scripting == 1:
-					terminal = scoml[scriptline][0]
-					scriptline += 1
-				try:
-					if scripting != 1:
-						terminal = input(bcolors.HEADER + 'usf:'+ modulename + bcolors.END + ' > ')
-				except(NameError):
-					print(bcolors.WARNING + "modules is corrupted: modulename not found" + bcolors.END)
+# Exception handling
 
-				if terminal == 'exit':
-					module = 0
+def fatalerror():
+	print(colors.red+"FATAL ERROR:")
+	traceback.print_exc()
+	print(colors.end)
+	forcetokr = input('Do you want to force to keep µSploit Framework running? ')
+	if forcetokr == 'yes':
+		main()
+	elif forcetokr == 'y':
+		main()
 
-				elif terminal == 'clear':
-					sys.stderr.write("\x1b[2J\x1b[H")
+# Start up shell
 
-				elif terminal == "back":
-					module = 0
+try:
+	def main(scripting, scf):
+		try:
+			shell.run(scripting, scf)
 
-				elif terminal == 'version':
-					try:
-						print(modulename + " " + funcname.version)
-					except Exception as error:
-						print(bcolors.WARNING+"error: module is corrupted\n")
-						traceback.print_exc(file=sys.stdout)
-						print(bcolors.END)
+		except SystemExit:
+			sys.exit(0)
 
-				elif terminal == 'about':
-					try:
-						print(bcolors.OKGREEN+modulename + " "+bcolors.YEL + funcname.version+bcolors.END)
-						print(bcolors.OKBLUE+"created by: "+bcolors.END + funcname.createdby)
-						print(bcolors.OKBLUE+"github: "+bcolors.END + funcname.github)
-						print(bcolors.OKBLUE+"email: " +bcolors.END+ funcname.email)
-						print(bcolors.OKBLUE+"description: "+bcolors.END + funcname.desc)
-					except Exception as error:
-						print(bcolors.WARNING+"error: module is corrupted\n")
-						traceback.print_exc(file=sys.stdout)
-						print(bcolors.END)
+		except:
+			fatalerror()
 
-				elif terminal == 'help':
-					try:
-						t = PrettyTable([bcolors.OKGREEN+'Command', '', 'Description'+bcolors.END])
-						t.add_row(["-------"," ","-----------"])
-						t.align = 'l'
-						t.valing = 'm'
-						t.border = False
+	if __name__ == '__main__':
+		scripting = 0
+		scf = ""
 
-						for key, val in help_module.commands.items():
-								t.add_row([bcolors.YEL+key+bcolors.END, '  =>  ', val])
-
-						try:
-							for key, val in funcname.mhelp.items():
-								t.add_row([bcolors.YEL+key+bcolors.END, '  =>  ', val])
-						except(AttributeError):
-							pass
-						print (t)
-						try:
-							print('\n',funcname.help_notes,'\n')
-						except(AttributeError):
-							pass
-
-					except Exception as error:
-						print(bcolors.WARNING+"error: module is corrupted\n")
-						traceback.print_exc(file=sys.stdout)
-						print(bcolors.END)
-
-				elif terminal == 'show options':
-					try:
-						print(" ")
-						t = PrettyTable([bcolors.OKGREEN+'Option', 'Value', 'Description'+bcolors.END])
-						t.add_row(["------","------","-----------"])
-						t.align = 'l'
-						t.valing = 'm'
-						t.border = False
-
-						for key, val in zip(funcname.variables.items(),funcname.vdesc):
-								t.add_row([key[0], key[1], val])
-
-						print (t,'\n')
-						try:
-							print(funcname.option_notes,'\n')
-						except(AttributeError):
-							pass
-
-					except Exception as error:
-						print(bcolors.WARNING+"error: module is corrupted\n")
-						traceback.print_exc(file=sys.stdout)
-						print(bcolors.END)
-
-				elif terminal[0:6] == 'cowsay':
-					try:
-						print (cowsay(terminal[7:]))
-					except(ValueError):
-						print(cowsay("µSploit Framework"))
-						
-
-				elif terminal == 'changelog':
-					try:
-						print(bcolors.YEL+funcname.changelog+bcolors.END)
-					except Exception as error:
-						print(bcolors.WARNING+"error: module is corrupted\n")
-						traceback.print_exc(file=sys.stdout)
-						print(bcolors.END)
-				elif terminal == 'ifconfig':
-					os.system('ifconfig')
-
-				elif terminal[0:5] == 'debug':
-					commandList = re.sub(" ", " ",  terminal).split()
-					debugfunc = getattr(funcname, commandList[1])
-					try:
-						debugfunc()
-					except Exception as error:
-						print(bcolors.WARNING+"error:\n")
-						traceback.print_exc(file=sys.stdout)
-						print(bcolors.END)
-
-				elif terminal[0:2] == 't ':
-					try:
-						os.system(terminal[2:])
-
-					except(NameError):
-						print(bcolors.WARNING+"[*] "+ '\xb5' +"Sploit cannot use this command or it's invalid"+bcolors.END)
-
-				#oispa kaljaa
-				
-				elif terminal[0:3] == 'set':
-					global targetvariable
-					commandList = re.sub(" ", " ",  terminal).split()
-
-					try:
-						targetvariable = funcname.variables[commandList[1]]
-						funcname.variables[commandList[1]] = commandList[2]
-						print(bcolors.OKGREEN+commandList[1] +" => "+ commandList[2] + bcolors.END)
-
-					except(NameError, KeyError):
-						print(bcolors.WARNING+"option not found"+bcolors.END)
-					except(IndexError):
-						print(bcolors.WARNING+"please enter variable's value"+bcolors.END)
-
-				elif terminal == 'run':
-					try:
-						try:
-							funcname.run()
-						except (KeyboardInterrupt, SystemExit):
-							print(bcolors.OKGREEN+"\n[*] ctrl + c detected process terminated..."+bcolors.END)
-					except Exception as error:
-						print(bcolors.WARNING+"error: module is corrupted\n")
-						traceback.print_exc(file=sys.stdout)
-						print(bcolors.END)
-
-				elif terminal[0:6] == 'reload':
-					try:
-						mod = "modules."+modulename
-						reload(sys.modules[mod])
-						sys.modules[mod]
-						print (bcolors.OKGREEN+"module "+ modulename +" reloaded"+bcolors.END)
-					except(IndexError):
-						print (bcolors.WARNING+"please enter module's name"+bcolors.END)
-					except(KeyError):
-						print (bcolors.WARNING+"module not found"+bcolors.END)
-
-				elif terminal == 'make exit':
-					print( bcolors.OKGREEN+"\n[*] Thank you for using "+ '\xb5'+"Sploit Framework =)"+ bcolors.END)
-					break
-
-				elif not terminal:
-					pass
-
-				else:
-					try:
-						commandList = re.sub(" ", " ",  terminal).split()
-						if commandList[0] in funcname.customcommands:
-							funcname.terminal = terminal
-							call = getattr(funcname, commandList[0])
-							call()
-						else:
-							print(bcolors.WARNING + "unknown command" + bcolors.END)
-					except IndexError:
-							pass
-					except (KeyboardInterrupt, SystemExit):
-						print(bcolors.OKGREEN+"\n[*] ctrl + c detected process terminated..."+bcolors.END)
-					except(AttributeError):
-						print(bcolors.WARNING + "unknown command" + bcolors.END)
-
-			except (KeyboardInterrupt, SystemExit):
-						module = 0
-						print(bcolors.OKGREEN+"\n[*] ctrl + c detected going back..."+bcolors.END)
-
-		#no module loaded
-		while module == 0:
-			try:
-				if scripting != 1:
-					terminal = input(bcolors.HEADER +'usf'+ bcolors.END +' > ')
-
-				#scripting
-				if scripting == 1:
-					terminal = scoml[scriptline][0]
-					scriptline += 1
-
-				#µSploit commands
-
-				if terminal == 'version':
-					print('\xb5'+"Sploit Framework " + version)
-
-				elif terminal == 'install requirements':
-
-					print(bcolors.OKGREEN+"[*] installing requirements..."+bcolors.END)
-					xterm_1 = "apt-get install ethtool aircrack-ng ettercap-text-only dsniff xterm driftnet"
-					os.system(xterm_1)
-					print(bcolors.OKGREEN+"[*] done"+bcolors.END)
-
-				elif terminal == 'exit':
-					sys.exit( bcolors.OKGREEN+"[*] Thank you for using " +'\xb5'+ "Sploit Framework =)"+ bcolors.END)
-
-				elif terminal == 'clear':
-
-					sys.stderr.write("\x1b[2J\x1b[H")
-
-				elif terminal[0:2] == 't ':
-
-					os.system(terminal[2:])
-
-
-				elif terminal == 'about':
-					about.print_about()
-
-				elif terminal == 'help':
-					t = PrettyTable([bcolors.OKGREEN+'Command', '', 'Description'+bcolors.END])
-					t.add_row(["-------"," ","-----------"])
-					t.align = 'l'
-					t.valing = 'm'
-					t.border = False
-
-					for key, val in help_main.commands.items():
-							t.add_row([bcolors.YEL+key+bcolors.END, '  =>  ', val])
-
-					print (t)
-
-				elif terminal == 'show modules':
-					t = PrettyTable([bcolors.OKGREEN+'Modules:', ''+bcolors.END])
-					t.add_row(['',''])
-					t.align = 'l'
-					t.valing = 'm'
-					t.border = False
-
-					for key, val in modules_database.database.items():
-							t.add_row([key, val])
-
-					print (t)
-
-				elif terminal == 'changelog':
-					#print changelog
-					try:
-						f = open('changelog', 'r')
-						file_contents = f.read()
-						print (bcolors.YEL+file_contents+bcolors.END)
-						f.close()
-					except(IOError):
-						print(bcolors.WARNING + "error: changelog file not found (have you removed it?)" + bcolors.END)
-
-				elif terminal[0:12] == 'check module':
-					#check module
-					commandList = re.sub(" ", " ",  terminal).split()
-					try:
-						funcname = globals()[commandList[2]]
-						print(bcolors.OKGREEN+"[*] module found"+bcolors.END)
-						check_module.funcname = funcname
-						check_module.check()
-
-					except(IndexError):
-						print(bcolors.WARNING + "please enter module name"+ bcolors.END)
-
-					except Exception as error:
-						print(bcolors.WARNING + "error: module not found ("+str(error)+")"+ bcolors.END)
-
-				elif terminal[0:10] == 'new module':
-					try:
-						commandList = re.sub("[^\w]", " ",  terminal).split()
-						completeName = os.path.join('modules', commandList[2]+".py")
-						if os.path.exists(completeName):
-							print(bcolors.WARNING+"[*] module already exists"+bcolors.END)
-
-						else:
-							mfile = open(completeName, 'w')
-							template = os.path.join('core', 'module_template')
-							f = open(template, 'r')
-							template_contents = f.readlines()
-							template_contents[7] = 'modulename = "'+commandList[2]+'"\n'
-							mfile.writelines(template_contents)
-							mfile.close()
-							print(bcolors.OKGREEN+"[*] module "+ commandList[2]+".py" +" created to modules folder"+bcolors.END)
-							print(bcolors.OKGREEN+"[*] done"+bcolors.END)
-					except(IOError):
-						print(bcolors.WARNING+"something went wrong"+bcolors.end)
-
-					except(IndexError):
-						print(bcolors.WARNING + "please enter module name"+ bcolors.END)
-
-						#reload module
-				elif terminal[0:6] == 'reload':
-					try:
-						commandList = re.sub("[^\w]", " ",  terminal).split()
-						mod = "modules."+commandList[1]
-						reload(sys.modules[mod])
-						sys.modules[mod]
-						print (bcolors.OKGREEN+"[*] module "+ commandList[1] +" reloaded"+bcolors.END)
-					except(IndexError):
-						print (bcolors.WARNING+"please enter module's name"+bcolors.END)
-					except(KeyError):
-						print (bcolors.WARNING+"module not found"+bcolors.END)
-
-				elif terminal == 'matrix':
-					try:
-						matrix.main()
-					except KeyboardInterrupt:
-						curses.endwin()
-						curses.curs_set(1)
-						curses.reset_shell_mode()
-						curses.echo()
-
-				elif terminal == 'alert_test':
-					alert('test')
-	
-
-				elif terminal[0:4] == 'scan':
-					network_scanner.scan()
-
-				elif terminal == 'ifconfig':
-					os.system('ifconfig')
-
-				elif terminal[0:6] == 'cowsay':
-					try:
-						print (cowsay(terminal[7:]))
-					except(ValueError):
-						print(cowsay("µSploit Framework"))
-				elif terminal == 'ds':
-					print(dsag.darkside)
-
-						#use module
-				elif terminal[0:3] == 'use':
-					try:
-						module = 1
-						funcname = globals()[terminal[4:]]
-						modulename = terminal[4:]
-						try:
-							print(bcolors.YEL + "[*] module " + funcname.modulename + " loaded" + bcolors.END)
-
-							try:
-								funcname.init()
-
-							except(AttributeError):
-								pass
-							
-							try:
-								print('[*] '+funcname.message+bcolors.END)
-
-							except(AttributeError):
-								pass
-
-							try:
-								if funcname.outdated == 1:
-									print(bcolors.WARNING+"[!] this module is outdated and might not be working"+bcolors.END)
-
-							except (AttributeError):
-								pass
-							try:
-								if funcname.needroot == 1:
-									if not os.geteuid() == 0:
-										print(bcolors.WARNING+'[!] this module needs root permissions!\n[!] please login as root!'+bcolors.END)
-							except(AttributeError):
-								pass
-						except Exception as error:
-							print(bcolors.WARNING+"error: module is corrupted\n")
-							traceback.print_exc(file=sys.stdout)
-							print(bcolors.END)
-							module = 0
-
-						main()
-					except(KeyError):
-						print(bcolors.WARNING + "module not found" + bcolors.END)
-						module = 0
-						main()
-				elif not terminal:
-					pass
-				else:
-					print(bcolors.WARNING + "unknown command" + bcolors.END)
-			except (KeyboardInterrupt, SystemExit):
-				sys.exit( bcolors.OKGREEN+"\n[*] Thank you for using "+ '\xb5'+"Sploit Framework =)"+ bcolors.END)
-
-			#fatal error
-			except Exception as error:
-				print(bcolors.WARNING+bcolors.BOLD+bcolors.UNDERLINE+"\nFATAL ERROR:\n"+bcolors.END+bcolors.WARNING)
-				traceback.print_exc(file=sys.stdout)
-				print(bcolors.END)
-				print('Something went wrong.')
-				forcetokr = input('Do you want try to keep running '+'\xb5'+'Sploit Framework? ')
-				if forcetokr == 'yes':
-					main()
-				exit(1)
-
-	if __name__=='__main__':
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], 's:t:')
 			for opt, arg in opts:
-
 				if opt in ('-t'):
 					if arg == 'challenge':
 						usftest.challenge()
 					else:
-						print(bcolors.WARNING+'[!] invalid arguments'+bcolors.END)
+						print(colors.red+'invalid arguments'+colors.end)
 
 				if opt in ('-s'):
 					try:
 						scriptfile = open('core/scripts/'+arg+'.usf', 'r')
 						reader = csv.reader(scriptfile)
-						scoml = [row for row in reader]
+						scf = [row for row in reader]
 						scripting = 1
-						scriptline = 0
+						print(colors.green+"entering scripting mode..."+colors.end)
 					except FileNotFoundError:
-						print(bcolors.WARNING+'[!] script not found'+bcolors.END)
+						print(colors.red+'script not found'+colors.end)
 		except getopt.GetoptError:
-			print(bcolors.WARNING+'[!] invalid arguments'+bcolors.END)
-		main()
+			print(colors.red+'invalid arguments'+colors.end)
+		main(scripting, scf)
 
-#fatal error
-except Exception as error:
-	print(bcolors.WARNING+bcolors.BOLD+bcolors.UNDERLINE+"\nFATAL ERROR:\n"+bcolors.END+bcolors.WARNING)
-	traceback.print_exc(file=sys.stdout)
-	print(bcolors.END)
-	print('Something went wrong.')
-	forcetokr = input('Do you want try to keep running '+'\xb5'+'Sploit Framework? ')
-	if forcetokr == 'yes':
-		main()
-	exit(1)
+# Exceptions
+
+except KeyboardInterrupt:
+	print()
+	sys.exit(0)
+
+except SystemExit:
+	print(colors.green+"Thank you for using µSploit Framework!"+colors.end)
+
+except:
+	fatalerror()
