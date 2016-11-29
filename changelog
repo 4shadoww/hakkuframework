@@ -35,3 +35,14 @@ VERSION 1.3-alpha:
 + updated check module command
 + updated dir_scanner
 + minor changes µsploit
+
+
+VERSION 2.0-alpha:
++ rewritten
++ rewritten test
++ added new feature: you can now force to keep µSploit running when facing fatal error
++ changed bcolors module name to colors
++ fixed minor bugs
+- removed messages module
+- removed install requirements command
+- removed debug command
