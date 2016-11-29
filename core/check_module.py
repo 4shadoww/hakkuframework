@@ -1,47 +1,48 @@
-from core import bcolors
+#		 Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+
+from core import colors
 import sys
 from glob import glob
-from core.messages import *
 
 def check():
-	global funcname
+	global modadd
 
-	print(bcolors.YEL+'\nchecking',funcname.modulename+bcolors.END)
+	print(colors.yellow+'\nchecking',modadd.name+colors.end)
 
-	funcname.version
-	if funcname.desc == 'modules_description':
-		print(bcolors.WARNING+'\ndesc variable has default value'+bcolors.END)
+	modadd.version
+	if modadd.desc == 'modules_description':
+		print(colors.red+'\ndesc variable has default value'+colors.end)
 		testfailed()
-	if funcname.github == 'mygithub':
-			print(bcolors.WARNING+'\ngithub variable has default value'+bcolors.END)
+	if modadd.github == 'mygithub':
+			print(colors.red+'\ngithub variable has default value'+colors.end)
 			testfailed()
-	if funcname.createdby == 'creators_name':
-		print(bcolors.WARNING+'\ncreatedby variable has default value'+bcolors.END)
+	if modadd.createdby == 'creators_name':
+		print(colors.red+'\ncreatedby variable has default value'+colors.end)
 		testfailed()
-	if funcname.email == 'creators@email.com':
-		print(bcolors.WARNING+'\nemail variable has default value'+bcolors.END)
+	if modadd.email == 'creators@email.com':
+		print(colors.red+'\nemail variable has default value'+colors.end)
 		testfailed()
 
-	for item in funcname.variables.items():
+	for item in modadd.variables.items():
 		if item[0] == 'option1' or item[0] == 'option2' or item[1] == 'none1' or item[1] == 'none2':
-			print(bcolors.WARNING+'\nvariables has default value')
+			print(colors.red+'\nvariables has default value')
 			testfailed()
 
-	for desc in funcname.vdesc:
+	for desc in modadd.vdesc:
 		if desc == 'description1' or desc == 'description2':
-			print(bcolors.WARNING+'\ndesc list has default value'+bcolors.END)
+			print(colors.red+'\ndesc list has default value'+colors.end)
 			testfailed()
-	if len(funcname.variables) != len(funcname.vdesc):
-		print(bcolors.WARNING+'\nvdesc has not same amount of items than variables')
+	if len(modadd.variables) != len(modadd.vdesc):
+		print(colors.red+'\nvdesc has not same amount of items than variables')
 		testfailed()
 
-	funcname.changelog
-	funcname.run
+	modadd.changelog
+	modadd.run
 
-	print(bcolors.OKGREEN+'\n[*] test passed'+bcolors.END)
+	print(colors.green+'\ntest passed'+colors.end)
 
 	try:
-		funcname.customcommands
+		modadd.customcommands
 		check_customcommands()
 	except AttributeError:
 		pass
