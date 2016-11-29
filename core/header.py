@@ -1,6 +1,6 @@
 from core import info
-from core import bcolors
-from core.check_modules import check
+from core import colors
+from core.moduleop import count
 
 sploit = r"""
          _____       _       _ _
@@ -14,12 +14,12 @@ sploit = r"""
 """
 
 def print_info():
-	check()
+	count()
 
-	ston = bcolors.OKBLUE + "[" + bcolors.END
-	print("\t\t--=" + ston + bcolors.OKGREEN + '\xb5' +"Sploit Framework" + bcolors.END)
-	print("\t+---**---==" + ston + "Version : " + bcolors.WARNING + info.version + bcolors.END)
-	print("\t+---**---==" + ston + "Codename : " + bcolors.WARNING + info.codename + bcolors.END)
-	print("\t+---**---==" + ston + "Available Modules : " + bcolors.OKGREEN  + check.mod + bcolors.END)
-	print("\t\t--=" + ston + "Update Date : [" + bcolors.WARNING + info.update_date + bcolors.END + "]")
+	ston = colors.blue + "[" + colors.end
+	print("\t\t--=" + ston + colors.green + '\xb5' +"Sploit Framework" + colors.end)
+	print("\t+---**---==" + ston + "Version : " + colors.red + info.version + colors.end)
+	print("\t+---**---==" + ston + "Codename : " + colors.red + info.codename + colors.end)
+	print("\t+---**---==" + ston + "Available Modules : " + colors.green  + count.mod + colors.end)
+	print("\t\t--=" + ston + "Update Date : [" + colors.red + info.update_date + colors.end + "]")
 	print("\n")
