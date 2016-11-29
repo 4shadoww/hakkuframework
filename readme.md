@@ -11,7 +11,7 @@
 
 ####What will i need to run µSploit framework?
 
-µSploit framework is written in python 3, and developed on mainly on Arch Linux.
+µSploit framework is written in python 3, and developed mainly on Arch Linux.
 So you will need Linux based operating system, python 3, and the dependencies.
 
 ####How i can get started?
