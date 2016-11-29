@@ -1,4 +1,4 @@
-from core import bcolors
+from core import colors
 import traceback, sys, os
 from modules import *
 import glob
@@ -6,108 +6,95 @@ import py_compile
 
 
 def check_customcommands():
-    global funcname
-    try:
-        funcname.mhelp
-    except AttributeError:
-        testfailed()
+	global modadd
+	try:
+		modadd.mhelp
+	except AttributeError:
+		testfailed()
 
 def challenge():
-    try:
-        global funcname
-        modules = glob.glob("modules/*.py")
-        core = glob.glob("core/*.py")
-        libs1 = glob.glob("core/libs/*.p")
-        libs2 = glob.glob("core/libs/*/*.py")
+	try:
+		global modadd
+		modules = glob.glob("modules/*.py")
+		core = glob.glob("core/*.py")
+		libs1 = glob.glob("core/libs/*.p")
+		libs2 = glob.glob("core/libs/*/*.py")
 
-        print(bcolors.OKGREEN+"\n[*] starting test"+bcolors.END)
-        print(bcolors.OKGREEN+"\n[*] testing modules\n"+bcolors.END)
-        #testing modules
-        for module in modules:
-            module = module.replace('modules/', '').replace('.py', '')
-            if module != '__init__':
-                funcname = globals()[module]
-                print(bcolors.YEL+'checking',funcname.modulename+bcolors.END)
-                if funcname.modulename != module:
-                    print(bcolors.WARNING+"\nmodules name doesn't match")
-                    testfailed()
-                funcname.version
-                if funcname.desc == 'modules_description':
-                    print(bcolors.WARNING+'\ndesc variable has default value'+bcolors.END)
-                    testfailed()
-                if funcname.github == 'mygithub':
-                     print(bcolors.WARNING+'\ngithub variable has default value'+bcolors.END)
-                     testfailed()
-                if funcname.createdby == 'creators_name':
-                    print(bcolors.WARNING+'\ncreatedby variable has default value'+bcolors.END)
-                    testfailed()
-                if funcname.email == 'creators@email.com':
-                    print(bcolors.WARNING+'\nemail variable has default value'+bcolors.END)
-                    testfailed()
+		print(colors.green+"\nstarting challenge"+colors.green)
+		print(colors.green+"\ntesting modules\n"+colors.green)
 
-                for item in funcname.variables.items():
-                    if item[0] == 'option1' or item[0] == 'option2' or item[1] == 'none1' or item[1] == 'none2':
-                        print(bcolors.WARNING+'\nvariables has default value')
-                        testfailed()
+		# Testing modules
+		for module in modules:
+			module = module.replace('modules/', '').replace('.py', '')
+			if module != '__init__':
+				modadd = globals()[module]
+				print(colors.yellow+'checking',modadd.name+colors.green)
+				if modadd.name != module:
+					print(colors.red+"\nmodules name doesn't match")
+				modadd.version
+				if modadd.desc == 'modules_description':
+					print(colors.red+'\ndesc variable has default value'+colors.green)
+					testfailed()
+				if modadd.github == 'mygithub':
+					 print(colors.red+'\ngithub variable has default value'+colors.green)
+					 testfailed()
+				if modadd.createdby == 'creators_name':
+					print(colors.red+'\ncreatedby variable has default value'+colors.green)
+					testfailed()
+				if modadd.email == 'creators@email.com':
+					print(colors.red+'\nemail variable has default value'+colors.green)
+					testfailed()
 
-                for desc in funcname.vdesc:
-                    if desc == 'description1' or desc == 'description2':
-                        print(bcolors.WARNING+'\ndesc list has default value'+bcolors.END)
-                        testfailed()
-                if len(funcname.variables) != len(funcname.vdesc):
-                    print(bcolors.WARNING+'\nvdesc has not same amount of items than variables')
-                    testfailed()
+				for item in modadd.variables.items():
+					if item[0] == 'option1' or item[0] == 'option2' or item[1] == 'none1' or item[1] == 'none2':
+						print(colors.red+'\nvariables has default value')
+						testfailed()
 
-                funcname.changelog
-                funcname.run
-                try:
-                    funcname.customcommands
-                    check_customcommands()
-                except AttributeError:
-                    pass
-        #testing core
-        print(bcolors.OKGREEN+'\n[*] testing core\n'+bcolors.END)
+				for desc in modadd.vdesc:
+					if desc == 'description1' or desc == 'description2':
+						print(colors.red+'\ndesc list has default value'+colors.green)
+						testfailed()
+				if len(modadd.variables) != len(modadd.vdesc):
+					print(colors.red+'\nvdesc has not same amount of items than variables')
+					testfailed()
 
-        for item in core:
-            print(bcolors.YEL+'compiling',item+bcolors.END)
-            py_compile.compile(item)
-        
-        #testing libs
-        print(bcolors.OKGREEN+'\n[*] testing libs\n'+bcolors.END)
+				modadd.changelog
+				modadd.run
+				try:
+					modadd.customcommands
+					check_customcommands()
+				except AttributeError:
+					pass
+		# Testing core
+		print(colors.green+'\ntesting core...\n'+colors.green)
 
-        for lib in libs1:
-            print(bcolors.YEL+'compiling',lib+bcolors.END)
-            py_compile.compile(lib)
-        
-        for lib in libs2:
-            print(bcolors.YEL+'compiling',lib+bcolors.END)
-            py_compile.compile(lib)
+		for item in core:
+			print(colors.yellow+'compiling',item+colors.green)
+			py_compile.compile(item)
+		
+		# Testing libs
+		print(colors.green+'\ntesting libs...\n'+colors.green)
 
-        #testing µsploit
-        print(bcolors.OKGREEN+'\n[*] testing '+'\xb5'+'Sploit'+bcolors.END)
+		for lib in libs1:
+			print(colors.yellow+'compiling',lib+colors.green)
+			py_compile.compile(lib)
+		
+		for lib in libs2:
+			print(colors.yellow+'compiling',lib+colors.green)
+			py_compile.compile(lib)
 
-        from __main__ import module
-        from __main__ import terminal
-        from __main__ import modulename
-        from __main__ import funcname
-        from __main__ import scoml
-        from __main__ import scripting
-        from __main__ import scriptline
+		print(colors.green+"test passed!"+colors.end)
 
+		sys.exit(0)
 
+	except SystemExit as e:
+		sys.exit(e)
 
-        print(bcolors.OKGREEN+"\n[*] test passed"+bcolors.END)
-
-        sys.exit(0)
-
-    except SystemExit as e:
-        sys.exit(e)
-
-    except:
-       testfailed()
+	except:
+		testfailed()
 
 def testfailed():
-    print(bcolors.WARNING+"\n[!] test failed\n")
-    traceback.print_exc()
-    print(bcolors.END)
-    sys.exit(1)
+	print(colors.red+"\ntest not passed!\n")
+	traceback.print_exc()
+	print(colors.green)
+	sys.exit(1)
