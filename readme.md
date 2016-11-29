@@ -3,15 +3,16 @@
 
 ####What is µSploit Framework?
 
-* µSploit framework is very basic exploit/penetration test tool framework.
-* µSploit framework is aimed to be easy to use.
-* Has been inspired by websploit and metasploit.
+* µSploit framework is collection of simple penetration testing tools
+* Tools will be used with simple cli
+* µSploit framework is aimed to be easy to use
+* Has been inspired by websploit and metasploit
 
 
 ####What will i need to run µSploit framework?
 
-µSploit framework is written in python 3, and developed on ubuntu.
-So you will need GNU/Linux based operating system, python 3, and the dependencies.
+µSploit framework is written in python 3, and developed on mainly on Arch Linux.
+So you will need Linux based operating system, python 3, and the dependencies.
 
 ####How i can get started?
 
@@ -23,17 +24,14 @@ Official wiki: https://github.com/4shadoww/usploit/wiki
 ####OS support:
 
 * Linux       supported, and developed on/for linux
-* OS X        isn't supported , because i (4shadoww) don't own mac
-* Windows     i think that windows will never get support from me (4shadoww), because mikkisofta sucks
+* OS X        support not planned
+* Windows     support not planned
 
 ####Basic features:
 
-* Run exploits
-* Simple UI
-* Includes scapy
-* Easy to use
-* Easy to write your own exploit (module)
-* Scripting
+* Simple CLI
+* Easy to write your own tool
+* Simple "scripting feature"
 
 available modules: 18
 
