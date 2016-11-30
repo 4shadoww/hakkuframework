@@ -132,6 +132,21 @@ def use(args):
 			modadd = globals()[args[0]]
 			mm.moduleLoaded = 1
 			mm.setName(modadd.name)
+			try:
+				if modadd.outdated == 1:
+					print(colors.red+"this module is outdated and might not be working"+colors.end)
+			except (AttributeError):
+				pass
+			try:
+				if modadd.needroot == 1:
+					if not os.geteuid() == 0:
+						print(colors.red+"this module requires root permissions for full functionality!"+colors.end)
+			except(AttributeError):
+				pass
+			try:
+				modadd.init()
+			except(AttributeError):
+				pass
 		except KeyError:
 			print(colors.red + "module not found" + colors.end)
 		except IndexError:

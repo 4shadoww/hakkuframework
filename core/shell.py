@@ -28,7 +28,6 @@ def run(scripting, scf):
 			if scripting == 1:
 				if scriptline == len(scf):
 					sys.exit(0)
-
 				
 				command = scf[scriptline][0].split()
 				scriptline += 1
