@@ -59,6 +59,8 @@ def run():
 		print(colors.green+"[-------------------------]"+colors.end)
 	except(dns.exception.Timeout):
 		print(colors.red+"[-] Error : Host is Down !"+colors.end)
+	except dns.resolver.NoAnswer:
+			print(colors.red+"[?] The DNS response does not contain an answer to the question"+colors.end)
 	for i in sub:
 		host = i+'.'+variables['target']
 		try:
@@ -70,3 +72,6 @@ def run():
 		except(dns.exception.Timeout):
 			if variables['pos'] != 'true':
 				print(colors.red+"[-] %s : N/A"%host+colors.end)
+		except dns.resolver.NoAnswer:
+			if variables['pos'] != 'true':
+				print(colors.red+"[?] The DNS response does not contain an answer to the question"+colors.end)
