@@ -13,7 +13,7 @@ import dns
 #modules name
 name = "cloudflare_resolver"
 #version
-version = "2.2"
+version = "2.2.1"
 # Description
 desc = "tries to resolve ip from subdomains"
 #created by
@@ -37,7 +37,7 @@ vdesc = [
 ]
 
 #simple changelog
-changelog = "Version 1.0:\nrelease\n\nVersion 2.0:\n+ fixed timeout bug\n+ module is now using dnspython library\n\nVersion 2.1:\n+ added more colors\n\nVersion 2.2:\n+ added ? when resolved is same than default ip\n+ added timeout variable"
+changelog = "Version 1.0:\nrelease\n\nVersion 2.0:\n+ fixed timeout bug\n+ module is now using dnspython library\n\nVersion 2.1:\n+ added more colors\n\nVersion 2.2:\n+ added ? when resolved is same than default ip\n+ added timeout variable\n\nVersion 2.2.1:\n+ added exception"
 
 # Run function
 def run():

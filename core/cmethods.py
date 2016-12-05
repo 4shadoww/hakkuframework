@@ -96,7 +96,12 @@ def help(args):
 			pass
 
 def version(args):
-	print("µSploit Framework " + info.version)
+	global modadd
+
+	if mm.moduleLoaded == 1:
+		print(modadd.name+" "+modadd.version)
+	else:
+		print("µSploit Framework " + info.version)
 
 def ifconfig(args):
 	os.system("ifconfig"+" "+' '.join(args))

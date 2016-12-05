@@ -33,6 +33,5 @@ vdesc = [
 #simple changelog
 changelog = "Version 1.0:\nrelease"
 
-
 def run():
 	print(variables['value'])
