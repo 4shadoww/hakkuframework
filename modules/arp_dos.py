@@ -1,5 +1,4 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-import sys
 from core import colors
 import subprocess
 from time import sleep

@@ -2,7 +2,6 @@
 
 from optparse import OptionParser
 import os
-import sys
 import signal
 from time import sleep
 import logging

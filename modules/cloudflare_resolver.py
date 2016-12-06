@@ -1,7 +1,5 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-import sys
-import os
 from core import colors
 from collections import OrderedDict
 from dns import resolver

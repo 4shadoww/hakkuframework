@@ -1,8 +1,6 @@
 #		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-import sys
 from core import colors
 from collections import OrderedDict
-import os
 import subprocess
 from scapy.all import *
 from time import sleep

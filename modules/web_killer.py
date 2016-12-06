@@ -3,7 +3,6 @@
 import time
 import os
 import subprocess
-import sys
 from core import colors
 from collections import OrderedDict
 

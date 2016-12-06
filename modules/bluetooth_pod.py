@@ -1,6 +1,5 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-import sys
 import os
 import subprocess
 import time
