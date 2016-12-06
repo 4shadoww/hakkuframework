@@ -249,7 +249,7 @@ def new(args):
 					template = os.path.join('core', 'module_template')
 					f = open(template, 'r')
 					template_contents = f.readlines()
-					template_contents[7] = 'name = "'+args[1]+'"\n'
+					template_contents[6] = 'name = "'+args[1]+'"\n'
 					mfile.writelines(template_contents)
 					mfile.close()
 					print(colors.green+"module "+ args[1] +".py" +" created to modules folder"+colors.end)
