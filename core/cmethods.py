@@ -24,6 +24,7 @@ from core import check_module
 import core.cowsay
 from core import dsag
 import core.matrix
+import core.touchingsky
 
 # Import modules
 from modules import *
@@ -311,3 +312,6 @@ def make(args):
 			raise UnknownCommand("unkown command")
 	except IndexError:
 		raise UnknownCommand("unkown command")
+
+def touchingsky(args):
+	core.touchingsky.main()
