@@ -6,7 +6,7 @@ import sys
 # Import core modules
 from core.module_manager import ModuleManager
 from core import colors
-from core import commandhandler
+from core import command_handler
 
 shellface = "usf"
 mm = ModuleManager
@@ -15,7 +15,7 @@ def run():
 	global shellface
 	global mm
 
-	ch = commandhandler.Commandhandler(mm)
+	ch = command_handler.Commandhandler(mm)
 
 	while True:
 		try:
