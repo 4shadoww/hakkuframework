@@ -51,6 +51,7 @@ try:
 	from core import colors
 	from core import header
 	from core import usftest
+	from core import scriptio
 
 	print("loading modules...")
 
@@ -86,7 +87,11 @@ def fatalerror():
 try:
 	def main(scripting, scf):
 		try:
-			shell.run(scripting, scf)
+			if scripting == 1:
+				scriptio.run(scf)
+				
+			else:
+				shell.run()
 
 		except SystemExit:
 			sys.exit(0)
