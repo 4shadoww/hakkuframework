@@ -1,3 +1,5 @@
+#		 Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+
 from core.exceptions import UnknownCommand
 from core import cmethods
 from core.module_manager import ModuleManager
