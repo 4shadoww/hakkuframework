@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+import shutil
+import distutils
+import getopt
+import sys
+import os
+
+def print_help():
+	print("usage: -i <install> -u <uninstall> -h <help>")
+
+
+def install():
+	print("installing µSploit Framework")
+
+	print("creating dictionary /usr/share/usploitframework")
+
+	if os.path.exists("/usr/share/usploitframework/"):
+		print("removing exist installion...")
+		shutil.rmtree("/usr/share/usploitframework/")
+
+	try:
+
+		os.mkdir("/usr/share/usploitframework")
+
+	except PermissionError:
+		print("permission error: permission denied")
+		return
+
+	print("copying files...")
+	shutil.copyfile("usploit", "/usr/share/usploitframework/usploit")
+
+	shutil.copyfile("license", "/usr/share/usploitframework/license")
+	shutil.copyfile("changelog", "/usr/share/usploitframework/changelog")
+	shutil.copyfile("readme", "/usr/share/usploitframework/readme")
+
+	shutil.copytree("core", "/usr/share/usploitframework/core/")
+	shutil.copytree("modules", "/usr/share/usploitframework/modules/")
+
+	print("writing bash script...")
+	f = open("/usr/bin/usploit", "w")
+	f.write("#!/bin/sh\n/usr/share/usploitframework/usploit")
+	f.close()
+
+	print("giving executeable permissions...")
+	os.system("chmod +x /usr/share/usploitframework/usploit")
+	os.system("chmod +x /usr/bin/usploit")
+
+def uninstall():
+	print("uninstalling µSploit Framework")
+
+	print("removing µSploit Framework...")
+	try:
+		shutil.rmtree("/usr/share/usploitframework/")
+	except FileNotFoundError:
+		pass
+
+	except PermissionError:
+		print("permission error: permission denied")
+		return
+
+	print("removing bash script...")
+	try:
+		os.remove("/usr/bin/usploit")
+	except FileNotFoundError:
+		pass
+
+	print("µSploit Framework uninstalled successfully")
+
+if __name__ == "__main__":
+	if not os.geteuid() == 0:
+		print("warning: no root access")
+
+	if len(sys.argv[1:]) > 1:
+		print("invalid argument")
+		print_help()
+
+	elif len(sys.argv[1:]) == 1:
+		if sys.argv[1] == '-i':
+			install()
+		elif sys.argv[1] == '-u':
+			uninstall()
+		elif sys.argv[1] == '-h':
+			print_help()
+		else:
+			print("invalid argument")
+			print_help()
