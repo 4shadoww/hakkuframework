@@ -4,12 +4,13 @@ from core import colors
 import traceback
 import sys
 from core.prettytable import PrettyTable
+from core import getpath
 
 def count():
 	isfile = os.path.isfile
 	join = os.path.join
 
-	directory = 'modules'
+	directory = getpath.modules()
 	global module_count
 	module_count = sum(1 for item in os.listdir(directory) if isfile(join(directory, item)))
 	module_count = module_count - 2
