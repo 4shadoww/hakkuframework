@@ -3,12 +3,13 @@ import traceback, sys, os
 from modules import *
 import glob
 import py_compile
+from core import getpath
 
 def check_modules():
-	modules = glob.glob("modules/*.py")
+	modules = glob.glob(getpath.modules()+"*.py")
 
 	for module in modules:
-		module = module.replace('modules/', '').replace('.py', '')
+		module = module.replace(getpath.modules(), '').replace('.py', '')
 		if module != '__init__':
 			modadd = globals()[module]
 			print(colors.yellow+'checking',modadd.name+colors.green)
@@ -56,7 +57,7 @@ def check_customcommands(modadd):
 		testfailed()
 
 def compile_core():
-	core = glob.glob("core/*.py")
+	core = glob.glob(getpath.core()+"*.py")
 
 	print(colors.green+'\ntesting core...\n'+colors.green)
 
@@ -65,8 +66,8 @@ def compile_core():
 		py_compile.compile(item)
 
 def compile_libs():
-	libs1 = glob.glob("core/libs/*.p")
-	libs2 = glob.glob("core/libs/*/*.py")
+	libs1 = glob.glob(getpath.libs()+"*.p")
+	libs2 = glob.glob(getpath.libs()+"*/*.py")
 
 	print(colors.green+'\ntesting libs...\n'+colors.green)
 
@@ -82,7 +83,7 @@ def check_cmethods():
 
 	print(colors.green+"\ntesting cmethods...\n"+colors.end)
 
-	fcm = open("core/cmethods.py", "r")
+	fcm = open(getpath.core()+"cmethods.py", "r")
 
 	linenum = 1
 
