@@ -25,6 +25,7 @@ import core.cowsay
 from core import dsag
 import core.matrix
 import core.touchingsky
+from core import getpath
 
 # Import modules
 from modules import *
@@ -93,7 +94,7 @@ class Cmethods:
 				print(helptable.generateTable(helpin.mcommands))
 			try:
 				print('\n',self.modadd.help_notes,'\n')
-			except(AttributeError):
+			except AttributeError:
 				pass
 
 	def version(self, args):
@@ -126,7 +127,7 @@ class Cmethods:
 				file_contents = f.read()
 				print (colors.yellow+file_contents+colors.end)
 				f.close()
-			except(IOError):
+			except IOError:
 				print(colors.red + "error: changelog file not found (have you removed it?)" + colors.end)
 
 	def use(self, args):
@@ -137,18 +138,18 @@ class Cmethods:
 				self.mm.setName(self.modadd.name)
 				try:
 					if self.modadd.outdated == 1:
-						print(colors.red+"this module is outdated and might not be working"+colors.end)
-				except (AttributeError):
+						print(colors.red + "this module is outdated and might not be working" + colors.end)
+				except AttributeError:
 					pass
 				try:
 					if self.modadd.needroot == 1:
 						if not os.geteuid() == 0:
 							print(colors.red+"this module requires root permissions for full functionality!"+colors.end)
-				except(AttributeError):
+				except AttributeError:
 					pass
 				try:
 					self.modadd.init()
-				except(AttributeError):
+				except AttributeError:
 					pass
 			except KeyError:
 				print(colors.red + "module not found" + colors.end)
@@ -191,9 +192,9 @@ class Cmethods:
 				imp.reload(sys.modules[mod])
 				sys.modules[mod]
 				print (colors.green+"module "+ args[0] +" reloaded"+colors.end)
-			except(IndexError):
+			except IndexError:
 				print (colors.red+"please enter module's name"+colors.end)
-			except(KeyError):
+			except KeyError:
 				print (colors.red+"module not found"+colors.end)
 		else:
 			try:
@@ -201,12 +202,12 @@ class Cmethods:
 				imp.reload(sys.modules[mod])
 				sys.modules[mod]
 				print (colors.green+"module "+ args[0] +" reloaded"+colors.end)
-			except(IndexError):
+			except IndexError:
 				mod = "modules."+self.mm.moduleName
 				imp.reload(sys.modules[mod])
 				sys.modules[mod]
 				print (colors.green+"module "+ self.mm.moduleName +" reloaded"+colors.end)
-			except(KeyError):
+			except KeyError:
 				print (colors.red+"module not found"+colors.end)
 
 	def run(self, args):
@@ -227,16 +228,16 @@ class Cmethods:
 			self.modadd.variables[args[0]] = args[1]
 			print(colors.green+args[0] +" => "+ args[1] + colors.end)
 
-		except(NameError, KeyError):
-			print(colors.red+"option not found"+colors.end)
-		except(IndexError):
-			print(colors.red+"please enter variable's value"+colors.end)
+		except NameError, KeyError:
+			print(colors.red + "option not found" + colors.end)
+		except IndexError:
+			print(colors.red + "please enter variable's value" + colors.end)
 
 	def new(self, args):
 		try:
 			if args[0] == "module":
 				try:
-					completeName = os.path.join('modules', args[1]+".py")
+					completeName = os.path.join(getpath.modules(), args[1]+".py")
 					if os.path.exists(completeName):
 						print(colors.red+"module already exists"+colors.end)
 
@@ -250,11 +251,16 @@ class Cmethods:
 						mfile.close()
 						print(colors.green+"module "+ args[1] +".py" +" created to modules folder"+colors.end)
 						print(colors.green+"done"+colors.end)
-				except(IOError):
-					print(colors.red+"something went wrong"+colors.end)
 
-				except(IndexError):
-					print(colors.red + "please enter module name"+ colors.end)
+				except IndexError:
+					print(colors.red + "please enter module's name" + colors.end)
+
+				except PermissionError:
+					print(colors.red + "error: permission denied" + colors.end)
+
+				except IOError:
+					print(colors.red + "something went wrong" + colors.end)
+
 			else:
 				raise UnknownCommand("unknown command")
 		except IndexError:
@@ -269,7 +275,7 @@ class Cmethods:
 					check_module.self.modadd = self.modadd
 					check_module.check()
 
-				except(IndexError):
+				except IndexError:
 					print(colors.red + "please enter module name"+ colors.end)
 
 				except Exception as error:
@@ -293,7 +299,7 @@ class Cmethods:
 			message = ' '.join(args)
 			print(core.cowsay.cowsay(message))
 			return
-		except(ValueError):
+		except ValueError:
 			print(core.cowsay.cowsay("µSploit Framework"))
 
 	def ds(self, args):
