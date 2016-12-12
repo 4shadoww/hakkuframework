@@ -228,7 +228,7 @@ class Cmethods:
 			self.modadd.variables[args[0]] = args[1]
 			print(colors.green+args[0] +" => "+ args[1] + colors.end)
 
-		except NameError, KeyError:
+		except (NameError, KeyError):
 			print(colors.red + "option not found" + colors.end)
 		except IndexError:
 			print(colors.red + "please enter variable's value" + colors.end)
