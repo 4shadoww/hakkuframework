@@ -38,7 +38,7 @@ def install():
 
 	print("writing bash script...")
 	f = open("/usr/bin/usploit", "w")
-	f.write("#!/bin/sh\n/usr/share/usploitframework/usploit")
+	f.write("#!/bin/sh\n/usr/share/usploitframework/usploit $@")
 	f.close()
 
 	print("giving executeable permissions...")
