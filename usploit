@@ -41,8 +41,11 @@ try:
 	if cur_version < req_version:
 		print('python3.5 or greater is recommended')
 
+	# Import getpath module for lib append
+	from core import getpath
+
 	# Append libs path
-	sys.path.append('core/libs')
+	sys.path.append(getpath.main()+'core/libs')
 
 	# Disable scapy warning
 	logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
@@ -51,12 +54,12 @@ try:
 	from core import colors
 	from core import header
 	from core import usftest
-	from core import scriptio
 
 	print("loading modules...")
 
 	# Import modules
 	from core import shell
+	from core import scriptio
 
 	print("done!")
 
@@ -89,7 +92,7 @@ try:
 		try:
 			if scripting == 1:
 				scriptio.run(scf)
-				
+
 			else:
 				shell.run()
 
