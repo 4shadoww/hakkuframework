@@ -2,52 +2,43 @@
 from core import colors
 from collections import OrderedDict
 
-# Info about module
-# Module's name (must be same as file name)
-#name = "module_name"
-# Module version
-version = "1.0"
-# Description
-desc = "modules_description"
-# Creator's github
-github = "mygithub"
-# Creator's name
-createdby = "creators_name"
-# Email
-email = "creators@email.com"
-# Alert user if root permissions not available (remove variable below if root permissions not needed)
-needroot = 1
+conf = {
+#	"name": = "module_name", # Module's name (should be same as file name)
+	"version": "1.0", # Module version
+	"shortdesc": "modules_description", # Short description
+	"github": "none", # Author's github
+	"author": "none", # Author
+	"email": "none", # Email
+	"needroot": 1, # Alert user if root permissions not available (remove variable below if root permissions not needed)
+}
 
 # List of the variables
 variables = OrderedDict((
-('option1', 'none1'),
-('option2', 'none2'),
+	("option1", "none1"),
+	("option2", "none2"),
 ))
 
 # Description for the variables
 vdesc = [
-'description1',
-'description2',
+	"description1",
+	"description2",
 ]
 
 # Help for custom commands (remove if you will not use custom commands)
 mhelp = OrderedDict((
-('example', 'help'),
+	("example", "help"),
 ))
 
 # Additional help notes
 help_notes = "help notes"
 
 # Additional notes to options
-option_notes = 'option note'
+option_notes = "option note"
 
 # Custom commands (remove this if you will not use custom commands)
 customcommands = (
-'example'
+	"example",
 )
-
-# Used with custom commands (remove this if are not using custom commands)
-termial = None
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
@@ -57,5 +48,5 @@ def run():
 	print(variables)
 
 # Just example of custom command "example" (remove this function below)
-def example():
-	print(terminal)
+def example(args):
+	print(args)
