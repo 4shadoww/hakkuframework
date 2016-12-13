@@ -12,20 +12,20 @@ def check_modules():
 		module = module.replace(getpath.modules(), '').replace('.py', '')
 		if module != '__init__':
 			modadd = globals()[module]
-			print(colors.yellow+'checking',modadd.name+colors.green)
-			if modadd.name != module:
+			print(colors.yellow+'checking',modadd.conf["name"]+colors.green)
+			if modadd.conf["name"] != module:
 				print(colors.red+"\nmodules name doesn't match")
-			modadd.version
-			if modadd.desc == 'modules_description':
+			modadd.conf["version"]
+			if modadd.conf["shortdesc"] == 'modules_description':
 				print(colors.red+'\ndesc variable has default value'+colors.green)
 				testfailed()
-			if modadd.github == 'mygithub':
+			if modadd.conf["github"] == 'mygithub':
 				 print(colors.red+'\ngithub variable has default value'+colors.green)
 				 testfailed()
-			if modadd.createdby == 'creators_name':
+			if modadd.conf["author"] == 'creators_name':
 				print(colors.red+'\ncreatedby variable has default value'+colors.green)
 				testfailed()
-			if modadd.email == 'creators@email.com':
+			if modadd.conf["email"] == 'creators@email.com':
 				print(colors.red+'\nemail variable has default value'+colors.green)
 				testfailed()
 
@@ -55,6 +55,20 @@ def check_customcommands(modadd):
 		modadd.mhelp
 	except AttributeError:
 		testfailed()
+
+	if len(modadd.mhelp) != len(modadd.customcommands):
+		print(len(modadd.mhelp), len(modadd.customcommands))
+		print(colors.red+"customcommands doesn't have same amount items as mhelp"+colors.end)
+		testfailed()
+
+	f = open(modadd.__file__, "r")
+	for line in f:
+		for c in modadd.customcommands:
+			if c in line and "def" in line and "#" not in line and "args" not in line:
+				print(colors.red+"custom command function doesn't have args argument"+colors.end)
+				testfailed()
+	f.close()
+
 
 def compile_core():
 	core = glob.glob(getpath.core()+"*.py")
@@ -89,7 +103,7 @@ def check_cmethods():
 
 	for line in fcm:
 		if "self" not in line and "def " in line or "args" not in line and "def " in line:
-			if "__init__" not in line and "mcu" not in line:
+			if "__init__" not in line and "mcu" not in line and "#" not in line:
 				print(colors.red+"error in line "+str(linenum)+":\n"+colors.end)
 				print(colors.red+line+colors.end)
 				testfailed()
