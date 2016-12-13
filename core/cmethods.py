@@ -47,14 +47,10 @@ class Cmethods:
 	def mcu(self, command):
 
 		try:
-			if command in self.modadd.customcommands:
+			if command[0] in self.modadd.customcommands:
+				call = getattr(self.modadd, command[0])
 				try:
-					self.modadd.terminal = terminal
-				except NameError:
-					pass
-				call = getattr(self.modadd, command)
-				try:
-					call()
+					call(command[1:])
 				except Exception as e:
 					print(colors.red+"error: module is corrupted\n")
 					traceback.print_exc(file=sys.stdout)
@@ -76,10 +72,6 @@ class Cmethods:
 	def clear(self, args):
 		sys.stderr.write("\x1b[2J\x1b[H")
 
-	def use(self, args):
-		self.mm.loadModule()
-		self.mm.setName(args[0])
-
 	def cl(self, args):
 		os.system(' '.join(args))
 
@@ -100,7 +92,7 @@ class Cmethods:
 	def version(self, args):
 
 		if self.mm.moduleLoaded == 1:
-			print(self.modadd.name+" "+self.modadd.version)
+			print(self.modadd.conf["name"]+" "+self.modadd.conf["version"])
 		else:
 			print("µSploit Framework " + info.version)
 
@@ -111,7 +103,19 @@ class Cmethods:
 		network_scanner.scan()
 
 	def about(self, args):
-		print(info.about)
+		if self.mm.moduleLoaded == 1:
+			try:
+				print(self.modadd.conf["name"]+" "+self.modadd.conf["version"])
+				print("created by: "+self.modadd.conf["author"])
+				print("github: "+self.modadd.conf["github"])
+				print("email: "+self.modadd.conf["email"])
+				print("description: "+self.modadd.conf["shortdesc"])
+			except:
+				print(colors.red+"error: module is corrupted\n")
+				traceback.print_exc(file=sys.stdout)
+				print(colors.end)
+		else:
+			print(info.about)
 
 	def changelog(self, args):
 		if self.mm.moduleLoaded == 1:
@@ -135,17 +139,17 @@ class Cmethods:
 			try:
 				self.modadd = globals()[args[0]]
 				self.mm.moduleLoaded = 1
-				self.mm.setName(self.modadd.name)
+				self.mm.setName(self.modadd.conf["name"])
 				try:
-					if self.modadd.outdated == 1:
+					if self.modadd.conf["outdated"] == 1:
 						print(colors.red + "this module is outdated and might not be working" + colors.end)
-				except AttributeError:
+				except KeyError:
 					pass
 				try:
-					if self.modadd.needroot == 1:
+					if self.modadd.conf["needroot"] == 1:
 						if not os.geteuid() == 0:
 							print(colors.red+"this module requires root permissions for full functionality!"+colors.end)
-				except AttributeError:
+				except KeyError:
 					pass
 				try:
 					self.modadd.init()
@@ -246,7 +250,7 @@ class Cmethods:
 						template = os.path.join('core', 'module_template')
 						f = open(template, 'r')
 						template_contents = f.readlines()
-						template_contents[6] = 'name = "'+args[1]+'"\n'
+						template_contents[5] = "	\"name\": \""+args[1]+"\", # Module's name (should be same as file name)\n"
 						mfile.writelines(template_contents)
 						mfile.close()
 						print(colors.green+"module "+ args[1] +".py" +" created to modules folder"+colors.end)
