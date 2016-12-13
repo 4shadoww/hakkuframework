@@ -5,31 +5,26 @@ from time import sleep
 import http.client
 import socket
 
-# Info about the module
-# Module's name (should be same as file's name)
-name = "apache_users"
-# Module version
-version = "1.0"
-# Description
-desc = "scan directory of apache users"
-# Creator's github
-github = "4shadoww"
-# Creator's name
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
+conf = {
+	"name": "apache_users", # Module's name (should be same as file's name)
+	"version": "1.0", # Module version
+	"shortdesc": "scan directory of apache users", # Short description
+	"github": "4shadoww", # Author's github
+	"author": "4shadoww", # Author
+	"email": "4shadoww0@gmail.com"
+}
 
 # List of the variables
 variables = OrderedDict((
-('target', 'google.com'),
+	("target", "google.com"),
 ))
 
 # Description for variables
 vdesc = [
-'target address',
+	"target address",
 ]
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():

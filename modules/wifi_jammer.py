@@ -7,41 +7,37 @@ from time import sleep
 from core import colors
 from core import getpath
 
-# Info about the module
-# Module's name (should be same as file's name)
-name = "wifi_jammer"
-# Module version
-version = "1.0"
-# Description
-desc = "wifi jammer"
-# Creator's github
-github = "4shadoww"
-# Creator's name
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
+conf = {
+	"name": "wifi_jammer",
+	"version": "1.0",
+	"shortdesc": "jam wifi",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com",
+	"needroot": 1
+}
 
 # List of the variables
 variables = OrderedDict((
-('interface', 'wlan0'),
-('bssid', 'none'),
-('essid', 'none'),
-('mon', 'mon0'),
-('channel', '11'),
+	('interface', 'wlan0'),
+	('bssid', 'none'),
+	('essid', 'none'),
+	('mon', 'mon0'),
+	('channel', '11'),
 ))
 
 vdesc = [
-'wireless interface name',
-'target BSSID address',
-'target ESSID name',
-'monitor',
-'target channel number',
+	'wireless interface name',
+	'target BSSID address',
+	'target ESSID name',
+	'monitor',
+	'target channel number',
 ]
 
 # Help for the custom commands (remove if you will not use custom commands)
 mhelp = OrderedDict((
-('scan', 'scan for target'),
-('stop', 'terminate process'),
+	('scan', 'scan for target'),
+	('stop', 'terminate process'),
 ))
 
 # Additional help notes
@@ -49,14 +45,11 @@ help_notes = colors.red+"this module will not work without root permission!\n th
 
 # Used with custom commands (remove this if are not using custom commands)
 customcommands = (
-'scan',
-'stop'
+	'scan',
+	'stop'
 )
 
-#used with custom commands (remove this if you will not use custom commands)
-termial = None
-
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\n\trelease"
 
 
@@ -73,14 +66,14 @@ def run():
 	sleep(3)
 	print(colors.green+"attack started"+colors.end)
 
-def stop():
+def stop(args):
 	subprocess.Popen("killall xterm", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 	subprocess.Popen("killall aireplay", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 	xterm_5 =  "airmon-ng"+" stop " + variables['interface']
 	os.system(xterm_5)
 	print(colors.green+"process terminated..."+colors.end)
 
-def scan():
+def scan(args):
 	xterm_1 = "airmon-ng"+" start " + variables['interface']
 	xterm_2 = "xterm -e "+"airmon-ng " + + variables['mon'] + " &"
 	subprocess.Popen(xterm_1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()

@@ -6,50 +6,43 @@ import time
 from core import colors
 from collections import OrderedDict
 
-# Info about the module
-#modules name
-name = "bluetooth_pod"
-#version
-version = "1.0"
-# Description
-desc = "bluetooth ping of death"
-# Creator's github
-github = "4shadoww"
-#created by
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
+conf = {
+	"name": "bluetooth_pod",
+	"version": "1.0",
+	"shortdesc": "bluetooth ping of death",
+	"github": "4shadoww",
+	"author": "4shadoww",
+	"email": "4shadoww0@gmail.com",
+	"needroot": 1
 
-needroot = 1
+}
 
-#list
+
+# List of variables
 variables = OrderedDict((
-('interface', 'hci0'),
-('bdaddr', 'none'),
-('size', '600'),
+	('interface', 'hci0'),
+	('bdaddr', 'none'),
+	('size', '600'),
 ))
 
 # Description for variables
 vdesc = [
-'interface',
-'target bluetooth address',
-'size of packets (default 600)',
+	'interface',
+	'target bluetooth address',
+	'size of packets (default 600)',
 ]
 
-#custom commands
+# Custom commands
 customcommands = (
-'scan'
+	'scan',
 )
 
 # Help for the custom commands (remove if you will not use custom commands)
 mhelp = OrderedDict((
-('scan', 'scan for devices'),
+	('scan', 'scan for devices'),
 ))
 
-#terminal from main
-terminal = None
-
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
@@ -63,5 +56,5 @@ def run():
 		print(colors.red + "[*] Something Is Wrong!" + colors.end)
 
 
-def scan():
+def scan(args):
 	os.system("hcitool scan")

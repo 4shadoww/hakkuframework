@@ -4,38 +4,32 @@ from collections import OrderedDict
 import subprocess
 import os
 
-# Info about the module
-# Module's name (should be same as file's name)
-name = "mitm"
-# Module version
-version = "1.0"
-# Description
-desc = "man in the middle attack"
-# Creator's github
-github = "4shadoww"
-# Creator's name
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
-# Alert user if root permissions not available (remove variable below if root permissions not needed)
-needroot = 1
+conf = {
+	"name": "mitm",
+	"version": "1.0",
+	"shortdesc": "man in the middle attack",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com",
+	"needroot": 1
+}
 
 # List of the variables
 variables = OrderedDict((
-('interface', 'eth0'),
-('router', '192.168.1.1'),
-('target', '192.168.1.2'),
-('sniffer', 'dsniff'),
-('ssl', 'true'),
+	('interface', 'eth0'),
+	('router', '192.168.1.1'),
+	('target', '192.168.1.2'),
+	('sniffer', 'dsniff'),
+	('ssl', 'true'),
 ))
 
 # Description for variables
 vdesc = [
-'network interface name',
-'router ip address',
-'target ip address',
-'sniffer name (select from sniffer list)',
-'SSLStrip, for SSL hijacking(true or false)',
+	'network interface name',
+	'router ip address',
+	'target ip address',
+	'sniffer name (select from sniffer list)',
+	'SSLStrip, for SSL hijacking(true or false)',
 ]
 
 # Additional notes to options
@@ -43,7 +37,7 @@ option_notes = colors.green+' sniffers\t description'+colors.end+'\n --------\t 
 
 help_notes = colors.red+"this module will not work without root permission!\n this module will not work without xterm, dsniff, driftnet!"+colors.end
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():

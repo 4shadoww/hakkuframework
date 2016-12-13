@@ -8,53 +8,47 @@ import socket
 import random
 from string import ascii_lowercase
 
-# Info about the module
-# Module's name (should be same as file's name)
-name = "email_bomber"
-# Module version
-version = "1.0"
-# Description
-desc = "spam email to target email"
-# Creator's github
-github = "4shadoww"
-# Creator's name
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
-
+conf = {
+	"name": "email_bomber",
+	"version": "1.0",
+	"shortdesc": "spam email to target email",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com"
+}
 
 # List of the variables
 variables = OrderedDict((
-('my_username', 'username'),
-('my_password', 'yourpassword'),
-('smtp', 'smtp.server.com'),
-('smtp_port', 587),
-('from_email', 'from@email.com'),
-('to_email', 'target@email.com'),
-('subject', 'hello'),
-('message', 'im email bomber'),
-('amount', 1),
-('starttls', 0),
-('login', 0),
-('random_email', 1),
-('random_message', 1),
+	('my_username', 'username'),
+	('my_password', 'yourpassword'),
+	('smtp', 'smtp.server.com'),
+	('smtp_port', 587),
+	('from_email', 'from@email.com'),
+	('to_email', 'target@email.com'),
+	('subject', 'hello'),
+	('message', 'im email bomber'),
+	('amount', 1),
+	('starttls', 0),
+	('login', 0),
+	('random_email', 1),
+	('random_message', 1),
 ))
 
 # Description for variables
 vdesc = [
-'username for login',
-'password for login',
-'smtp server',
-'smtp server port(must be int)',
-'from email',
-'to email',
-'subject',
-'message',
-'amount of emails(0 = infinite/must be int)',
-'use starttls(0 = no/1 =yes)',
-'use login(0 = no/1 = yes)',
-'generate random email(0 = no/1 = yes)',
-'generate random message(0 = no/1 = yes)',
+	'username for login',
+	'password for login',
+	'smtp server',
+	'smtp server port(must be int)',
+	'from email',
+	'to email',
+	'subject',
+	'message',
+	'amount of emails(0 = infinite/must be int)',
+	'use starttls(0 = no/1 =yes)',
+	'use login(0 = no/1 = yes)',
+	'generate random email(0 = no/1 = yes)',
+	'generate random message(0 = no/1 = yes)',
 ]
 
 s_nouns = ["A dude", "My mom", "The king", "Some guy", "A cat with rabies", "A sloth", "Your homie", "This cool guy my gardener met yesterday", "Superman", "Super Mario", "Human", "Robot", "Boy", "Girl"]
@@ -64,7 +58,7 @@ p_verbs = ["eat", "kick", "give", "treat", "meet with", "create", "hack", "confi
 infinitives = ["to make a pie.", "for no apparent reason.", "because the sky is green.", "for a disease.", "to be able to make toast explode.", "to know more about archeology.", "because the sky is blue"]
 
 option_notes = colors.yellow+" this module will not work with gmail, yahoo, yandex\n please run your own smtp!"+colors.end
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():

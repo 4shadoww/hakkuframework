@@ -6,34 +6,29 @@ from collections import OrderedDict
 import socket
 from core.messages import *
 
-# Info about the module
-#modules name
-name = "dir_scanner"
-#version
-version = "1.1"
-# Description
-desc = "scans dirs from website"
-#created by
-createdby = "4shadoww"
-# Creator's github
-github = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
+conf = {
+	"name": "dir_scanner",
+	"version": "1.1",
+	"shortdesc": "scans dirs from website",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com"
+}
 
-#list
+# List of variables
 variables = OrderedDict((
-('target', 'google.com'),
-('timeout', '10'),
-('pos', 'false'),
+	('target', 'google.com'),
+	('timeout', '10'),
+	('pos', 'false'),
 ))
 
 vdesc = [
-'target address',
-'timeout (default: 10)',
-'print only success[true/false]',
+	'target address',
+	'timeout (default: 10)',
+	'print only success[true/false]',
 ]
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease\n\nVersion 1.1:\n+ added timeout variable"
 
 def run():

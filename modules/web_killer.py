@@ -6,34 +6,29 @@ import subprocess
 from core import colors
 from collections import OrderedDict
 
-# Info about the module
-#modules name
-name = "web_killer"
-#version
-version = "1.0"
-# Description
-desc = "TCP Attack"
-# Creator's github
-github = "4shadoww"
-#created by
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
+conf = {
+	"name": "web_killer",
+	"version": "1.0",
+	"shortdesc": "TCP Attack",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email":  "4shadoww0@gmail.com"
+}
 
 # List of the variables
 variables = OrderedDict((
-('interface', 'wlan0'),
-('target', 'google.com'),
+	('interface', 'wlan0'),
+	('target', 'google.com'),
 
 ))
 
 # Description for variables
 vdesc = [
-'network interface name',
-'target address',
+	'network interface name',
+	'target address',
 ]
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 

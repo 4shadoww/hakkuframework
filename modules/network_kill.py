@@ -10,37 +10,31 @@ from collections import OrderedDict
 from core import colors
 from core import network_scanner
 
-# Info about the module
-#modules name
-name = "network_kill"
-#version
-version = "1.0"
-# Description
-desc = "kicks out target device from network with arp calls"
-#created by
-createdby = "4shadoww"
-# Creator's github
-github = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
+conf = {
+	"name": "network_kill",
+	"version": "1.0",
+	"shortdesc": "\"kicks\" out target device from network with arp calls",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com",
+	"needroot": 1
+}
 
-needroot = 1
-
-#list
+# List of variables
 variables = OrderedDict((
-('target', '192.168.1.2'),
-('router', '192.168.1.1'),
+	('target', '192.168.1.2'),
+	('router', '192.168.1.1'),
 ))
 
 # Description for variables
 vdesc = [
-"target device's ip",
-"router's ip",
+	"target device's ip",
+	"router's ip",
 ]
 
 # Help for the custom commands (remove if you will not use custom commands)
 mhelp = OrderedDict((
-('scan', 'scan for targets'),
+	('scan', 'scan for targets'),
 ))
 
 # Additional help notes
@@ -48,7 +42,7 @@ help_notes = colors.red+"this module will not work without root permission!\n th
 
 #custom commands
 customcommands = (
-'scan'
+	'scan',
 )
 
 #simple changelog
@@ -64,5 +58,5 @@ def run():
 		send(packet, verbose=False)
 		sleep(10)
 
-def scan():
+def scan(args):
 	network_scanner.scan()

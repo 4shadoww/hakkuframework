@@ -6,35 +6,30 @@ import socket
 import subprocess
 from datetime import datetime
 
-# Info about the module
-# Module's name (should be same as file's name)
-name = "port_scanner"
-# Module version
-version = "1.0"
-# Description
-desc = "scan open ports"
-# Creator's github
-github = "4shadoww"
-# Creator's name
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
+conf = {
+	"name": "port_scanner",
+	"version": "1.0",
+	"shortdesc": "scan open ports",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com"
+}
 
 # List of the variables
 variables = OrderedDict((
-('target', 'google.com'),
-('first', 1),
-('last', 100),
+	('target', 'google.com'),
+	('first', 1),
+	('last', 100),
 ))
 
 # Description for variables
 vdesc = [
-'target address',
-'first port which will be scanned',
-'last port which will be scanned',
+	'target address',
+	'first port which will be scanned',
+	'last port which will be scanned',
 ]
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():

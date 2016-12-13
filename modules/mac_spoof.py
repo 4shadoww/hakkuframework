@@ -8,45 +8,39 @@ import random
 from core import getpath
 from core.setvar import setvar
 
-# Info about the module
-# Module's name (should be same as file's name)
-name = "mac_spoof"
-# Module version
-version = "1.0"
-# Description
-desc = "mac spoof"
-# Creator's github
-github = "4shadoww"
-# Creator's name
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
-# Alert user if root permissions not available (remove variable below if root permissions not needed)
-needroot = 1
+conf = {
+	"name": "mac_spoof",
+	"version": "1.0",
+	"shortdesc": "mac spoof",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com",
+	"needroot": 1
+}
 
 #custom commands
 customcommands = (
-'scan',
-'random_mac',
-'reset',
+	'scan',
+	'random_mac',
+	'reset',
 )
 
 # List of the variables
 variables = OrderedDict((
-('fake_mac', '02:a0:04:d3:00:11'),
-('interface', 'eth0'),
+	('fake_mac', '02:a0:04:d3:00:11'),
+	('interface', 'eth0'),
 ))
 
 # Description for variables
 vdesc = [
-'fake mac',
-'network interface',
+	'fake mac',
+	'network interface',
 ]
 
 mhelp =  OrderedDict((
-('scan', 'scan network'),
-('random_mac', 'generate random mac'),
-('reset', 'end mac spoof'),
+	('scan', 'scan network'),
+	('random_mac', 'generate random mac'),
+	('reset', 'end mac spoof'),
 ))
 
 # Additional help notes
@@ -55,7 +49,7 @@ help_notes = colors.red+"this module will not work without root permissions!"+co
 # Additional notes to options
 option_notes = colors.yellow+" you can generate fake_mac using 'random_mac' command\n use 'reset' command to end mac spoof"+colors.end
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
@@ -69,10 +63,10 @@ def run():
 	os.system(xterm3)
 	print(colors.green+"done!"+colors.end)
 
-def scan():
+def scan(args):
 	network_scanner.scan()
 
-def random_mac():
+def random_mac(args):
 	mac = "f4:ac:c1:%02x:%02x:%02x" % (
 		random.randint(0, 255),
 		random.randint(0, 255),
@@ -80,7 +74,7 @@ def random_mac():
 	)
 	setvar('fake_mac', mac)
 
-def reset():
+def reset(args):
 	command = ['ethtool', '-P', variables['interface']]
 	output = subprocess.Popen( command, stdout=subprocess.PIPE ).communicate()[0]
 	realmac = str(output)

@@ -5,34 +5,29 @@ import os
 import time
 from core import getpath
 
-# Info about the module
-# Module's name (should be same as file's name)
-name = "dns_spoof"
-# Module version
-version = "1.0"
-# Description
-desc = "dns spoof"
-# Creator's github
-github = "4shadoww"
-# Creator's name
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
-# Alert user if root permissions not available (remove variable below if root permissions not needed)
-needroot = 1
+conf = {
+	"name": "dns_spoof",
+	"version": "1.0",
+	"shortdesc": "dns spoof",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com",
+	"needroot": 1
+}
+
 
 # List of the variables
 variables = OrderedDict((
-('interface', 'eth0'),
-('target', '192.168.1.2'),
-('router', '192.168.1.1'),
+	('interface', 'eth0'),
+	('target', '192.168.1.2'),
+	('router', '192.168.1.1'),
 ))
 
 # Description for variables
 vdesc = [
-'target interface',
-'target address',
-'router address',
+	'target interface',
+	'target address',
+	'router address',
 ]
 
 # Additional help notes
@@ -42,7 +37,7 @@ help_notes = colors.red+"this module will not work without dsniff!"+colors.end
 option_notes = colors.red+'remember to edit hostslist:\n'+getpath.conf()+"hosts"+colors.end
 
 mhelp = OrderedDict((
-('stop', 'end dnsspoof'),
+	('stop', 'end dnsspoof'),
 ))
 
 customcommands = (
@@ -69,6 +64,6 @@ def run():
 	os.system(xterm3)
 	print(colors.blue+'use "stop" command to end'+colors.end)
 
-def stop():
+def stop(args):
 	os.system("killall arpspoof")
 	os.system("killall dnsspoof")

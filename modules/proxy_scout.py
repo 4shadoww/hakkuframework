@@ -8,41 +8,38 @@ from core.messages import *
 import http.client
 import re
 
-# Info about the module
-# Module's name (should be same as file's name)
-name = "proxy_scout"
-# Module version
-version = "1.0"
-# Description
-desc = "scan http proxy from ip"
-# Creator's github
-github = "4shadoww"
-# Creator's name
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
+conf = {
+	"name": "proxy_scout",
+	"version": "1.0",
+	"shortdesc": "verify http proxy",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com"
+
+
+}
 
 # List of the variables
 variables = OrderedDict((
-('target', '192.168.1.2'),
-('port', '80'),
-('timeout', '1'),
-('port_range', '1-100000'),
-('use_range', '0'),
-('scan_common', '0'),
+	('target', '192.168.1.2'),
+	('port', '80'),
+	('timeout', '1'),
+	('port_range', '1-100000'),
+	('use_range', '0'),
+	('scan_common', '0'),
 ))
 
 # Description for variables
 vdesc = [
-'target address',
-'target port',
-'timeout (default: 1)',
-'port range (default: 1-100000)',
-'scan port range(1=yes/0=no)',
-'scan commonly used ports(1=yes/0=no)',
+	'target address',
+	'target port',
+	'timeout (default: 1)',
+	'port range (default: 1-100000)',
+	'scan port range(1=yes/0=no)',
+	'scan commonly used ports(1=yes/0=no)',
 ]
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():

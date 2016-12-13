@@ -5,31 +5,26 @@ import http.client
 from time import sleep
 import socket
 
-# Info about the module
-# Module's name (should be same as file's name)
-name = "pma_scanner"
-# Module version
-version = "1.0"
-# Description
-desc = "PHPMyAdmin login page scanner"
-# Creator's github
-github = "4shadoww"
-# Creator's name
-createdby = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
+conf = {
+	"name": "pma_scanner",
+	"version": "1.0",
+	"shortdesc": "PHPMyAdmin login page scanner",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com"
+}
 
 # List of the variables
 variables = OrderedDict((
-('target', 'google.com'),
+	('target', 'google.com'),
 ))
 
 # Description for variables
 vdesc = [
-'target address',
+	'target address',
 ]
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():

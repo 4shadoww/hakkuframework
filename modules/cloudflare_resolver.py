@@ -5,36 +5,30 @@ from collections import OrderedDict
 from dns import resolver
 import dns
 
+conf = {
+	"name": "cloudflare_resolver",
+	"version": "2.2.1",
+	"shortdesc": "tries to resolve ip from subdomains",
+	"author": "4shadoww",
+	"github": "4shadoww",
+	"email": "4shadoww0@gmail.com"
+}
 
-
-# Info about the module
-#modules name
-name = "cloudflare_resolver"
-#version
-version = "2.2.1"
-# Description
-desc = "tries to resolve ip from subdomains"
-#created by
-createdby = "4shadoww"
-# Creator's github
-github = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
-
-#list
+# List of variables
 variables = OrderedDict((
-('target', 'google.com'),
-('pos', 'false'),
-('timeout', '0.5')
+	('target', 'google.com'),
+	('pos', 'false'),
+	('timeout', '0.5')
 ))
 
+# Desc
 vdesc = [
-'target address',
-'print only success[true/false]',
-'timeout',
+	'target address',
+	'print only success[true/false]',
+	'timeout',
 ]
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease\n\nVersion 2.0:\n+ fixed timeout bug\n+ module is now using dnspython library\n\nVersion 2.1:\n+ added more colors\n\nVersion 2.2:\n+ added ? when resolved is same than default ip\n+ added timeout variable\n\nVersion 2.2.1:\n+ added exception"
 
 # Run function

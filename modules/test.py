@@ -5,31 +5,28 @@ from collections import OrderedDict
 from core import getpath
 
 # Info about the module
-# Module's name (should be same as file's name)
-name = "test"
-# Module version
-version = "1.0"
-# Description
-desc = "only test"
-#created by
-createdby = "4shadoww"
-# Creator's github
-github = "4shadoww"
-# Email
-email = "4shadoww0@gmail.com"
 
-message = "hello!"
+conf = {
+	"name": "test", # Module's name (should be same as file's name)
+	"version": "1.0", # Module version
+	"shortdesc": "only test", # Short description
+	"author": "4shadoww", # Author
+	"github": "4shadoww", # Author's github
+	"email": "4shadoww0@gmail.com", # Email
 
-#list
+	"message": "hello"
+}
+
+# List of the variables
 variables = OrderedDict((
-('value', 0),
+	("value", 0),
 ))
 # Description for variables
 vdesc = [
-'description',
+	"description",
 ]
 
-#simple changelog
+# Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
