@@ -9,7 +9,8 @@ conf = {
 	"github": "none", # Author's github
 	"author": "none", # Author
 	"email": "none", # Email
-	"needroot": 1, # Alert user if root permissions not available (remove variable below if root permissions not needed)
+#	"initdate": "none" # Initial date
+	"needroot": 1 # Alert user if root permissions not available (remove variable below if root permissions not needed)
 }
 
 # List of the variables
