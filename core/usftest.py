@@ -12,47 +12,52 @@ def check_modules():
 		module = module.replace(getpath.modules(), '').replace('.py', '')
 		if module != '__init__':
 			modadd = globals()[module]
-			print(colors.yellow+'checking',modadd.conf["name"]+colors.green)
-			if modadd.conf["name"] != module:
-				print(colors.red+"\nmodules name doesn't match")
-			modadd.conf["version"]
-			if modadd.conf["shortdesc"] == 'modules_description':
-				print(colors.red+'\ndesc variable has default value'+colors.green)
-				testfailed()
-			if modadd.conf["github"] == 'mygithub':
-				 print(colors.red+'\ngithub variable has default value'+colors.green)
-				 testfailed()
-			if modadd.conf["author"] == 'creators_name':
-				print(colors.red+'\ncreatedby variable has default value'+colors.green)
-				testfailed()
-			if modadd.conf["email"] == 'creators@email.com':
-				print(colors.red+'\nemail variable has default value'+colors.green)
-				testfailed()
+			check_module(modadd)
 
-			if modadd.conf["initdate"] == "none":
-				print(colors.red+'\ninitdate variable has default value'+colors.green)
-				testfailed()
+def check_module(modadd):
+	print(colors.yellow+'checking',modadd.conf["name"]+colors.green)
+	module = modadd.__name__.replace("modules.", "")
+	if modadd.conf["name"] != module:
+		print(colors.red+"\nmodules name doesn't match")
+	modadd.conf["version"]
+	if modadd.conf["shortdesc"] == 'modules_description':
+		print(colors.red+'\ndesc variable has default value'+colors.green)
+		testfailed()
+	if modadd.conf["github"] == 'mygithub':
+		 print(colors.red+'\ngithub variable has default value'+colors.green)
+		 testfailed()
+	if modadd.conf["author"] == 'creators_name':
+		print(colors.red+'\ncreatedby variable has default value'+colors.green)
+		testfailed()
+	if modadd.conf["email"] == 'creators@email.com':
+		print(colors.red+'\nemail variable has default value'+colors.green)
+		testfailed()
 
-			for item in modadd.variables.items():
-				if item[0] == 'option1' or item[0] == 'option2' or item[1] == 'none1' or item[1] == 'none2':
-					print(colors.red+'\nvariables has default value')
-					testfailed()
+	if modadd.conf["initdate"] == "none":
+		print(colors.red+'\ninitdate variable has default value'+colors.green)
+		testfailed()
 
-			for desc in modadd.vdesc:
-				if desc == 'description1' or desc == 'description2':
-					print(colors.red+'\ndesc list has default value'+colors.green)
-					testfailed()
-			if len(modadd.variables) != len(modadd.vdesc):
-				print(colors.red+'\nvdesc has not same amount of items than variables')
-				testfailed()
+	for item in modadd.variables.items():
+		if item[0] == 'option1' or item[0] == 'option2' or item[1] == 'none1' or item[1] == 'none2':
+			print(colors.red+'\nvariables has default value')
+			testfailed()
 
-			modadd.changelog
-			modadd.run
-			try:
-				modadd.customcommands
-				check_customcommands(modadd)
-			except AttributeError:
-				pass
+	for desc in modadd.vdesc:
+		if desc == 'description1' or desc == 'description2':
+			print(colors.red+'\ndesc list has default value'+colors.green)
+			testfailed()
+	if len(modadd.variables) != len(modadd.vdesc):
+		print(colors.red+'\nvdesc has not same amount of items than variables')
+		testfailed()
+
+	modadd.changelog
+	modadd.run
+	try:
+		modadd.customcommands
+		check_customcommands(modadd)
+	except AttributeError:
+		pass
+
 
 def check_customcommands(modadd):
 	try:
