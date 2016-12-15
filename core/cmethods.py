@@ -21,12 +21,12 @@ from core.exceptions import UnknownCommand
 from core import moduleop
 from core.prettytable import PrettyTable
 from core import module_database
-from core import check_module
 import core.cowsay
 from core import dsag
 import core.matrix
 import core.touchingsky
 from core import getpath
+from core import usftest
 
 # Import modules
 from modules import *
@@ -278,14 +278,19 @@ class Cmethods:
 				try:
 					self.modadd = globals()[args[1]]
 					print(colors.green+"module found"+colors.end)
-					check_module.self.modadd = self.modadd
-					check_module.check()
+					usftest.check_module(self.modadd)
+					print(colors.green+"\ntest passed"+colors.end)
 
 				except IndexError:
 					print(colors.red + "please enter module name"+ colors.end)
 
-				except Exception as error:
-					print(colors.red + "error: module not found ("+str(error)+")"+ colors.end)
+				except KeyError:
+					print(colors.red+"error: module not found"+colors.end)
+
+				except:
+					print(colors.red + "error:\n")
+					traceback.print_exc(file=sys.stdout)
+					print(colors.end)
 			else:
 				raise UnknownCommand("unknown command")
 		except IndexError:
