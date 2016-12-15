@@ -29,6 +29,8 @@ def check_modules():
 				print(colors.red+'\nemail variable has default value'+colors.green)
 				testfailed()
 
+			modadd.conf["initdate"]
+
 			for item in modadd.variables.items():
 				if item[0] == 'option1' or item[0] == 'option2' or item[1] == 'none1' or item[1] == 'none2':
 					print(colors.red+'\nvariables has default value')
