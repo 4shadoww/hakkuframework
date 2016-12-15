@@ -91,9 +91,13 @@ class Cmethods:
 				pass
 
 	def version(self, args):
-
 		if self.mm.moduleLoaded == 1:
-			print(self.modadd.conf["name"]+" "+self.modadd.conf["version"])
+			try:
+				print(self.modadd.conf["name"]+" "+self.modadd.conf["version"])
+			except:
+				print(colors.red+"error: module is corrupted\n")
+				traceback.print_exc(file=sys.stdout)
+				print(colors.end)
 		else:
 			print("µSploit Framework " + info.version)
 
@@ -111,6 +115,7 @@ class Cmethods:
 				print("github: "+self.modadd.conf["github"])
 				print("email: "+self.modadd.conf["email"])
 				print("description: "+self.modadd.conf["shortdesc"])
+				print("initial date: "+self.modadd.conf["initdate"])
 			except:
 				print(colors.red+"error: module is corrupted\n")
 				traceback.print_exc(file=sys.stdout)
@@ -122,7 +127,7 @@ class Cmethods:
 		if self.mm.moduleLoaded == 1:
 			try:
 				print(colors.yellow+self.modadd.changelog+colors.end)
-			except Exception as error:
+			except:
 				print(colors.red+"error: module is corrupted\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
@@ -160,6 +165,10 @@ class Cmethods:
 				print(colors.red + "module not found" + colors.end)
 			except IndexError:
 				print(colors.red + "please enter module name" + colors.end)
+			except:
+				print(colors.red+"error: module is corrupted\n")
+				traceback.print_exc(file=sys.stdout)
+				print(colors.end)
 		else:
 			raise UnknownCommand("module in use")
 
@@ -177,7 +186,12 @@ class Cmethods:
 
 				print (t)
 			elif args[0] == "options" and self.mm.moduleLoaded == 1:
-				moduleop.printoptions(self.modadd)
+				try:
+					moduleop.printoptions(self.modadd)
+				except:
+					print(colors.red+"error: module is corrupted\n")
+					traceback.print_exc(file=sys.stdout)
+					print(colors.end)
 			else:
 				raise UnknownCommand("module not loaded or unknown command")
 		except IndexError:
@@ -220,7 +234,7 @@ class Cmethods:
 		if self.mm.moduleLoaded == 1:
 			try:
 				self.modadd.run()
-			except Exception as error:
+			except:
 				print(colors.red+"error: module is corrupted\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
@@ -237,6 +251,10 @@ class Cmethods:
 			print(colors.red + "option not found" + colors.end)
 		except IndexError:
 			print(colors.red + "please enter variable's value" + colors.end)
+		except:
+			print(colors.red+"error: module is corrupted\n")
+			traceback.print_exc(file=sys.stdout)
+			print(colors.end)
 
 	def new(self, args):
 		try:
