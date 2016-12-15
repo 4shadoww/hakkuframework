@@ -11,7 +11,8 @@ conf = {
 	"shortdesc": "scan directory of apache users", # Short description
 	"github": "4shadoww", # Author's github
 	"author": "4shadoww", # Author
-	"email": "4shadoww0@gmail.com"
+	"email": "4shadoww0@gmail.com",
+	"initdate": "1.3.2016"
 }
 
 # List of the variables

@@ -15,6 +15,7 @@ conf = {
 	"author": "4shadoww",
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
+	"initdate": "9.3.2016",
 	"needroot": 1
 }
 

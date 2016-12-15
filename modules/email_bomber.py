@@ -14,7 +14,8 @@ conf = {
 	"shortdesc": "spam email to target email",
 	"author": "4shadoww",
 	"github": "4shadoww",
-	"email": "4shadoww0@gmail.com"
+	"email": "4shadoww0@gmail.com",
+	"initdate": "5.4.2016"
 }
 
 # List of the variables

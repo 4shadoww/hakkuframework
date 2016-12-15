@@ -11,7 +11,8 @@ conf = {
 	"shortdesc": "tries to resolve ip from subdomains",
 	"author": "4shadoww",
 	"github": "4shadoww",
-	"email": "4shadoww0@gmail.com"
+	"email": "4shadoww0@gmail.com",
+	"initdate": "24.2.2016"
 }
 
 # List of variables

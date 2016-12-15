@@ -14,8 +14,8 @@ conf = {
 	"shortdesc": "verify http proxy",
 	"author": "4shadoww",
 	"github": "4shadoww",
-	"email": "4shadoww0@gmail.com"
-
+	"email": "4shadoww0@gmail.com",
+	"initdate": "19.5.2016"
 
 }
 
