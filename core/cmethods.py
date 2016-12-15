@@ -8,6 +8,7 @@ from collections import OrderedDict
 import imp
 import traceback
 import curses
+import time
 
 # Import core modules
 
@@ -251,6 +252,7 @@ class Cmethods:
 						f = open(template, 'r')
 						template_contents = f.readlines()
 						template_contents[5] = "	\"name\": \""+args[1]+"\", # Module's name (should be same as file name)\n"
+						template_contents[11] = "	\"initdate\": \""+(time.strftime("%d.%m.%Y"))+"\", # Initial date\n"
 						mfile.writelines(template_contents)
 						mfile.close()
 						print(colors.green+"module "+ args[1] +".py" +" created to modules folder"+colors.end)
