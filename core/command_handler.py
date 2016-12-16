@@ -26,7 +26,7 @@ class Commandhandler:
 
 		# Validate command
 
-		if command[0] in self.notcommand:
+		if len(command) != 0 and command[0] in self.notcommand:
 			print(colors.red+"unknown command"+colors.end)
 			return
 		try:
