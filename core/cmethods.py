@@ -27,6 +27,8 @@ import core.matrix
 import core.touchingsky
 from core import getpath
 from core import usftest
+from core import update
+from core import mscop
 
 # Import modules
 from modules import *
@@ -71,7 +73,10 @@ class Cmethods:
 			sys.exit()
 
 	def clear(self, args):
-		sys.stderr.write("\x1b[2J\x1b[H")
+		if len(args) != 0 and args[0] == "tmp":
+			mscop.clear_tmp()
+		else:
+			sys.stderr.write("\x1b[2J\x1b[H")
 
 	def cl(self, args):
 		os.system(' '.join(args))
@@ -345,3 +350,13 @@ class Cmethods:
 
 	def touchingsky(self, args):
 		core.touchingsky.main()
+
+	def update(self, args):
+		if update.check_for_updates() == True:
+			try:
+				update.update()
+			except PermissionError:
+				print(colors.red+"error: permission denied"+colors.end)
+
+			except Exception as error:
+				print(colors.red+"error: "+str(error)+colors.end)
