@@ -25,3 +25,7 @@ def tools():
 def conf():
 	path = os.path.dirname(os.path.abspath(__file__)) + "/conf/"
 	return path
+
+def tmp():
+	path = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__)) + "/core/tmp/"
+	return path
