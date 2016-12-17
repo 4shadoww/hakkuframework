@@ -15,19 +15,8 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	("option1", "none1"),
-	("option2", "none2"),
-))
-
-# Description for the variables
-vdesc = [
-	"description1",
-	"description2",
-]
-
-# Help for custom commands (remove if you will not use custom commands)
-mhelp = OrderedDict((
-	("example", "help"),
+	("option1", ["none1", "description1"]),
+	("option2", ["none2", "description2"]),
 ))
 
 # Additional help notes
@@ -37,9 +26,9 @@ help_notes = "help notes"
 option_notes = "option note"
 
 # Custom commands (remove this if you will not use custom commands)
-customcommands = (
-	"example",
-)
+customcommands = {
+	"example": "example command"
+}
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
