@@ -20,15 +20,14 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	("value", 0),
+	("value", [0, "description"]),
+	("value2", [0, "description"]),
+	("value3", [0, "description"]),
 ))
-# Description for variables
-vdesc = [
-	"description",
-]
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	print(variables['value'])
+	print(variables['value'][0])
+	print(variables['value'][1])

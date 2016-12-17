@@ -18,26 +18,19 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	('target', 'google.com'),
-	('first', 1),
-	('last', 100),
+	('target', ['google.com', 'target address']),
+	('first', [1, 'first port which will be scanned']),
+	('last', [100, 'last port which will be scanned']),
 ))
-
-# Description for variables
-vdesc = [
-	'target address',
-	'first port which will be scanned',
-	'last port which will be scanned',
-]
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	variables['target'] = variables['target'].replace("http://", "")
-	variables['target'] = variables['target'].replace("https://", "")
+	variables['target'][0] = variables['target'][0].replace("http://", "")
+	variables['target'][0] = variables['target'][0].replace("https://", "")
 	try:
-		targetip = socket.gethostbyname(variables['target'])
+		targetip = socket.gethostbyname(variables['target'][0])
 	except(socket.gaierror):
 		print(colors.red+'Hostname could not be resolved'+colors.end)
 		return
@@ -50,10 +43,10 @@ def run():
 
 	t1 = datetime.now()
 
-	end = variables['last'] + 1
+	end = variables['last'][0] + 1
 
 	try:
-		for port in range(int(variables['first']),int(end)):
+		for port in range(int(variables['first'][0]),int(end)):
 			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			result = sock.connect_ex((targetip, port))
 			if result == 0:

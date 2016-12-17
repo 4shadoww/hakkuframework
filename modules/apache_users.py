@@ -1,9 +1,9 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 from core import colors
-from collections import OrderedDict
 from time import sleep
 import http.client
 import socket
+from collections import OrderedDict
 
 conf = {
 	"name": "apache_users", # Module's name (should be same as file's name)
@@ -17,21 +17,16 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	("target", "google.com"),
+	("target", ["google.com", "target address"]),
 ))
-
-# Description for variables
-vdesc = [
-	"target address",
-]
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	variables['target'] = variables['target'].replace("http://", "")
-	variables['target'] = variables['target'].replace("https://", "")
-	print(colors.green + "[*] Your Target : " + variables['target'] + colors.end)
+	variables['target'][0] = variables['target'][0].replace("http://", "")
+	variables['target'][0] = variables['target'][0].replace("https://", "")
+	print(colors.green + "[*] Your Target : " + variables['target'][0] + colors.end)
 	print(colors.blue + "[*]Loading Path List ... Please Wait ..." + colors.end)
 	sleep(2)
 	paths = ['~root',
@@ -8953,7 +8948,7 @@ def run():
 	try:
 		for path in paths:
 			path = path.replace("\n", "")
-			conn = http.client.HTTPConnection(variables['target'])
+			conn = http.client.HTTPConnection(variables['target'][0])
 			conn.request("GET", path)
 			res = conn.getresponse()
 			if(res.status==200):

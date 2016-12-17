@@ -17,16 +17,9 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	('target', 'google.com'),
-	('timeout', '1'),
+	('target', ['google.com', 'target address']),
+	('timeout', ['1', 'timeout (default: 1)']),
 ))
-
-# Description for variables
-vdesc = [
-	'target address',
-	'timeout (default: 1)',
-]
-
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
@@ -34,10 +27,10 @@ changelog = "Version 1.0:\nrelease"
 def run():
 	try:
 		try:
-			socket.setdefaulttimeout(float(variables['timeout']))
+			socket.setdefaulttimeout(float(variables['timeout'][0]))
 		except ValueError:
 			printerror('invalid timeout')
-		conn = http.client.HTTPConnection(variables['target'])
+		conn = http.client.HTTPConnection(variables['target'][0])
 		conn.request("HEAD","/index.html")
 		res = conn.getresponse()
 		results = res.getheaders()

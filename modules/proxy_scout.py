@@ -21,53 +21,43 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	('target', '192.168.1.2'),
-	('port', '80'),
-	('timeout', '1'),
-	('port_range', '1-100000'),
-	('use_range', '0'),
-	('scan_common', '0'),
+	('target', ['192.168.1.2', 'target address']),
+	('port', ['80', 'target port']),
+	('timeout', ['1', 'timeout (default: 1)']),
+	('port_range', ['1-100000', 'port range (default: 1-100000)']),
+	('use_range', ['0', 'scan port range(1=yes/0=no)']),
+	('scan_common', ['0', 'scan commonly used ports(1=yes/0=no)']),
 ))
-
-# Description for variables
-vdesc = [
-	'target address',
-	'target port',
-	'timeout (default: 1)',
-	'port range (default: 1-100000)',
-	'scan port range(1=yes/0=no)',
-	'scan commonly used ports(1=yes/0=no)',
-]
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
 	commonports = ['80', '8080', '8888', '25', '3128', '8003', '9529', '8088', '8118', '4624', '9090', '82', '8090', '5555', '81', '7004', '9797', '7777', '8998', '9999', '10200']
-	variables['target'] = variables['target'].replace("http://", "").replace("https://", "")
-	if variables['target'] == 'google.com':
+	variables['target'][0] = variables['target'][0].replace("http://", "").replace("https://", "")
+	if variables['target'][0] == 'google.com':
 		printerror('not valid address')
 		return
 	try:
 		try:
-			socket.setdefaulttimeout(int(variables['timeout']))
+			socket.setdefaulttimeout(int(variables['timeout'][0]))
 		except ValueError:
 			printerror('not valid timeout')
 			return
-		if variables['use_range'] != '1' and variables['scan_common'] != '1':
-			proxy_support = urllib.request.ProxyHandler({"http":variables['target']+':'+variables['port']})
+		if variables['use_range'][0] != '1' and variables['scan_common'][0] != '1':
+			proxy_support = urllib.request.ProxyHandler({"http":variables['target'][0]+':'+variables['port'][0]})
 			opener = urllib.request.build_opener(proxy_support)
 			urllib.request.install_opener(opener)
 
 			html = urllib.request.urlopen("http://www.google.com").read()
 			printsuccess('proxy server detected')
-		if variables['scan_common'] == '1':
+		if variables['scan_common'][0] == '1':
 			for port in commonports:
 				try:
 					status = colors.yellow+'[*] scanning port '+ port+colors.end
 					sys.stdout.write("\r%s" % status)
 					sys.stdout.flush()
-					proxy_support = urllib.request.ProxyHandler({"http":variables['target']+':'+port})
+					proxy_support = urllib.request.ProxyHandler({"http":variables['target'][0]+':'+port})
 					opener = urllib.request.build_opener(proxy_support)
 					urllib.request.install_opener(opener)
 
@@ -88,14 +78,14 @@ def run():
 					print(' :'+colors.green+' proxy detected'+colors.end)
 			printsuccess('\ndone')
 
-		if variables['use_range'] == '1':
-			ports = re.sub("-", " ",  variables['port_range']).split()
+		if variables['use_range'][0] == '1':
+			ports = re.sub("-", " ",  variables['port_range'][0]).split()
 			for port in range(int(ports[0]), int(ports[1])):
 				try:
 					status = colors.yellow+'[*] scanning port '+ str(port)+colors.end
 					sys.stdout.write("\r%s" % status)
 					sys.stdout.flush()
-					proxy_support = urllib.request.ProxyHandler({"http":variables['target']+':'+str(port)})
+					proxy_support = urllib.request.ProxyHandler({"http":variables['target'][0]+':'+str(port)})
 					opener = urllib.request.build_opener(proxy_support)
 					urllib.request.install_opener(opener)
 

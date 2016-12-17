@@ -19,29 +19,17 @@ conf = {
 	"needroot": 1
 }
 
-#custom commands
-customcommands = (
-	'scan',
-	'random_mac',
-	'reset',
-)
+# Custom commands
+customcommands = {
+	'scan': 'scan network',
+	'random_mac': 'generate random mac',
+	'reset': 'end mac spoof'
+}
 
 # List of the variables
 variables = OrderedDict((
-	('fake_mac', '02:a0:04:d3:00:11'),
-	('interface', 'eth0'),
-))
-
-# Description for variables
-vdesc = [
-	'fake mac',
-	'network interface',
-]
-
-mhelp =  OrderedDict((
-	('scan', 'scan network'),
-	('random_mac', 'generate random mac'),
-	('reset', 'end mac spoof'),
+	('fake_mac', ['02:a0:04:d3:00:11', 'fake mac']),
+	('interface', ['eth0', 'network interface']),
 ))
 
 # Additional help notes
@@ -55,7 +43,7 @@ changelog = "Version 1.0:\nrelease"
 
 def run():
 	xterm1 = "service network-manager stop"
-	xterm2 = "ifconfig "+variables['interface']+" hw ether "+variables['fake_mac']
+	xterm2 = "ifconfig "+variables['interface'][0]+" hw ether "+variables['fake_mac'][0]
 	xterm3 = "service network-manager start"
 	print(colors.blue+"[*] starting mac spoof"+colors.yellow)
 	os.system(xterm1)
@@ -76,7 +64,7 @@ def random_mac(args):
 	setvar('fake_mac', mac)
 
 def reset(args):
-	command = ['ethtool', '-P', variables['interface']]
+	command = ['ethtool', '-P', variables['interface'][0]]
 	output = subprocess.Popen( command, stdout=subprocess.PIPE ).communicate()[0]
 	realmac = str(output)
 	realmac = realmac.replace("b'Permanent address: ", "")
@@ -87,7 +75,7 @@ def reset(args):
 	else:
 		print(colors.blue+"realmac: "+realmac)
 		xterm1a = "service network-manager stop"
-		xterm2a = "ifconfig "+variables['interface']+" hw ether "+realmac
+		xterm2a = "ifconfig "+variables['interface'][0]+" hw ether "+realmac
 		xterm3a = "service network-manager start"
 		print("[*] setting real mac"+colors.yellow)
 		os.system(xterm1a)

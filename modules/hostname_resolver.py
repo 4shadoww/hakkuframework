@@ -15,21 +15,15 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	('target', '192.168.1.1'),
+	('target', ['192.168.1.1', 'target ip address']),
 ))
-
-# Description for variables
-vdesc = [
-'	target ip address',
-]
-
 
 #simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
 	try:
-		querly = socket.gethostbyaddr(variables['target'])
+		querly = socket.gethostbyaddr(variables['target'][0])
 		print(colors.yellow+"resolved hostname:", querly[0]+colors.end)
 	except(socket.herror):
 		print(colors.red+"unknown host"+colors.end)

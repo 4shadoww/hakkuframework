@@ -18,23 +18,17 @@ conf = {
 
 # List of variables
 variables = OrderedDict((
-	('target', 'google.com'),
-	('timeout', '10'),
-	('pos', 'false'),
+	('target', ['google.com', 'target address']),
+	('timeout', ['10', 'timeout (default: 10)']),
+	('pos', ['false', 'print only success[true/false]']),
 ))
-
-vdesc = [
-	'target address',
-	'timeout (default: 10)',
-	'print only success[true/false]',
-]
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease\n\nVersion 1.1:\n+ added timeout variable"
 
 def run():
-	variables['target'] = variables['target'].replace("http://", "")
-	variables['target'] = variables['target'].replace("https://", "")
+	variables['target'][0] = variables['target'][0].replace("http://", "")
+	variables['target'][0] = variables['target'][0].replace("https://", "")
 	print (colors.green + "[*] Your Target : " + variables['target'] + colors.end)
 	paths = ['index',
 'images',
@@ -220585,12 +220579,12 @@ def run():
 't1551',
 'nt4stopc',]
 	try:
-		if variables['pos'] == 'true':
+		if variables['pos'][0] == 'true':
 			for path in paths:
 				path = path.replace("\n", "")
-				conn = http.client.HTTPConnection(variables['target'])
+				conn = http.client.HTTPConnection(variables['target'][0])
 				try:
-					conn.timeout = float(variables['timeout'])
+					conn.timeout = float(variables['timeout'][0])
 				except ValueError:
 					printerror('invalid timeout')
 				conn.request("GET", path)
@@ -220600,7 +220594,7 @@ def run():
 		else:
 			for path in paths:
 				path = path.replace("\n", "")
-				conn = http.client.HTTPConnection(variables['target'])
+				conn = http.client.HTTPConnection(variables['target'][0])
 				conn.timeout = 2
 				conn.request("GET", path)
 				res = conn.getresponse()
@@ -220609,6 +220603,6 @@ def run():
 				else:
 					print(colors.yellow + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
 	except (socket.gaierror):
-		print (colors.red+"target "+variables['target']+" not found"+colors.end)
+		print (colors.red+"target "+variables['target'][0]+" not found"+colors.end)
 	except (socket.timeout):
-		printerror("time out "+variables['target'])
+		printerror("time out "+variables['target'][0])
