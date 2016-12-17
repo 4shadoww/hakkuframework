@@ -25,8 +25,8 @@ def printoptions(modadd):
 		t.valing = 'm'
 		t.border = False
 
-		for key, val in zip(modadd.variables.items(),modadd.vdesc):
-				t.add_row([key[0], key[1], val])
+		for key, val in modadd.variables.items():
+				t.add_row([key, val[0], val[1]])
 
 		print (t,'\n')
 		try:
