@@ -26,6 +26,8 @@ mcommands = OrderedDict((
 ("back", "exit from module"),
 ("clear", "clear terminal"),
 ("ifconfig", "run terminal command ifconfig"),
+("scan", "scan devices from lan"),
+("about", "information about this module"),
 ("cl "+colors.end+"(command)", "run terminal command"),
 ("changelog", "show changelog"),
 ("reload", "reload this module (useful for developers)"),
