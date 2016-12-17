@@ -48,9 +48,8 @@ class Cmethods:
 	# Module custom commands
 
 	def mcu(self, command):
-
 		try:
-			if command[0] in self.modadd.customcommands:
+			if command[0] in self.modadd.customcommands.keys():
 				call = getattr(self.modadd, command[0])
 				try:
 					call(command[1:])
@@ -87,7 +86,7 @@ class Cmethods:
 			print(helptable.generateTable(helpin.commands))
 		else:
 			try: 
-				print(helptable.generatemTable(helpin.mcommands, self.modadd.mhelp))
+				print(helptable.generatemTable(helpin.mcommands, self.modadd.customcommands))
 			except AttributeError:
 				print(helptable.generateTable(helpin.mcommands))
 			try:
@@ -151,6 +150,10 @@ class Cmethods:
 				self.modadd = globals()[args[0]]
 				self.mm.moduleLoaded = 1
 				self.mm.setName(self.modadd.conf["name"])
+				try:
+					print(self.modadd.conf["message"])
+				except KeyError:
+					pass
 				try:
 					if self.modadd.conf["outdated"] == 1:
 						print(colors.red + "this module is outdated and might not be working" + colors.end)
@@ -248,8 +251,7 @@ class Cmethods:
 
 	def set(self, args):
 		try:
-			targetvariable = self.modadd.variables[args[0]]
-			self.modadd.variables[args[0]] = args[1]
+			self.modadd.variables[args[0]][0] = args[1]
 			print(colors.green+args[0] +" => "+ args[1] + colors.end)
 
 		except (NameError, KeyError):
