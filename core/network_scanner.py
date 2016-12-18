@@ -21,7 +21,7 @@ def scan():
 	interface = input(colors.purple+"interface: "+colors.end)
 	try:
 		ip = netifaces.ifaddresses(interface)[2][0]['addr']
-	except(ValueError):
+	except(ValueError, KeyError):
 		print(colors.red+"error: invalid interface"+colors.end)
 		return
 	ips = ip+"/24"
