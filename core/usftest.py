@@ -37,18 +37,7 @@ def check_module(modadd):
 		print(colors.red+'\ninitdate variable has default value'+colors.green)
 		testfailed()
 
-	for item in modadd.variables.items():
-		if item[0] == 'option1' or item[0] == 'option2' or item[1] == 'none1' or item[1] == 'none2':
-			print(colors.red+'\nvariables has default value')
-			testfailed()
-
-	for desc in modadd.vdesc:
-		if desc == 'description1' or desc == 'description2':
-			print(colors.red+'\ndesc list has default value'+colors.green)
-			testfailed()
-	if len(modadd.variables) != len(modadd.vdesc):
-		print(colors.red+'\nvdesc has not same amount of items than variables')
-		testfailed()
+	modadd.variables.items()
 
 	modadd.changelog
 	modadd.run
@@ -60,15 +49,6 @@ def check_module(modadd):
 
 
 def check_customcommands(modadd):
-	try:
-		modadd.mhelp
-	except AttributeError:
-		testfailed()
-
-	if len(modadd.mhelp) != len(modadd.customcommands):
-		print(len(modadd.mhelp), len(modadd.customcommands))
-		print(colors.red+"customcommands doesn't have same amount items as mhelp"+colors.end)
-		testfailed()
 
 	f = open(modadd.__file__, "r")
 	for line in f:
