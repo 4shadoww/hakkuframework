@@ -14,8 +14,8 @@ def core():
 	path = os.path.dirname(os.path.abspath(__file__)) + "/"
 	return path
 
-def libs():
-	path = os.path.dirname(os.path.abspath(__file__)) + "/libs/"
+def lib():
+	path = os.path.dirname(os.path.abspath(__file__)) + "/lib/"
 	return path
 
 def tools():
