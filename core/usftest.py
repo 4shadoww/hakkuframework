@@ -4,6 +4,7 @@ from modules import *
 import glob
 import py_compile
 from core import getpath
+import importlib
 
 def check_modules():
 	modules = glob.glob(getpath.modules()+"*.py")
@@ -11,7 +12,7 @@ def check_modules():
 	for module in modules:
 		module = module.replace(getpath.modules(), '').replace('.py', '')
 		if module != '__init__':
-			modadd = globals()[module]
+			modadd = importlib.import_module("modules."+module)
 			check_module(modadd)
 
 def check_module(modadd):
