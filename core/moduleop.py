@@ -13,7 +13,7 @@ def count():
 	directory = getpath.modules()
 	global module_count
 	module_count = sum(1 for item in os.listdir(directory) if isfile(join(directory, item)))
-	module_count = module_count - 2
+	module_count = module_count - 1
 	count.mod = str(module_count)
 
 def printoptions(modadd):
