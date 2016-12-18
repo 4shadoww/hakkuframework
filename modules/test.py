@@ -21,8 +21,6 @@ conf = {
 # List of the variables
 variables = OrderedDict((
 	("value", [0, "description"]),
-	("value2", [0, "description"]),
-	("value3", [0, "description"]),
 ))
 
 # Simple changelog
