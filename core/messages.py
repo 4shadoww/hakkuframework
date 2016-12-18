@@ -10,6 +10,6 @@ def printerror(message):
 def printsuccess(message):
     if "\n" in message[0:1]:
         message = message.replace(message[0:1], "")
-        print(colors.green+'\n[*]', message+colors.end)
+        print(colors.green+'\n'+message+colors.end)
     else:
-         print(colors.green+'[*]', message+colors.end)
+         print(colors.green+message+colors.end)
