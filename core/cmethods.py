@@ -16,7 +16,6 @@ import importlib
 from core import helptable
 from core import helpin
 from core import info
-#from core import network_scanner
 from core import colors
 from core.exceptions import UnknownCommand
 from core import moduleop
