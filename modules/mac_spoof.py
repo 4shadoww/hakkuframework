@@ -61,7 +61,7 @@ def random_mac(args):
 		random.randint(0, 255),
 		random.randint(0, 255),
 	)
-	setvar('fake_mac', mac)
+	setvar('fake_mac', mac, variables)
 
 def reset(args):
 	command = ['ethtool', '-P', variables['interface'][0]]
