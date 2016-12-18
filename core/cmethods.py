@@ -9,13 +9,14 @@ import imp
 import traceback
 import curses
 import time
+import importlib
 
 # Import core modules
 
 from core import helptable
 from core import helpin
 from core import info
-from core import network_scanner
+#from core import network_scanner
 from core import colors
 from core.exceptions import UnknownCommand
 from core import moduleop
@@ -26,12 +27,9 @@ from core import dsag
 import core.matrix
 import core.touchingsky
 from core import getpath
-from core import usftest
+from core.usftest import check_module
 from core import update
 from core import mscop
-
-# Import modules
-from modules import *
 
 class Cmethods:
 
@@ -109,7 +107,9 @@ class Cmethods:
 		os.system("ifconfig"+" "+' '.join(args))
 
 	def scan(self, args):
+		network_scanner = importlib.import_module("core.network_scanner")
 		network_scanner.scan()
+		del network_scanner
 
 	def about(self, args):
 		if self.mm.moduleLoaded == 1:
@@ -147,7 +147,7 @@ class Cmethods:
 	def use(self, args):
 		if self.mm.moduleLoaded == 0:
 			try:
-				self.modadd = globals()[args[0]]
+				self.modadd = importlib.import_module("modules."+args[0])
 				self.mm.moduleLoaded = 1
 				self.mm.setName(self.modadd.conf["name"])
 				try:
@@ -169,7 +169,7 @@ class Cmethods:
 					self.modadd.init()
 				except AttributeError:
 					pass
-			except KeyError:
+			except ImportError:
 				print(colors.red + "module not found" + colors.end)
 			except IndexError:
 				print(colors.red + "please enter module name" + colors.end)
@@ -301,15 +301,15 @@ class Cmethods:
 		try:
 			if args[0] == "module":
 				try:
-					self.modadd = globals()[args[1]]
+					self.modadd = importlib.import_module("modules."+args[1])
 					print(colors.green+"module found"+colors.end)
-					usftest.check_module(self.modadd)
+					check_module(self.modadd)
 					print(colors.green+"\ntest passed"+colors.end)
 
 				except IndexError:
 					print(colors.red + "please enter module name"+ colors.end)
 
-				except KeyError:
+				except ImportError:
 					print(colors.red+"error: module not found"+colors.end)
 
 				except:
@@ -362,3 +362,6 @@ class Cmethods:
 
 			except Exception as error:
 				print(colors.red+"error: "+str(error)+colors.end)
+
+	def loaded(self, args):
+		print(sys.modules.keys())
