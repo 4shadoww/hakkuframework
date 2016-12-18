@@ -96,8 +96,8 @@ try:
 			else:
 				shell.run()
 
-		except SystemExit:
-			sys.exit(0)
+		except SystemExit as e:
+			sys.exit(e)
 
 		except:
 			fatalerror()
@@ -132,10 +132,10 @@ try:
 
 except KeyboardInterrupt:
 	print()
-	sys.exit(0)
 
-except SystemExit:
+except SystemExit as e:
 	print(colors.green+"Thank you for using µSploit Framework!"+colors.end)
+	sys.exit(e)
 
 except:
 	fatalerror()
