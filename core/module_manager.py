@@ -1,7 +1,7 @@
 class ModuleManager():
 	moduleLoaded = 0
-	moduleName = ""
-	modadd = ""
+	moduleName = None
+	modadd = None
 
 	def unloadModule():
 		ModuleManager.moduleLoaded = 0
