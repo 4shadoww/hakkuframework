@@ -69,9 +69,9 @@ def compile_core():
 		print(colors.yellow+'compiling',item+colors.green)
 		py_compile.compile(item)
 
-def compile_libs():
-	libs1 = glob.glob(getpath.libs()+"*.p")
-	libs2 = glob.glob(getpath.libs()+"*/*.py")
+def compile_lib():
+	libs1 = glob.glob(getpath.lib()+"*.p")
+	libs2 = glob.glob(getpath.lib()+"*/*.py")
 
 	print(colors.green+'\ntesting libs...\n'+colors.green)
 
@@ -107,7 +107,7 @@ def challenge():
 
 		check_modules()
 		compile_core()		
-		compile_libs()
+		compile_lib()
 		check_cmethods()
 
 		print(colors.green+"test passed!"+colors.end)
