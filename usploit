@@ -45,7 +45,7 @@ try:
 	from core import getpath
 
 	# Append libs path
-	sys.path.append(getpath.libs())
+	sys.path.append(getpath.lib())
 
 	# Disable scapy warning
 	logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
