@@ -1,7 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-import __main__
 from core import colors
 
-def setvar(variable, value):
-	__main__.funcname.variables[variable] = value
+def setvar(variable, value, variables):
+	variables[variable][0] = value
 	print(colors.green+variable +" => "+ value + colors.end)
