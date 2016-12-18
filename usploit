@@ -54,14 +54,8 @@ try:
 	from core import colors
 	from core import header
 	from core import usftest
-
-	print("loading modules...")
-
-	# Import modules
 	from core import shell
 	from core import scriptio
-
-	print("done!")
 
 	# Print header
 	print(colors.cyan+header.sploit+colors.end)
@@ -81,9 +75,9 @@ def fatalerror():
 	print(colors.end)
 	forcetokr = input('Do you want to force to keep µSploit Framework running? ')
 	if forcetokr == 'yes':
-		main()
+		main(0, None)
 	elif forcetokr == 'y':
-		main()
+		main(0, None)
 
 # Start up shell
 
