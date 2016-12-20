@@ -10,47 +10,47 @@ def print_help():
 
 
 def install():
-	print("installing µSploit Framework")
+	print("installing Hakku Framework")
 
-	print("creating dictionary /usr/share/usploitframework")
+	print("creating dictionary /usr/share/hakkuframework")
 
-	if os.path.exists("/usr/share/usploitframework/"):
+	if os.path.exists("/usr/share/hakkuframework/"):
 		print("removing exist installion...")
-		shutil.rmtree("/usr/share/usploitframework/")
+		shutil.rmtree("/usr/share/hakkuframework/")
 
 	try:
 
-		os.mkdir("/usr/share/usploitframework")
+		os.mkdir("/usr/share/hakkuframework")
 
 	except PermissionError:
 		print("permission error: permission denied")
 		return
 
 	print("copying files...")
-	shutil.copyfile("usploit", "/usr/share/usploitframework/usploit")
+	shutil.copyfile("hakku", "/usr/share/hakkuframework/hakku")
 
-	shutil.copyfile("license", "/usr/share/usploitframework/license")
-	shutil.copyfile("changelog", "/usr/share/usploitframework/changelog")
-	shutil.copyfile("readme", "/usr/share/usploitframework/readme")
+	shutil.copyfile("license", "/usr/share/hakkuframework/license")
+	shutil.copyfile("changelog", "/usr/share/hakkuframework/changelog")
+	shutil.copyfile("readme", "/usr/share/hakkuframework/readme")
 
-	shutil.copytree("core", "/usr/share/usploitframework/core/")
-	shutil.copytree("modules", "/usr/share/usploitframework/modules/")
+	shutil.copytree("core", "/usr/share/hakkuframework/core/")
+	shutil.copytree("modules", "/usr/share/hakkuframework/modules/")
 
 	print("writing bash script...")
-	f = open("/usr/bin/usploit", "w")
-	f.write("#!/bin/sh\n/usr/share/usploitframework/usploit $@")
+	f = open("/usr/bin/hakku", "w")
+	f.write("#!/bin/sh\n/usr/share/hakkuframework/hakku $@")
 	f.close()
 
 	print("giving executeable permissions...")
-	os.system("chmod +x /usr/share/usploitframework/usploit")
-	os.system("chmod +x /usr/bin/usploit")
+	os.system("chmod +x /usr/share/hakkuframework/hakku")
+	os.system("chmod +x /usr/bin/hakku")
 
 def uninstall():
-	print("uninstalling µSploit Framework")
+	print("uninstalling Hakku Framework")
 
-	print("removing µSploit Framework...")
+	print("removing Hakku Framework...")
 	try:
-		shutil.rmtree("/usr/share/usploitframework/")
+		shutil.rmtree("/usr/share/hakkuframework/")
 	except FileNotFoundError:
 		pass
 
@@ -60,11 +60,11 @@ def uninstall():
 
 	print("removing bash script...")
 	try:
-		os.remove("/usr/bin/usploit")
+		os.remove("/usr/bin/hakku")
 	except FileNotFoundError:
 		pass
 
-	print("µSploit Framework uninstalled successfully")
+	print("Hakku Framework uninstalled successfully")
 
 if __name__ == "__main__":
 	if not os.geteuid() == 0:
