@@ -104,7 +104,7 @@ try:
 			for opt, arg in opts:
 				if opt in ('-t'):
 					if arg == 'challenge':
-						usftest.challenge()
+						hftest.challenge()
 					else:
 						print(colors.red+'invalid arguments'+colors.end)
 
