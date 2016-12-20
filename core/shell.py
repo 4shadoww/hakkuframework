@@ -8,19 +8,19 @@ from core.module_manager import ModuleManager
 from core import colors
 from core import command_handler
 
-shellface = "usf"
+shellface = "["+colors.bold+"hakku"+colors.end+"]:"
 mm = ModuleManager
 
 def run():
 	global shellface
 	global mm
 
-	ch = command_handler.Commandhandler(mm)
+	ch = command_handler.Commandhandler(mm, False)
 
 	while True:
 		try:
 			setFace()
-			command = input(colors.purple+shellface+colors.end+" > ")
+			command = input(shellface+" ")
 			command = command.split()
 
 			ch.handle(command)
@@ -38,6 +38,6 @@ def setFace():
 	global shellface
 	global mm
 	if mm.moduleLoaded == 0:
-		shellface = "usf"
+		shellface = "["+colors.bold+"hakku"+colors.end+"]:"
 	else:
-		shellface = "usf:"+mm.moduleName
+		shellface = "["+colors.bold+"hakku"+colors.end+"]"+"("+colors.red+mm.moduleName+colors.end+"):"
