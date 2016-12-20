@@ -2,24 +2,21 @@ from core import info
 from core import colors
 from core.moduleop import count
 
-sploit = r"""
-         _____       _       _ _
-        / ____|     | |     (_) |
-  _   _| (___  _ __ | | ___  _| |_
- | | | |\___ \| '_ \| |/ _ \| | __|
- | |_| |____) | |_) | | (_) | | |_
- | .___|_____/| .__/|_|\___/|_|\__|
- | |          | |
- |_|          |_|
+hakku = r"""
+  _    _       _    _          
+ | |  | |     | |  | |         
+ | |__| | __ _| | _| | ___   _ 
+ |  __  |/ _` | |/ / |/ / | | |
+ | |  | | (_| |   <|   <| |_| |
+ |_|  |_|\__,_|_|\_\_|\_\\__,_|
 """
 
 def print_info():
 	count()
 
-	ston = colors.blue + "[" + colors.end
-	print("\t\t--=" + ston + colors.green + '\xb5' +"Sploit Framework" + colors.end)
-	print("\t+---**---==" + ston + "Version : " + colors.red + info.version + colors.end)
-	print("\t+---**---==" + ston + "Codename : " + colors.red + info.codename + colors.end)
-	print("\t+---**---==" + ston + "Available Modules : " + colors.green  + count.mod + colors.end)
-	print("\t\t--=" + ston + "Update Date : [" + colors.red + info.update_date + colors.end + "]")
+	print("\t" + colors.bold + "Hakku Framework\n" + colors.end)
+	print("\t" + colors.bold + "Core "+colors.end+"\t[ "+info.version+" "+info.codename+"\t]" + colors.end)
+	print("\t" + colors.bold + "API"+colors.end+"\t[ "+info.apiversion+"\t\t]"+colors.end)
+	print("\t" + colors.bold + "Date"+colors.end+"\t[ "+info.update_date+"\t\t]"+colors.end)
+	print("\t" + colors.bold + "Modules "+colors.end+"[ "+count.mod+" modules"+"\t\t]"+colors.end)
 	print("\n")
