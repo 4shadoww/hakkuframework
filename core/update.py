@@ -76,7 +76,7 @@ def update():
 	update_path = None
 
 	for file in files:
-		if "usploit" in file and os.path.isfile(file) == False:
+		if "hakku" in file and os.path.isfile(file) == False:
 			update_path = file
 			break
 
