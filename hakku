@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # 			 --------------------------------------------------
-#							µSploit Framework
+#							Hakku Framework
 # 			 --------------------------------------------------
 #		 Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
@@ -27,7 +27,6 @@
 try:
 
 	# Import python modules
-	import readline
 	import traceback
 	import sys
 	import logging
@@ -53,19 +52,19 @@ try:
 	# Import core modules
 	from core import colors
 	from core import header
-	from core import usftest
+	from core import hftest
 	from core import shell
 	from core import scriptio
 
 	# Print header
-	print(colors.cyan+header.sploit+colors.end)
+	print(header.hakku)
 	header.print_info()
 
 except KeyboardInterrupt:
 	sys.exit(0)
 
 if not os.geteuid() == 0:
-	print(colors.red+'some modules will not work without root permission!\nrecommended to login as root!'+colors.end)
+	print(colors.red+'some modules will not work without root permission!\nrecommended to login as root!\n'+colors.end)
 
 # Exception handling
 
@@ -73,7 +72,7 @@ def fatalerror():
 	print(colors.red+"FATAL ERROR:")
 	traceback.print_exc()
 	print(colors.end)
-	forcetokr = input('Do you want to force to keep µSploit Framework running? ')
+	forcetokr = input('Do you want to force to keep Hakku Framework running? ')
 	if forcetokr == 'yes':
 		main(0, None)
 	elif forcetokr == 'y':
@@ -111,13 +110,13 @@ try:
 
 				if opt in ('-s'):
 					try:
-						scriptfile = open('core/scripts/'+arg+'.usf', 'r')
+						scriptfile = open('core/scripts/'+arg+'.hfs', 'r')
 						reader = csv.reader(scriptfile)
 						scf = [row for row in reader]
 						scripting = 1
 						print(colors.green+"entering scripting mode..."+colors.end)
 					except FileNotFoundError:
-						print(colors.red+'script not found'+colors.end)
+						print(colors.red+'error: script not found'+colors.end)
 		except getopt.GetoptError:
 			print(colors.red+'invalid arguments'+colors.end)
 		main(scripting, scf)
@@ -128,7 +127,7 @@ except KeyboardInterrupt:
 	print()
 
 except SystemExit as e:
-	print(colors.green+"Thank you for using µSploit Framework!"+colors.end)
+	print(colors.bold+"Thank you for using Hakku Framework!"+colors.end)
 	sys.exit(e)
 
 except:
