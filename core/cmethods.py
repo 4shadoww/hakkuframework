@@ -17,7 +17,6 @@ from core import helptable
 from core import helpin
 from core import info
 from core import colors
-from core.exceptions import UnknownCommand
 from core import moduleop
 from core.prettytable import PrettyTable
 from core import module_database
@@ -26,9 +25,14 @@ from core import dsag
 import core.matrix
 import core.touchingsky
 from core import getpath
-from core.usftest import check_module
+from core.hftest import check_module
 from core import update
 from core import mscop
+
+# Import exceptions
+from core.exceptions import UnknownCommand
+from core.exceptions import ModuleNotFound
+from core.exceptions import VariableError
 
 class Cmethods:
 
@@ -100,7 +104,7 @@ class Cmethods:
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
 		else:
-			print("µSploit Framework " + info.version)
+			print("Hakku Framework " + info.version)
 
 	def ifconfig(self, args):
 		os.system("ifconfig"+" "+' '.join(args))
@@ -170,8 +174,10 @@ class Cmethods:
 					pass
 			except ImportError:
 				print(colors.red + "module not found" + colors.end)
+				raise ModuleNotFound("module not found")
 			except IndexError:
 				print(colors.red + "please enter module name" + colors.end)
+				raise ModuleNotFound("module not found")
 			except:
 				print(colors.red+"error: module is corrupted\n")
 				traceback.print_exc(file=sys.stdout)
@@ -240,7 +246,7 @@ class Cmethods:
 
 		if self.mm.moduleLoaded == 1:
 			try:
-				self.modadd.run()
+				return self.modadd.run()
 			except:
 				print(colors.red+"error: module is corrupted\n")
 				traceback.print_exc(file=sys.stdout)
@@ -251,12 +257,14 @@ class Cmethods:
 	def set(self, args):
 		try:
 			self.modadd.variables[args[0]][0] = args[1]
-			print(colors.green+args[0] +" => "+ args[1] + colors.end)
+			print(colors.green+args[0] +" => "+ str(args[1]) + colors.end)
 
 		except (NameError, KeyError):
 			print(colors.red + "option not found" + colors.end)
+			raise VariableError("option not found")
 		except IndexError:
 			print(colors.red + "please enter variable's value" + colors.end)
+			raise VariableError("no value")
 		except:
 			print(colors.red+"error: module is corrupted\n")
 			traceback.print_exc(file=sys.stdout)
@@ -335,7 +343,7 @@ class Cmethods:
 			print(core.cowsay.cowsay(message))
 			return
 		except ValueError:
-			print(core.cowsay.cowsay("µSploit Framework"))
+			print(core.cowsay.cowsay("Hakku Framework"))
 
 	def ds(self, args):
 		print(dsag.darkside)
