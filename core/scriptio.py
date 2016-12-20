@@ -15,7 +15,7 @@ def run(scf):
 	global mm
 
 	scriptline = 0
-	ch = command_handler.Commandhandler(mm)
+	ch = command_handler.Commandhandler(mm, False)
 
 	while True:
 		try:
