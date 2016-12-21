@@ -22,8 +22,7 @@ class Commandhandler:
 	def handle(self, command):
 		if self.mm.moduleLoaded == 1:
 				try:
-					self.cm.mcu(command)
-					return
+					return self.cm.mcu(command)
 				except IndexError:
 					return
 				except UnknownCommand:
