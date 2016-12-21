@@ -5,11 +5,12 @@ from collections import OrderedDict
 conf = {
 #	"name": = "module_name", # Module's name (should be same as file name)
 	"version": "1.0", # Module version
-	"shortdesc": "modules_description", # Short description
+	"shortdesc": "none", # Short description
 	"github": "none", # Author's github
 	"author": "none", # Author
 	"email": "none", # Email
 #	"initdate": "none" # Initial date
+	"apisupport": False, # Api support
 	"needroot": 1 # Alert user if root permissions not available (remove variable below if root permissions not needed)
 }
 
