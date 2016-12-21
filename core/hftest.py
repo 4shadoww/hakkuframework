@@ -21,16 +21,16 @@ def check_module(modadd):
 	if modadd.conf["name"] != module:
 		print(colors.red+"\nmodules name doesn't match")
 	modadd.conf["version"]
-	if modadd.conf["shortdesc"] == 'modules_description':
+	if modadd.conf["shortdesc"] == 'none':
 		print(colors.red+'\ndesc variable has default value'+colors.green)
 		testfailed()
-	if modadd.conf["github"] == 'mygithub':
+	if modadd.conf["github"] == 'none':
 		 print(colors.red+'\ngithub variable has default value'+colors.green)
 		 testfailed()
-	if modadd.conf["author"] == 'creators_name':
+	if modadd.conf["author"] == 'none':
 		print(colors.red+'\ncreatedby variable has default value'+colors.green)
 		testfailed()
-	if modadd.conf["email"] == 'creators@email.com':
+	if modadd.conf["email"] == 'none':
 		print(colors.red+'\nemail variable has default value'+colors.green)
 		testfailed()
 
@@ -40,6 +40,7 @@ def check_module(modadd):
 
 	modadd.variables.items()
 
+	modadd.conf["apisupport"]
 	modadd.changelog
 	modadd.run
 	try:
