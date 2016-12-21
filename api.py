@@ -39,4 +39,10 @@ class Hakkuapi:
 		answer = self.ch.handle(["run"])
 		self.enablePrint()
 		return answer
+
+	def customCommand(self, command):
+		self.disablePrint()
+		answer = self.ch.handle([command])
+		self.enablePrint()
+		return answer
 		
