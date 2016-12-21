@@ -3,4 +3,4 @@ from core import colors
 
 def setvar(variable, value, variables):
 	variables[variable][0] = value
-	print(colors.green+variable +" => "+ value + colors.end)
+	print(colors.bold+variable +" => "+ value + colors.end)
