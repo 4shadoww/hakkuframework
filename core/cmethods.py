@@ -53,7 +53,7 @@ class Cmethods:
 			if command[0] in self.modadd.customcommands.keys():
 				call = getattr(self.modadd, command[0])
 				try:
-					call(command[1:])
+					return call(command[1:])
 				except Exception as e:
 					print(colors.red+"error: module is corrupted\n")
 					traceback.print_exc(file=sys.stdout)
@@ -118,11 +118,16 @@ class Cmethods:
 		if self.mm.moduleLoaded == 1:
 			try:
 				print(self.modadd.conf["name"]+" "+self.modadd.conf["version"])
-				print("created by: "+self.modadd.conf["author"])
+				print("author: "+self.modadd.conf["author"])
 				print("github: "+self.modadd.conf["github"])
 				print("email: "+self.modadd.conf["email"])
 				print("description: "+self.modadd.conf["shortdesc"])
 				print("initial date: "+self.modadd.conf["initdate"])
+				if self.modadd.conf["apisupport"] == True:
+					support = "supported"
+				else:
+					support = "not supported"
+				print("api support: "+support)
 			except:
 				print(colors.red+"error: module is corrupted\n")
 				traceback.print_exc(file=sys.stdout)
@@ -133,7 +138,7 @@ class Cmethods:
 	def changelog(self, args):
 		if self.mm.moduleLoaded == 1:
 			try:
-				print(colors.yellow+self.modadd.changelog+colors.end)
+				print(self.modadd.changelog)
 			except:
 				print(colors.red+"error: module is corrupted\n")
 				traceback.print_exc(file=sys.stdout)
@@ -142,7 +147,7 @@ class Cmethods:
 			try:
 				f = open('changelog', 'r')
 				file_contents = f.read()
-				print (colors.yellow+file_contents+colors.end)
+				print (file_contents)
 				f.close()
 			except IOError:
 				print(colors.red + "error: changelog file not found (have you removed it?)" + colors.end)
@@ -188,7 +193,7 @@ class Cmethods:
 	def show(self, args):
 		try:
 			if args[0] == "modules" and self.mm.moduleLoaded == 0:
-				t = PrettyTable([colors.green+'Modules:', ''+colors.end])
+				t = PrettyTable([colors.bold+'Modules:', ''+colors.end])
 				t.add_row(['',''])
 				t.align = 'l'
 				t.valing = 'm'
@@ -223,24 +228,24 @@ class Cmethods:
 				mod = "modules."+args[0]
 				imp.reload(sys.modules[mod])
 				sys.modules[mod]
-				print (colors.green+"module "+ args[0] +" reloaded"+colors.end)
+				print (colors.bold+"module "+ args[0] +" reloaded"+colors.end)
 			except IndexError:
 				print (colors.red+"please enter module's name"+colors.end)
 			except KeyError:
-				print (colors.red+"module not found"+colors.end)
+				print (colors.red+"module not found or not loaded"+colors.end)
 		else:
 			try:
 				mod = "modules."+args[0]
 				imp.reload(sys.modules[mod])
 				sys.modules[mod]
-				print (colors.green+"module "+ args[0] +" reloaded"+colors.end)
+				print (colors.bold+"module "+ args[0] +" reloaded"+colors.end)
 			except IndexError:
 				mod = "modules."+self.mm.moduleName
 				imp.reload(sys.modules[mod])
 				sys.modules[mod]
-				print (colors.green+"module "+ self.mm.moduleName +" reloaded"+colors.end)
+				print (colors.bold+"module "+ self.mm.moduleName +" reloaded"+colors.end)
 			except KeyError:
-				print (colors.red+"module not found"+colors.end)
+				print (colors.red+"module not found or loaded"+colors.end)
 
 	def run(self, args):
 
@@ -257,7 +262,7 @@ class Cmethods:
 	def set(self, args):
 		try:
 			self.modadd.variables[args[0]][0] = args[1]
-			print(colors.green+args[0] +" => "+ str(args[1]) + colors.end)
+			print(colors.bold+args[0] +" => "+ str(args[1]) + colors.end)
 
 		except (NameError, KeyError):
 			print(colors.red + "option not found" + colors.end)
@@ -287,8 +292,8 @@ class Cmethods:
 						template_contents[11] = "	\"initdate\": \""+(time.strftime("%d.%m.%Y"))+"\", # Initial date\n"
 						mfile.writelines(template_contents)
 						mfile.close()
-						print(colors.green+"module "+ args[1] +".py" +" created to modules folder"+colors.end)
-						print(colors.green+"done"+colors.end)
+						print(colors.bold+"module "+ args[1] +".py" +" created to modules folder"+colors.end)
+						print(colors.bold+"done"+colors.end)
 
 				except IndexError:
 					print(colors.red + "please enter module's name" + colors.end)
