@@ -10,7 +10,8 @@ conf = {
 	"author": "4shadoww",
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
-	"initdate": "9.5.2016"
+	"initdate": "9.5.2016",
+	"apisupport": False
 }
 
 # List of the variables

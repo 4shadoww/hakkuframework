@@ -14,6 +14,7 @@ conf = {
 	"author": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "10.3.2016",
+	"apisupport": False,
 	"needroot": 1
 }
 

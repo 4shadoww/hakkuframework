@@ -11,6 +11,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com", # Email
 	"initdate": "18.12.2016", # Initial date
+	"apisupport": False
 }
 
 # List of the variables

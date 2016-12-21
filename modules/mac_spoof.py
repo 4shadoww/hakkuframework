@@ -16,6 +16,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "9.3.2016",
+	"apisupport": True,
 	"needroot": 1
 }
 
@@ -33,7 +34,7 @@ variables = OrderedDict((
 ))
 
 # Additional help notes
-help_notes = colors.red+"this module will not work without root permissions!"+colors.end
+help_notes = colors.red+"this module will not work without root permissions, and ethtool!"+colors.end
 
 # Additional notes to options
 option_notes = colors.yellow+" you can generate fake_mac using 'random_mac' command\n use 'reset' command to end mac spoof"+colors.end

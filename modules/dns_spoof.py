@@ -13,6 +13,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "29.4.2016",
+	"apisupport": False,
 	"needroot": 1
 }
 

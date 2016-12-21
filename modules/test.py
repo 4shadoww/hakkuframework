@@ -14,6 +14,7 @@ conf = {
 	"github": "4shadoww", # Author's github
 	"email": "4shadoww0@gmail.com", # Email
 	"initdate": "24.2.2016", # Initial date
+	"apisupport": True, # Api support
 
 	"message": "hello"
 }
@@ -23,9 +24,17 @@ variables = OrderedDict((
 	("value", [0, "description"]),
 ))
 
+customcommands = {
+	"test": "test"
+}
+
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
 	print(variables['value'][0])
 	print(variables['value'][1])
+	return variables
+
+def test(args):
+	return "ok"
