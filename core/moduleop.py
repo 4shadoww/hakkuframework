@@ -19,7 +19,7 @@ def count():
 def printoptions(modadd):
 	try:
 		print(" ")
-		t = PrettyTable([colors.green+'Option', 'Value', 'Description'+colors.end])
+		t = PrettyTable([colors.red +'Option', 'Value', 'Description'+colors.end])
 		t.add_row(["------","------","-----------"])
 		t.align = 'l'
 		t.valing = 'm'
