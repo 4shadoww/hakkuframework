@@ -40,12 +40,6 @@ try:
 	if cur_version < req_version:
 		print('python3.5 or greater is recommended')
 
-	# Import getpath module for lib append
-	from core import getpath
-
-	# Append libs path
-	sys.path.append(getpath.lib())
-
 	# Disable scapy warning
 	logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
