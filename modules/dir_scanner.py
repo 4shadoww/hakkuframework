@@ -14,7 +14,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "24.2.2016",
-	"apisupport": False
+	"apisupport": True
 }
 
 # List of variables
@@ -220580,6 +220580,7 @@ def run():
 't1551',
 'nt4stopc',]
 	try:
+		paths_found = []
 		if variables['pos'][0] == 'true':
 			for path in paths:
 				path = path.replace("\n", "")
@@ -220588,22 +220589,31 @@ def run():
 					conn.timeout = float(variables['timeout'][0])
 				except ValueError:
 					printerror('invalid timeout')
+					return "error: invalid timeout"
 				conn.request("GET", path)
 				res = conn.getresponse()
 				if(res.status==200):
 					print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colorss.end)
+					paths_found.append(path)
 		else:
 			for path in paths:
 				path = path.replace("\n", "")
 				conn = http.client.HTTPConnection(variables['target'][0])
-				conn.timeout = 2
+				try:
+					conn.timeout = float(variables['timeout'][0])
+				except ValueError:
+					printerror('invalid timeout')
+					return "error: invalid timeout"
 				conn.request("GET", path)
 				res = conn.getresponse()
 				if(res.status==200):
 					print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colorss.end)
+					paths_found.append(path)
 				else:
 					print(colors.yellow + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
 	except (socket.gaierror):
 		print (colors.red+"target "+variables['target'][0]+" not found"+colors.end)
+		return "error: not found"
 	except (socket.timeout):
 		printerror("time out "+variables['target'][0])
+		return "error: timeout"

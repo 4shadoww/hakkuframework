@@ -2,7 +2,6 @@
 from core import colors
 from collections import OrderedDict
 import http.client
-from time import sleep
 import socket
 
 conf = {
@@ -13,7 +12,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "1.3.2016",
-	"apisupport": False
+	"apisupport": True
 }
 
 # List of the variables
@@ -27,9 +26,8 @@ changelog = "Version 1.0:\nrelease"
 def run():
 	variables['target'][0] = variables['target'][0].replace("http://", "")
 	variables['target'][0] = variables['target'][0].replace("https://", "")
-	print(colors.green + "[*]Your Target : " + variables['target'][0] + colors.end)
-	print(colors.blue + "[*]Loading Path List ... Please Wait ..." + colors.end)
-	sleep(2)
+	print(colors.green + "[*] your target : " + variables['target'][0] + colors.end)
+	print(colors.blue + "[*] loading path list ... please wait ..." + colors.end)
 	paths = ['/phpMyAdmin/',
 '/phpmyadmin/',
 '/PMA/',
@@ -116,7 +114,8 @@ def run():
 '/webdb/',
 '/mysqladmin/',
 '/mysql-admin/',]
-	print(colors.blue+"[*]Starting scan..."+colors.end)
+	print(colors.blue+"[*] starting scan..."+colors.end)
+	paths_found = []
 	try:
 		for path in paths:
 			path = path.replace("\n", "")
@@ -125,7 +124,13 @@ def run():
 			res = conn.getresponse()
 			if(res.status==200):
 				print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
+				paths_found.append(path)
 			else:
 				print(colors.yellow + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
+		return paths_found
 	except(socket.gaierror):
-		print(colors.red+"[!]Host is down!"+colors.end)
+		print(colors.red+"[!] host is down!"+colors.end)
+		return "error: host is down"
+	except socket.timeout:
+		print(colors.red+"[!] timeout")
+		return "error: timeout"
