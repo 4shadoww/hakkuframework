@@ -11,6 +11,12 @@ import curses
 import time
 import importlib
 
+# Import getpath for lib path
+from core import getpath
+
+# Append lib path
+sys.path.append(getpath.lib())
+
 # Import core modules
 
 from core import helptable
@@ -24,7 +30,6 @@ import core.cowsay
 from core import dsag
 import core.matrix
 import core.touchingsky
-from core import getpath
 from core.hftest import check_module
 from core import update
 from core import mscop
@@ -252,6 +257,9 @@ class Cmethods:
 		if self.mm.moduleLoaded == 1:
 			try:
 				return self.modadd.run()
+
+			except KeyboardInterrupt:
+				print(colors.red+"module terminated"+colors.end)
 			except:
 				print(colors.red+"error: module is corrupted\n")
 				traceback.print_exc(file=sys.stdout)
