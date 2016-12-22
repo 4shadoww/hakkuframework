@@ -13,7 +13,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com",
 	"initdate": "1.3.2016",
-	"apisupport": False
+	"apisupport": True
 }
 
 # List of the variables
@@ -8947,6 +8947,7 @@ def run():
 '~zulema',
 '~zuzana',]
 	try:
+		paths_found = []
 		for path in paths:
 			path = path.replace("\n", "")
 			conn = http.client.HTTPConnection(variables['target'][0])
@@ -8954,7 +8955,10 @@ def run():
 			res = conn.getresponse()
 			if(res.status==200):
 				print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
+				paths_found.append(path)
 			else:
 				print(colors.yellow + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
+		return paths_found
 	except(socket.gaierror):
-		print(colors.red+"[!]Host is down!"+colors.end)
+		print(colors.red+"[!] host is down"+colors.end)
+		return "error: host is down"

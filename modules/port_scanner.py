@@ -14,7 +14,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "4.3.2016",
-	"apisupport": False
+	"apisupport": True
 }
 
 # List of the variables
@@ -28,13 +28,14 @@ variables = OrderedDict((
 changelog = "Version 1.0:\nrelease"
 
 def run():
+	open_ports = []
 	variables['target'][0] = variables['target'][0].replace("http://", "")
 	variables['target'][0] = variables['target'][0].replace("https://", "")
 	try:
 		targetip = socket.gethostbyname(variables['target'][0])
 	except(socket.gaierror):
 		print(colors.red+'Hostname could not be resolved'+colors.end)
-		return
+		return "error: hostname could not be resolved"
 
 	socket.setdefaulttimeout(0.5)
 
@@ -52,6 +53,7 @@ def run():
 			result = sock.connect_ex((targetip, port))
 			if result == 0:
 				print(colors.green+"Port {}: Open".format(port)+colors.end)
+				open_ports.append(port)
 			else:
 				print(colors.red+"Port {}: Closed".format(port)+colors.end)
 
@@ -59,13 +61,13 @@ def run():
 
 	except(socket.gaierror):
 		print(colors.red+'Hostname could not be resolved'+colors.end)
-		sys.exit()
-
+		return "error: hostname could not be resolved"
 	except(socket.error):
 		print(colors.red+"Couldn't connect to server"+colors.end)
-		sys.exit()
+		return "error: couldn't connect to server"
 	except(ValueError):
 		print(colors.red+"Port value must be integer"+colors.end)
+		return "error: port value must be integer"
 
 	# Checking the time again
 	t2 = datetime.now()
@@ -75,3 +77,4 @@ def run():
 
 	# Printing the information to screen
 	print(colors.blue+'Scanning Completed in: ', total, colors.end)
+	return open_ports

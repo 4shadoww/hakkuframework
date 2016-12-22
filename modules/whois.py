@@ -11,7 +11,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com", # Email
 	"initdate": "18.12.2016", # Initial date
-	"apisupport": False
+	"apisupport": True
 }
 
 # List of the variables
@@ -26,3 +26,4 @@ def run():
 	# Run
 	w = whois.whois(variables["target"][0])
 	print(w)
+	return w

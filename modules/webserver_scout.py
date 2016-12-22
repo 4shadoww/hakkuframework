@@ -13,7 +13,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "17.5.2016",
-	"apisupport": False
+	"apisupport": True
 }
 
 # List of the variables
@@ -39,9 +39,13 @@ def run():
 		for item in results:
 			print(colors.yellow+item[0], item[1]+colors.end)
 		print('')
+		return results
 	except http.client.InvalidURL:
 		printerror('invalid url')
+		return "error: invalid url"
 	except socket.gaierror:
 		printerror('name or service not known')
+		return "error: name or service not known"
 	except socket.timeout:
 		printerror('timeout')
+		return "error: timeout"

@@ -11,7 +11,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "9.5.2016",
-	"apisupport": False
+	"apisupport": True
 }
 
 # List of the variables
@@ -26,7 +26,10 @@ def run():
 	try:
 		querly = socket.gethostbyaddr(variables['target'][0])
 		print(colors.yellow+"resolved hostname:", querly[0]+colors.end)
+		return querly[0]
 	except(socket.herror):
 		print(colors.red+"unknown host"+colors.end)
+		return "error: unknown host"
 	except(socket.gaierror):
 		print(colors.red+"name or service not known"+colors.end)
+		return "error: name or service not known"
