@@ -39,7 +39,7 @@ class Hakkuapi:
 		self.disablePrint()
 		try:
 			self.ch.handle(["use", module])
-			modadd = sys.modules["modules.cloudflare_resolver"]
+			modadd = sys.modules["modules."+module]
 			if modadd.conf['apisupport'] == False:
 				raise ApiNotSupported("this module doesn't support api")
 		except core.exceptions.ModuleNotFound:
