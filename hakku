@@ -49,6 +49,7 @@ try:
 	from core import hftest
 	from core import shell
 	from core import scriptio
+	from core import getpath
 
 	# Print header
 	print(header.hakku)
@@ -104,7 +105,7 @@ try:
 
 				if opt in ('-s'):
 					try:
-						scriptfile = open('core/scripts/'+arg+'.hfs', 'r')
+						scriptfile = open(getpath.scripts()+arg+'.hfs', 'r')
 						reader = csv.reader(scriptfile)
 						scf = [row for row in reader]
 						scripting = 1
