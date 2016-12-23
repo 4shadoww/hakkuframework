@@ -38,7 +38,7 @@ class Hakkuapi:
 	def loadModule(self, module):
 		self.disablePrint()
 		try:
-			self.ch.handle(["use", module])
+			self.ch.handle("use "+module)
 			modadd = sys.modules["modules."+module]
 			if modadd.conf['apisupport'] == False:
 				raise ApiNotSupported("this module doesn't support api")
@@ -55,7 +55,7 @@ class Hakkuapi:
 	def unloadModule(self):
 		self.disablePrint()
 		try:
-			self.ch.handle(["back"])
+			self.ch.handle("back")
 		except:
 			self.enablePrint()
 			print("unexpected error:")
@@ -65,7 +65,7 @@ class Hakkuapi:
 	def setVariable(self, target, value):
 		self.disablePrint()
 		try:
-			self.ch.handle(["set", target, value])
+			self.ch.handle("set "+target+" "+value)
 		except core.exceptions.VariableError:
 			self.enablePrint()
 			raise VariableError("error: variable not found")
@@ -79,7 +79,7 @@ class Hakkuapi:
 	def runModule(self):
 		self.disablePrint()
 		try:
-			answer = self.ch.handle(["run"])
+			answer = self.ch.handle("run")
 		except:
 			self.enablePrint()
 			print("unexpected error:")
@@ -90,7 +90,7 @@ class Hakkuapi:
 	def customCommand(self, command):
 		self.disablePrint()
 		try:
-			answer = self.ch.handle([command])
+			answer = self.ch.handle(command)
 		except:
 			self.enablePrint()
 			print("unexpected error:")
@@ -102,7 +102,6 @@ class Hakkuapi:
 	def runCommand(self, command):
 		self.disablePrint()
 		try:
-			command = command.split()
 			self.ch.handle(command)
 		except:
 			self.enablePrint()
