@@ -99,6 +99,19 @@ class Hakkuapi:
 		self.enablePrint()
 		return answer
 
+	def runCommand(self, command):
+		self.disablePrint()
+		try:
+			command = command.split()
+			self.ch.handle(command)
+		except:
+			self.enablePrint()
+			print("unexpected error:")
+			traceback.print_exc()
+
+		self.enablePrint()
+
+
 class ModuleNotFound(Exception):
 	pass
 
