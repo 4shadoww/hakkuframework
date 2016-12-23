@@ -64,7 +64,7 @@ if not os.geteuid() == 0:
 # Exception handling
 
 def fatalerror():
-	print(colors.red+"FATAL ERROR:")
+	print(colors.red+"unexpected error:")
 	traceback.print_exc()
 	print(colors.end)
 	forcetokr = input('Do you want to force to keep Hakku Framework running? ')
