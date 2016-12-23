@@ -20,6 +20,10 @@ class Commandhandler:
 			self.api = True
 
 	def handle(self, command):
+		# String to list
+		command = command.split()
+
+		# Custom command
 		if self.mm.moduleLoaded == 1:
 				try:
 					return self.cm.mcu(command)

@@ -11,6 +11,10 @@ def main():
 	path = rchop(os.path.dirname(os.path.abspath(__file__)), "core")
 	return path
 
+def main_module():
+	path = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__)) + "/"
+	return path
+
 def modules():
 	path = rchop(os.path.dirname(os.path.abspath(__file__)), "core") + "modules/"
 	return path
@@ -37,4 +41,8 @@ def tmp():
 
 def scripts():
 	path = os.path.dirname(os.path.abspath(__file__)) + "/scripts/"
+	return path
+
+def db():
+	path = os.path.dirname(os.path.abspath(__file__)) + "/db/"
 	return path

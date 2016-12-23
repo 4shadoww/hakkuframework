@@ -22,7 +22,7 @@ def run(scf):
 			if scriptline == len(scf):
 				sys.exit(0)
 
-			command = scf[scriptline][0].split()
+			command = scf[scriptline][0]
 			scriptline += 1
 
 			ch.handle(command)

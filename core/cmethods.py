@@ -33,6 +33,7 @@ import core.touchingsky
 from core.hftest import check_module
 from core import update
 from core import mscop
+from core import value_holder
 
 # Import exceptions
 from core.exceptions import UnknownCommand
@@ -60,7 +61,7 @@ class Cmethods:
 				try:
 					return call(command[1:])
 				except Exception as e:
-					print(colors.red+"error: module is corrupted\n")
+					print(colors.red+"unexpected error in module:\n")
 					traceback.print_exc(file=sys.stdout)
 					print(colors.end)
 			else:
@@ -105,7 +106,7 @@ class Cmethods:
 			try:
 				print(self.modadd.conf["name"]+" "+self.modadd.conf["version"])
 			except:
-				print(colors.red+"error: module is corrupted\n")
+				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
 		else:
@@ -134,7 +135,7 @@ class Cmethods:
 					support = "not supported"
 				print("api support: "+support)
 			except:
-				print(colors.red+"error: module is corrupted\n")
+				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
 		else:
@@ -145,7 +146,7 @@ class Cmethods:
 			try:
 				print(self.modadd.changelog)
 			except:
-				print(colors.red+"error: module is corrupted\n")
+				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
 		else:
@@ -158,6 +159,10 @@ class Cmethods:
 				print(colors.red + "error: changelog file not found (have you removed it?)" + colors.end)
 
 	def use(self, args):
+		init = False
+		if "modules."+args[0] not in sys.modules:
+			init = True
+
 		if self.mm.moduleLoaded == 0:
 			try:
 				self.modadd = importlib.import_module("modules."+args[0])
@@ -178,10 +183,11 @@ class Cmethods:
 							print(colors.red+"this module requires root permissions for full functionality!"+colors.end)
 				except KeyError:
 					pass
-				try:
-					self.modadd.init()
-				except AttributeError:
-					pass
+				if init == True:
+					try:
+						self.modadd.init()
+					except AttributeError:
+						pass
 			except ImportError:
 				print(colors.red + "module not found" + colors.end)
 				raise ModuleNotFound("module not found")
@@ -189,7 +195,7 @@ class Cmethods:
 				print(colors.red + "please enter module name" + colors.end)
 				raise ModuleNotFound("module not found")
 			except:
-				print(colors.red+"error: module is corrupted\n")
+				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
 		else:
@@ -212,7 +218,7 @@ class Cmethods:
 				try:
 					moduleop.printoptions(self.modadd)
 				except:
-					print(colors.red+"error: module is corrupted\n")
+					print(colors.red+"unexpected error in module:\n")
 					traceback.print_exc(file=sys.stdout)
 					print(colors.end)
 			else:
@@ -231,8 +237,14 @@ class Cmethods:
 		if self.mm.moduleLoaded == 0:
 			try:
 				mod = "modules."+args[0]
+				value_holder.save_values(sys.modules[mod].variables)
 				imp.reload(sys.modules[mod])
 				sys.modules[mod]
+				value_holder.set_values(sys.modules[mod].variables)
+				try:
+					self.modadd.init()
+				except AttributeError:
+					pass
 				print (colors.bold+"module "+ args[0] +" reloaded"+colors.end)
 			except IndexError:
 				print (colors.red+"please enter module's name"+colors.end)
@@ -241,13 +253,25 @@ class Cmethods:
 		else:
 			try:
 				mod = "modules."+args[0]
+				value_holder.save_values(sys.modules[mod].variables)
 				imp.reload(sys.modules[mod])
 				sys.modules[mod]
+				value_holder.set_values(sys.modules[mod].variables)
+				try:
+					self.modadd.init()
+				except AttributeError:
+					pass				
 				print (colors.bold+"module "+ args[0] +" reloaded"+colors.end)
 			except IndexError:
 				mod = "modules."+self.mm.moduleName
+				value_holder.save_values(sys.modules[mod].variables)
 				imp.reload(sys.modules[mod])
 				sys.modules[mod]
+				value_holder.set_values(sys.modules[mod].variables)
+				try:
+					self.modadd.init()
+				except AttributeError:
+					pass
 				print (colors.bold+"module "+ self.mm.moduleName +" reloaded"+colors.end)
 			except KeyError:
 				print (colors.red+"module not found or loaded"+colors.end)
@@ -261,7 +285,7 @@ class Cmethods:
 			except KeyboardInterrupt:
 				print(colors.red+"module terminated"+colors.end)
 			except:
-				print(colors.red+"error: module is corrupted\n")
+				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
 		else:
@@ -279,7 +303,7 @@ class Cmethods:
 			print(colors.red + "please enter variable's value" + colors.end)
 			raise VariableError("no value")
 		except:
-			print(colors.red+"error: module is corrupted\n")
+			print(colors.red+"unexpected error in module:\n")
 			traceback.print_exc(file=sys.stdout)
 			print(colors.end)
 

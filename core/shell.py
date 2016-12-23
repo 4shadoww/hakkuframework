@@ -21,7 +21,6 @@ def run():
 		try:
 			setFace()
 			command = input(shellface+" ")
-			command = command.split()
 
 			ch.handle(command)
 		except KeyboardInterrupt:
