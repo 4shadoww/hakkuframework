@@ -11,6 +11,7 @@ database = OrderedDict((
 ("bluetooth_pod", "bluetooth ping of death"),
 # End of wireless, bluetooth modules
 (" ",""),
+
 # Web modules
 (colors.uline+colors.red+"Web Modules"+colors.end, colors.uline+colors.red+"Description"+colors.end),
 ("cloudflare_resolver", "tries to resolve real ip address from sub domains"),
@@ -25,7 +26,8 @@ database = OrderedDict((
 ("proxy_scout", "scan http proxy from ip"),
 ("whois", "perform whois query"),
 # End of web modules
-("  ",""),
+(""," "),
+
 # Network modules
 (colors.uline+colors.red+"Network Modules"+colors.end, colors.uline+colors.red+"Description"+colors.end),
 ("network_kill", "kicks out target device from network"),
@@ -34,7 +36,12 @@ database = OrderedDict((
 ("mac_spoof", "use fake mac address"),
 ("mitm", "man in the middle attack"),
 ("dns_spoof", "dns spoof"),
-
 # End of network modules
-("   ",""),
+("  ",""),
+
+# File modules
+(colors.uline+colors.red+"File modules"+colors.end, colors.uline+colors.red+"Description"+colors.end),
+("zip_cracker", "zip file brute-force attack using dictionary"),
+
+# End of file modules
 ))
