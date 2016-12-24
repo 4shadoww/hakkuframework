@@ -211,8 +211,9 @@ class Cmethods:
 				t.border = False
 
 				for key, val in module_database.database.items():
-						t.add_row([key, val])
+					t.add_row([key, val])
 
+				t.add_row(['',''])
 				print (t)
 			elif args[0] == "options" and self.mm.moduleLoaded == 1:
 				try:
