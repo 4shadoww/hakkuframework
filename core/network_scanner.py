@@ -34,7 +34,7 @@ def scan():
 	try:
 		ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst = ips), timeout = 2,iface=interface,inter=0.1)
 	except PermissionError:
-		print(colors.red+'error: root permissions required')
+		print(colors.red+'error: root permissions required'+colors.end)
 		return
 
 	for snd,rcv in ans:
