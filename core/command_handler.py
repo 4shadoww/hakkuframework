@@ -9,7 +9,7 @@ from core import colors
 
 class Commandhandler:
 	mm = None
-	notcommand = ["init", "mcu"]
+	notcommand = ["mcu"]
 	cm = None
 	api = False
 
