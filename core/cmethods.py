@@ -210,8 +210,8 @@ class Cmethods:
 				t.valing = 'm'
 				t.border = False
 
-				for key, val in module_database.database.items():
-					t.add_row([key, val])
+				for val in module_database.database:
+					t.add_row([val[0], val[1]])
 
 				t.add_row(['',''])
 				print (t)
