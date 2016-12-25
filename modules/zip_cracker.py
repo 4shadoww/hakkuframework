@@ -6,7 +6,6 @@ import threading, queue
 from core import getpath
 from os.path import relpath
 import sys
-import os
 
 conf = {
 	"name": "zip_cracker", # Module's name (should be same as file name)
