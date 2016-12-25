@@ -29,7 +29,7 @@ database = [
 
 # Network modules
 [colors.uline+colors.red+"Network Modules"+colors.end, colors.uline+colors.red+"Description"+colors.end],
-["network_kill", "kicks out target device from network"],
+["network_kill", "blocks communication between router and target"],
 ["arp_dos", "arp cache denial of service attack"],
 ["arp_spoof", "arp spoof"],
 ["mac_spoof", "use fake mac address"],
