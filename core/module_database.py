@@ -41,6 +41,7 @@ database = [
 # File modules
 [colors.uline+colors.red+"File modules"+colors.end, colors.uline+colors.red+"Description"+colors.end],
 ["zip_cracker", "zip file brute-force attack using dictionary"],
+["rar_cracker", "rar file brute-force attack using dictionary"],
 
 # End of file modules
 ]
