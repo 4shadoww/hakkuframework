@@ -16,9 +16,13 @@ from scapy.layers.l2 import *
 
 
 try:
-    from Crypto.Cipher import ARC4
+    from cryptography.hazmat.backends import default_backend
+    from cryptography.hazmat.primitives.ciphers import (
+        Cipher,
+        algorithms,
+    )    
 except ImportError:
-    log_loading.info("Can't import python Crypto lib. Won't be able to decrypt WEP.")
+    log_loading.info("Can't import python cryptography lib. Won't be able to decrypt WEP.")
 
 
 ### Fields
@@ -40,7 +44,7 @@ class Dot11AddrMACField(MACField):
 class Dot11Addr2MACField(Dot11AddrMACField):
     def is_applicable(self, pkt):
         if pkt.type == 1:
-            return pkt.subtype in [ 0xb, 0xa, 0xe, 0xf] # RTS, PS-Poll, CF-End, CF-End+CF-Ack
+            return pkt.subtype in [ 0xb, 0xa, 0xe, 0xf, 0x9, 0x8 ] # RTS, PS-Poll, CF-End, CF-End+CF-Ack, BACK, BAR
         return 1
 
 class Dot11Addr3MACField(Dot11AddrMACField):
@@ -118,12 +122,48 @@ class RadioTap(Packet):
     fields_desc = [ ByteField('version', 0),
                     ByteField('pad', 0),
                     FieldLenField('len', None, 'notdecoded', '<H', adjust=lambda pkt,x:x+8),
-                    FlagsField('present', None, -32, ['TSFT','Flags','Rate','Channel','FHSS','dBm_AntSignal',
-                                                     'dBm_AntNoise','Lock_Quality','TX_Attenuation','dB_TX_Attenuation',
-                                                      'dBm_TX_Power', 'Antenna', 'dB_AntSignal', 'dB_AntNoise',
-                                                     'b14', 'b15','b16','b17','b18','b19','b20','b21','b22','b23',
-                                                     'b24','b25','b26','b27','b28','b29','b30','Ext']),
-                    StrLenField('notdecoded', "", length_from= lambda pkt:pkt.len-8) ]
+                    FlagsField('present', None, -32, ['TSFT','Flags','Rate','Channel','FHSS','dBm_AntSignal', # 0-5
+                                                     'dBm_AntNoise','Lock_Quality','TX_Attenuation','dB_TX_Attenuation', # 6-9
+                                                      'dBm_TX_Power', 'Antenna', 'dB_AntSignal', 'dB_AntNoise', # 10-13
+                                                     'RX_Flags', 'b15','b16','b17','b18','MCS','A-MPDU_Status','VHT', # 14-21
+                                                     'b22','b23','b24','b25','b26','b27','b28','Reset','Vendor','Ext']),
+                    ConditionalField(LELongField('tsft', 0), lambda pkt: pkt.getdictval('present')['TSFT']),
+                    ConditionalField(FlagsField('flags', None, -8, ['CFP', 'short', 'WEP', 'fragmentation', 'FCS', 'padding', 'failed', 'HT']), lambda pkt: pkt.getdictval('present')['Flags']),
+                    ConditionalField(ByteField('rate', 0), lambda pkt: pkt.getdictval('present')['Rate']),
+                    ConditionalField(LEShortField('channel_freq', 0), lambda pkt: pkt.getdictval('present')['Channel']),
+                    ConditionalField(FlagsField('channel_flags', None, -16, ['b0', 'b1', 'b2', 'b3',
+                                                        'Turbo', 'CCK', 'OFDM', '2GHz', '5GHz', 'Passive', 'Dynamic', 'GFSK',
+                                                        'b12', 'b13', 'b14', 'b15']), lambda pkt: pkt.getdictval('present')['Channel']),
+                    ConditionalField(ByteField('hop_set', 0), lambda pkt: pkt.getdictval('present')['FHSS']),
+                    ConditionalField(ByteField('hop_pattern', 0), lambda pkt: pkt.getdictval('present')['FHSS']),
+                    ConditionalField(SignedByteField('dbm_antsignal', 0), lambda pkt: pkt.getdictval('present')['dBm_AntSignal']),
+                    ConditionalField(SignedByteField('dbm_antnoise', 0), lambda pkt: pkt.getdictval('present')['dBm_AntNoise']),
+                    ConditionalField(LEShortField('lock_quality', 0), lambda pkt: pkt.getdictval('present')['Lock_Quality']),
+                    ConditionalField(LEShortField('tx_attenuation', 0), lambda pkt: pkt.getdictval('present')['TX_Attenuation']),
+                    ConditionalField(LEShortField('db_tx_attenuation', 0), lambda pkt: pkt.getdictval('present')['dB_TX_Attenuation']),
+                    ConditionalField(SignedByteField('dbm_tx_power', 0), lambda pkt: pkt.getdictval('present')['dBm_TX_Power']),
+                    ConditionalField(ByteField('antenna', 0), lambda pkt: pkt.getdictval('present')['Antenna']),
+                    ConditionalField(SignedByteField('db_antsignal', 0), lambda pkt: pkt.getdictval('present')['dB_AntSignal']),
+                    ConditionalField(SignedByteField('db_antnoise', 0), lambda pkt: pkt.getdictval('present')['dB_AntNoise']),
+                    ConditionalField(FlagsField('rx_flags', None, -16, ['b0', 'PLCP_CRC_Failed']), lambda pkt: pkt.getdictval('present')['RX_Flags']),
+
+                    StrLenField('notdecoded', "", length_from= lambda pkt:pkt.len-8
+                        -pkt.getdictval('present')['TSFT']*8
+                        -pkt.getdictval('present')['Flags']*1
+                        -pkt.getdictval('present')['Rate']*1
+                        -pkt.getdictval('present')['Channel']*4
+                        -pkt.getdictval('present')['FHSS']*2
+                        -pkt.getdictval('present')['dBm_AntSignal']*1
+                        -pkt.getdictval('present')['dBm_AntNoise']*1
+                        -pkt.getdictval('present')['Lock_Quality']*2
+                        -pkt.getdictval('present')['TX_Attenuation']*2
+                        -pkt.getdictval('present')['dB_TX_Attenuation']*2
+                        -pkt.getdictval('present')['dBm_TX_Power']*1
+                        -pkt.getdictval('present')['Antenna']*1
+                        -pkt.getdictval('present')['dB_AntSignal']*1
+                        -pkt.getdictval('present')['dB_AntNoise']*1
+                        -pkt.getdictval('present')['RX_Flags']*2
+                          ) ]
 
 class PPI(Packet):
     name = "Per-Packet Information header (partial)"
@@ -150,8 +190,39 @@ class Dot11SCField(LEShortField):
         else:
             return s,None
 
+# See https://bitbucket.org/secdev/scapy/issues/109/incorrect-parsing-of-80211-frame-with 
+class FCSField(StrFixedLenField):
+    def __init__(self ,name, default):
+        StrFixedLenField.__init__(self, name, default, 4)
+
+    def is_applicable(self, pkt):
+        return pkt.has_FCS()
+
+    def getfield(self, pkt, s):
+        if self.is_applicable(pkt):
+            l = self.length_from(pkt)
+            return s[:-l], self.m2i(pkt, s[-l:])
+        else:
+            return s,None
+
+    #However drivers shouldn't receive a FCS field, because
+    #it is generated by the driver or the firmware.
+    def addfield(self, pkt, s, val):
+        return s
+    
+    def i2repr(self, pkt, x):
+        if x is None:
+            return "None"
+        else:
+            s="0x"
+            for char in x:
+                s+="%02x"%(char,)
+                
+            return s
+
 class Dot11(Packet):
     name = "802.11"
+    fcs_enabled=False
     fields_desc = [
                     BitField("subtype", 0, 4),
                     BitEnumField("type", 0, 2, ["Management", "Control", "Data", "Reserved"]),
@@ -162,12 +233,16 @@ class Dot11(Packet):
                     Dot11Addr2MACField("addr2", ETHER_ANY),
                     Dot11Addr3MACField("addr3", ETHER_ANY),
                     Dot11SCField("SC", 0),
-                    Dot11Addr4MACField("addr4", ETHER_ANY) 
+                    Dot11Addr4MACField("addr4", ETHER_ANY),
+                    FCSField("FCS", None) 
                     ]
     def mysummary(self):
         return self.sprintf("802.11 %Dot11.type% %Dot11.subtype% %Dot11.addr2% > %Dot11.addr1%")
+
     def guess_payload_class(self, payload):
         if self.type == 0x02 and (self.subtype >= 0x08 and self.subtype <=0xF and self.subtype != 0xD):
+            if self.subtype == 12:
+                return Dot11QoSNULL
             return Dot11QoS
         elif self.FCfield & 0x40:
             return Dot11WEP
@@ -203,14 +278,28 @@ class Dot11(Packet):
                 return
         self.FCfield &= ~0x40
         self.payload=self.payload.payload
+    @classmethod
+    def enable_FCS(cls, fcsupport):
+        cls.fcs_enabled=fcsupport
+        
+    def pre_dissect(self, s):
+        if self.fcs_enabled:
+            chksum=crc32(s[:-4])
+            self.fcs=(s[-4:]==struct.pack("<i",chksum))
+        else:
+            self.fcs=False
+    
+        return s
 
+    def has_FCS(self):
+        return self.fcs
 
 class Dot11QoS(Packet):
     name = "802.11 QoS"
-    fields_desc = [ BitField("TID",None,4),
+    fields_desc = [ BitField("A-MSDU present",None,1),
+                    BitField("AckPolicy",None,2),
                     BitField("EOSP",None,1),
-                    BitField("Ack Policy",None,2),
-                    BitField("Reserved",None,1),
+                    BitField("TID",None,4),
                     ByteField("TXOP",None) ]
     def guess_payload_class(self, payload):
         if isinstance(self.underlayer, Dot11):
@@ -234,6 +323,17 @@ status_code = {0:"success", 1:"failure", 10:"cannot-support-all-cap",
                11:"inexist-asso", 12:"asso-denied", 13:"algo-unsupported",
                14:"bad-seq-num", 15:"challenge-failure",
                16:"timeout", 17:"AP-full",18:"rate-unsupported" }
+
+class Dot11NULL(Packet):
+    name = "802.11 NULL data"
+
+class Dot11QoSNULL(Packet):
+    name = "802.11 QoS NULL data"
+    fields_desc = [ BitField("Reserved",None,1),
+                    BitField("AckPolicy",None,2),
+                    BitField("EOSP",None,1),
+                    BitField("TID",None,4),
+                    ByteField("TXOP",None) ]
 
 class Dot11Beacon(Packet):
     name = "802.11 Beacon"
@@ -306,7 +406,57 @@ class Dot11Deauth(Packet):
     name = "802.11 Deauthentication"
     fields_desc = [ LEShortEnumField("reason", 1, reason_code) ]
 
+class Dot11Action(Packet):
+    name = "802.11 Action"
+    fields_desc = [ ByteEnumField("category", 0, {0:"SpectrumMgmt", 1:"QoS", 2:"DLS", 3:"BlockAck", 4:"Public",
+                                                  5:"RM", 6:"FastBSS", 7:"HT", 8:"SAQuery", 9:"ProtPublic", 10:"WNM",
+                                                  11:"UnprotWNM", 12:"TDLS", 13:"Mesh", 14:"Multihop", 15:"SelfProt",
+                                                  21:"VHT", 126:"VendorProt", 127:"Vendor"}) ]
 
+class Dot11ActionNoACK(Packet):
+    name = "802.11 Action - no ACK"
+
+class Dot11CtrlWrap(Packet):
+    name = "802.11 Control wrapper"
+
+class Dot11BAR(Packet):
+    name = "802.11 BAR"
+    fields_desc = [ BitField("Reserved1", None, 5),
+                    BitField("Compressed", None, 1),
+                    BitField("MultiTID", None, 1),
+                    BitField("BACKPolicy", None, 1),
+                    BitField("TID", None, 4),
+                    BitField("Reserved", None, 4),
+                    LEShortField("SSN", 0) ]
+
+class Dot11BACK(Packet):
+    name = "802.11 BACK"
+    fields_desc = [ BitField("Reserved1", None, 5),
+                    BitField("Compressed", None, 1),
+                    BitField("MultiTID", None, 1),
+                    BitField("BACKPolicy", None, 1),
+                    BitField("TID", None, 4),
+                    BitField("Reserved", None, 4),
+                    LEShortField("SSN", 0),
+                    StrFixedLenField("Bitmap", b"\0\0\0\0\0\0\0\0", 8) ]
+
+class Dot11PSPoll(Packet):
+    name = "802.11 PS-Poll"
+
+class Dot11RTS(Packet):
+    name = "802.11 RTS"
+
+class Dot11CTS(Packet):
+    name = "802.11 CTS"
+
+class Dot11ACK(Packet):
+    name = "802.11 ACK"
+
+class Dot11CFEnd(Packet):
+    name = "802.11 CF-end"
+
+class Dot11CFEndACK(Packet):
+    name = "802.11 CF-end+ACK"
 
 class Dot11WEP(Packet):
     name = "802.11 WEP packet"
@@ -334,8 +484,12 @@ class Dot11WEP(Packet):
                     icv = b""
                 else:
                     icv = p[4:8]
-                c = ARC4.new(self.iv+key)
-                p = p[:4]+c.encrypt(pay)+icv
+                e = Cipher(
+                    algorithms.ARC4(self.iv+key),
+                    None,
+                    default_backend(),
+                ).encryptor()
+                p = p[:4]+e.update(pay)+e.finalize()+icv
             else:
                 warning("No WEP key set (conf.wepkey).. strange results expected..")
         return p
@@ -345,15 +499,20 @@ class Dot11WEP(Packet):
         if key is None:
             key = conf.wepkey
         if key:
-            c = ARC4.new(self.iv+key)
-            self.add_payload(LLC(c.decrypt(self.wepdata)))
-                    
+            d = Cipher(
+                algorithms.ARC4(self.iv+key),
+                None,
+                default_backend(),
+            ).decryptor()
+            self.add_payload(LLC(d.update(self.wepdata)+d.finalize())) 
 
 bind_layers( PrismHeader,   Dot11,         )
 bind_layers( RadioTap,      Dot11,         )
 bind_layers( PPI,           Dot11,         dlt=105)
+bind_layers( Dot11,         Dot11NULL,       subtype=4, type=2)
 bind_layers( Dot11,         LLC,           type=2)
 bind_layers( Dot11QoS,      LLC,           )
+bind_layers( Dot11,         Dot11QoSNULL,    subtype=12, type=2)
 bind_layers( Dot11,         Dot11AssoReq,    subtype=0, type=0)
 bind_layers( Dot11,         Dot11AssoResp,   subtype=1, type=0)
 bind_layers( Dot11,         Dot11ReassoReq,  subtype=2, type=0)
@@ -365,6 +524,17 @@ bind_layers( Dot11,         Dot11ATIM,       subtype=9, type=0)
 bind_layers( Dot11,         Dot11Disas,      subtype=10, type=0)
 bind_layers( Dot11,         Dot11Auth,       subtype=11, type=0)
 bind_layers( Dot11,         Dot11Deauth,     subtype=12, type=0)
+bind_layers( Dot11,         Dot11Action,     subtype=13, type=0)
+bind_layers( Dot11,         Dot11ActionNoACK, subtype=14, type=0)
+bind_layers( Dot11,         Dot11CtrlWrap,   subtype=7, type=1)
+bind_layers( Dot11,         Dot11BAR,        subtype=8, type=1)
+bind_layers( Dot11,         Dot11BACK,       subtype=9, type=1)
+bind_layers( Dot11,         Dot11PSPoll,     subtype=10, type=1)
+bind_layers( Dot11,         Dot11RTS,        subtype=11, type=1)
+bind_layers( Dot11,         Dot11CTS,        subtype=12, type=1)
+bind_layers( Dot11,         Dot11ACK,        subtype=13, type=1)
+bind_layers( Dot11,         Dot11CFEnd,      subtype=14, type=1)
+bind_layers( Dot11,         Dot11CFEndACK,   subtype=15, type=1)
 bind_layers( Dot11Beacon,     Dot11Elt,    )
 bind_layers( Dot11AssoReq,    Dot11Elt,    )
 bind_layers( Dot11AssoResp,   Dot11Elt,    )

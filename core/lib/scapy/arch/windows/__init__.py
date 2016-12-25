@@ -73,29 +73,30 @@ class PcapNameNotFoundError(Scapy_Exception):
     pass    
 
 def get_windows_if_list():
-    ps = sp.Popen(['powershell', 'Get-NetAdapter', '|', 'select Name, InterfaceIndex, InterfaceDescription, InterfaceGuid, MacAddress', '|', 'fl'], stdout = sp.PIPE)
+    # Windows 8+ way: ps = sp.Popen(['powershell', 'Get-NetAdapter', '|', 'select Name, InterfaceIndex, InterfaceDescription, InterfaceGuid, MacAddress', '|', 'fl'], stdout = sp.PIPE, universal_newlines = True)
+    ps = sp.Popen(['powershell', '-NoProfile', 'Get-WMIObject -class Win32_NetworkAdapter', '|', 'select Name, @{Name="InterfaceIndex";Expression={$_.Index}}, @{Name="InterfaceDescription";Expression={$_.Description}},@{Name="InterfaceGuid";Expression={$_.GUID}}, @{Name="MacAddress";Expression={$_.MacAddress.Replace(":","-")}} | where InterfaceGuid -ne $null', '|', 'fl'], stdout = sp.PIPE, universal_newlines = True)
     stdout, stdin = ps.communicate(timeout = 10)
     current_interface = None
     interface_list = []
-    for i in stdout.split(b'\r\n'):
+    for i in stdout.split('\n'):
         if not i.strip():
             continue
-        if i.find(b':')<0:
+        if i.find(':')<0:
             continue
-        name, value = [ j.strip() for j in i.split(b':') ]
-        if name == b'Name':
+        name, value = [ j.strip() for j in i.split(':') ]
+        if name == 'Name':
             if current_interface:
                 interface_list.append(current_interface)
             current_interface = {}
-            current_interface['name'] = value.decode('ascii')
-        elif name == b'InterfaceIndex':
+            current_interface['name'] = value
+        elif name == 'InterfaceIndex':
             current_interface['win_index'] = int(value)
-        elif name == b'InterfaceDescription':
-            current_interface['description'] = value.decode('ascii')
-        elif name == b'InterfaceGuid':
-            current_interface['guid'] = value.decode('ascii')
-        elif name == b'MacAddress':
-            current_interface['mac'] = ':'.join([ j.decode('ascii') for j in value.split(b'-')])    
+        elif name == 'InterfaceDescription':
+            current_interface['description'] = value
+        elif name == 'InterfaceGuid':
+            current_interface['guid'] = value
+        elif name == 'MacAddress':
+            current_interface['mac'] = ':'.join([ j for j in value.split('-')])    
     if current_interface:
         interface_list.append(current_interface)
     return interface_list
@@ -119,7 +120,8 @@ class NetworkInterface(object):
         self.description = data['description']
         self.win_index = data['win_index']
         # Other attributes are optional
-        self._update_pcapdata()
+        if conf.use_winpcapy:
+            self._update_pcapdata()
         try:
             self.ip = socket.inet_ntoa(get_if_raw_addr(data['guid']))
         except (KeyError, AttributeError, NameError):
@@ -218,8 +220,11 @@ def show_interfaces(resolve_mac=True):
     """Print list of available network interfaces"""
     return ifaces.show(resolve_mac)
 
-_orig_open_pcap = pcapdnet.open_pcap
-pcapdnet.open_pcap = lambda iface,*args,**kargs: _orig_open_pcap(pcap_name(iface),*args,**kargs)
+try:
+    _orig_open_pcap = pcapdnet.open_pcap
+    pcapdnet.open_pcap = lambda iface,*args,**kargs: _orig_open_pcap(pcap_name(iface),*args,**kargs)
+except AttributeError:
+    pass
 
 _orig_get_if_raw_hwaddr = pcapdnet.get_if_raw_hwaddr
 pcapdnet.get_if_raw_hwaddr = lambda iface,*args,**kargs: [ int(i, 16) for i in ifaces[iface].mac.split(':') ]
@@ -234,10 +239,11 @@ def read_routes():
     delim = "\s+"        # The columns are separated by whitespace
     netstat_line = delim.join([if_index, dest, next_hop, metric_pattern])
     pattern = re.compile(netstat_line)
-    ps = sp.Popen(['powershell', 'Get-NetRoute', '-AddressFamily IPV4', '|', 'select ifIndex, DestinationPrefix, NextHop, RouteMetric'], stdout = sp.PIPE)
+    # This works only starting from Windows 8/2012 and up. For older Windows another solution is needed
+    ps = sp.Popen(['powershell', 'Get-NetRoute', '-AddressFamily IPV4', '|', 'select ifIndex, DestinationPrefix, NextHop, RouteMetric'], stdout = sp.PIPE, universal_newlines = True)
     stdout, stdin = ps.communicate(timeout = 10)
-    for l in stdout.split(b'\r\n'):
-        match = re.search(pattern,l.decode('utf-8'))
+    for l in stdout.split('\n'):
+        match = re.search(pattern,l)
         if match:
             try:
                 iface = devname_from_index(int(match.group(1)))
@@ -258,18 +264,19 @@ def read_routes():
 def read_routes6():
     return []
 
-try:
-    __IPYTHON__
-except NameError:
+if conf.interactive_shell != 'ipython':
     try:
-        import readline
-        console = readline.GetOutputFile()
-    except (ImportError, AttributeError):
-        log_loading.info("Could not get readline console. Will not interpret ANSI color codes.") 
-    else:
-        conf.readfunc = readline.rl.readline
-        orig_stdout = sys.stdout
-        sys.stdout = console
+        __IPYTHON__
+    except NameError:
+        try:
+            import readline
+            console = readline.GetOutputFile()
+        except (ImportError, AttributeError):
+            log_loading.info("Could not get readline console. Will not interpret ANSI color codes.") 
+        else:
+            conf.readfunc = readline.rl.readline
+            orig_stdout = sys.stdout
+            sys.stdout = console
 
 def sndrcv(pks, pkt, timeout = 2, inter = 0, verbose=None, chainCC=0, retry=0, multi=0):
     if not isinstance(pkt, Gen):
@@ -492,7 +499,7 @@ def get_working_if():
         elif 'Wi-Fi' in ifaces and ifaces['Wi-Fi'].ip != '0.0.0.0':
             return 'Wi-Fi'
         elif len(ifaces) > 0:
-            return ifaces[list(ifaces.keys())[0]]
+            return ifaces[list(ifaces.keys())[0]].name
         else:
             return LOOPBACK_NAME
     except:
