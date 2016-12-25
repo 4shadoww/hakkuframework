@@ -8,8 +8,8 @@ def generateTable(hlist):
 	t.valing = 'm'
 	t.border = False
 
-	for key, val in hlist.items():
-			t.add_row([key, "  =>  ", val])
+	for val in hlist:
+			t.add_row([val[0], "  =>  ", val[1]])
 
 	return t
 
@@ -20,8 +20,8 @@ def generatemTable(hlist1, hlist2):
 	t.valing = 'm'
 	t.border = False
 
-	for key, val in hlist1.items():
-			t.add_row([key, "  =>  ", val])
+	for val in hlist1:
+			t.add_row([val[0], "  =>  ", val[1]])
 
 	for key, val in hlist2.items():
 			t.add_row([key, "  =>  ", val])
