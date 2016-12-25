@@ -4,12 +4,12 @@
 
 import sys
 import os
-from collections import OrderedDict
 import imp
 import traceback
 import curses
 import time
 import importlib
+import glob
 
 # Import getpath for lib path
 from core import getpath
@@ -134,6 +134,18 @@ class Cmethods:
 				else:
 					support = "not supported"
 				print("api support: "+support)
+				try:
+					self.modadd.conf["dependencies"]
+					print("dependencies: ", end="")
+					i = 0
+					for dep in self.modadd.conf["dependencies"]:
+						i += 1
+						if i == len(self.modadd.conf["dependencies"]):
+							print(dep)
+						else:
+							print(dep+", ", end="")
+				except KeyError:
+					pass
 			except:
 				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
@@ -413,3 +425,30 @@ class Cmethods:
 
 	def loaded(self, args):
 		print(sys.modules.keys())
+
+	def list(self, args):
+		if args[0] == "dependencies":
+			if self.mm.moduleLoaded == 0:
+				modules = glob.glob(getpath.modules()+"*.py")
+				dependencies = []
+				for module in modules:
+					try:
+						modadd = importlib.import_module("modules."+os.path.basename(module).replace(".py", ""))
+						for dep in modadd.conf["dependencies"]:
+							if dep not in dependencies:
+								dependencies.append(dep)
+					except ImportError:
+						print(colors.red+"import error: "+os.path.basename(module).replace(".py", "")+colors.end)
+						break
+					except KeyError:
+						pass
+				for dep in dependencies:
+					print(dep)
+			else:
+				try:
+					for dep in self.modadd.conf["dependencies"]:
+						print(dep)
+				except KeyError:
+					print("this module doesn't require any dependencies")
+		else:
+			raise UnknownCommand("unknown command")
