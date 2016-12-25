@@ -11,7 +11,8 @@ conf = {
 	"email": "none", # Email
 #	"initdate": "none" # Initial date
 	"apisupport": False, # Api support
-	"needroot": 1 # Alert user if root permissions not available (remove variable below if root permissions not needed)
+	"needroot": 1, # Alert user if root permissions not available (remove variable below if root permissions not needed)
+	"dependencies": [None] # Remove this if your module doesn't have any dependencies
 }
 
 # List of the variables
