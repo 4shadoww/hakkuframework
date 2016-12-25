@@ -285,6 +285,9 @@ class Cmethods:
 
 			except KeyboardInterrupt:
 				print(colors.red+"module terminated"+colors.end)
+			except PermissionError:
+				print(colors.red+"error: permission denied"+colors.end)
+				return "error: permission denied"
 			except:
 				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
