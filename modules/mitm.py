@@ -13,7 +13,8 @@ conf = {
 	"email": "4shadoww0@gmail.com",
 	"initdate": "26.4.2016",
 	"apisupport": False,
-	"needroot": 1
+	"needroot": 1,
+	"dependencies": ["xterm", "dsniff", "driftnet", "sslstrip"]
 }
 
 # List of the variables
@@ -22,13 +23,11 @@ variables = OrderedDict((
 	('router', ['192.168.1.1', 'router ip address']),
 	('target', ['192.168.1.2', 'target ip address']),
 	('sniffer', ['dsniff', 'sniffer name (select from sniffer list)']),
-	('ssl', ['true', 'SSLStrip, for SSL hijacking(true or false)']),
+	('ssl', ['true', 'SSLStrip, for SSL hijacking(true / false)']),
 ))
 
 # Additional notes to options
 option_notes = colors.green+' sniffers\t description'+colors.end+'\n --------\t ------------\n dsniff\t\t sniff all passwords\n msgsnarf\t sniff all text of victim messengers\n urlsnarf\t sniff victim links\n driftnet\t sniff victim images'
-
-help_notes = colors.red+"this module will not work without root permission!\n this module will not work without xterm, dsniff, driftnet!"+colors.end
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"

@@ -16,7 +16,8 @@ conf = {
 	"email": "4shadoww0@gmail.com",
 	"initdate": "24.2.2016",
 	"apisupport": False,
-	"needroot": 1
+	"needroot": 1,
+	"dependencies": ["xterm", "aircrack-ng"]
 }
 
 # List of the variables
@@ -42,7 +43,7 @@ changelog = "Version 1.0:\n\trelease"
 
 
 def run():
-	print (colors.green + "[*]Attack Has Been Started on : " + variables['essid'][0])
+	print (colors.green + "[*] Attack Has Been Started on : " + variables['essid'][0])
 	print ("use command 'stop' to end attack" + colors.end)
 	xterm_3 = "xterm -e "+ "airodump-ng" +" -c " + variables['channel'][0] + " --bssid " + variables['bssid'][0] + " " + variables['mon'][0] + " &"
 	os.system(xterm_3)

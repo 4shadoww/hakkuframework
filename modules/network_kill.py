@@ -13,7 +13,7 @@ from core import network_scanner
 conf = {
 	"name": "network_kill",
 	"version": "1.0",
-	"shortdesc": "\"kicks\" out target device from network with arp calls",
+	"shortdesc": "blocks communication between router and target",
 	"author": "4shadoww",
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
@@ -29,7 +29,7 @@ variables = OrderedDict((
 ))
 
 # Additional help notes
-help_notes = colors.red+"this module will not work without root permission!\n this will not work alway because some devices can refuse from arp request!"+colors.end
+help_notes = colors.red+"this module will not work without root permission!\n this doesn't work if target refuses from arp request!"+colors.end
 
 #custom commands
 customcommands = {

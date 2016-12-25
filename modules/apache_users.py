@@ -28,7 +28,7 @@ def run():
 	variables['target'][0] = variables['target'][0].replace("http://", "")
 	variables['target'][0] = variables['target'][0].replace("https://", "")
 	print(colors.green + "[*] Your Target : " + variables['target'][0] + colors.end)
-	print(colors.blue + "[*]Loading Path List ... Please Wait ..." + colors.end)
+	print(colors.blue + "[*] Loading Path List ... Please Wait ..." + colors.end)
 	sleep(2)
 	paths = ['~root',
 '~toor',

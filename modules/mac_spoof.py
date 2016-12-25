@@ -17,7 +17,8 @@ conf = {
 	"email": "4shadoww0@gmail.com",
 	"initdate": "9.3.2016",
 	"apisupport": True,
-	"needroot": 1
+	"needroot": 1,
+	"dependencies": ["ethtool"]
 }
 
 # Custom commands

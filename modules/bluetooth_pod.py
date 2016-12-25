@@ -15,7 +15,8 @@ conf = {
 	"email": "4shadoww0@gmail.com",
 	"initdate": "24.2.2016",
 	"apisupport": False,
-	"needroot": 1
+	"needroot": 1,
+	"dependencies": ["xterm", "hcitool", "l2ping"]
 
 }
 

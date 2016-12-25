@@ -14,7 +14,8 @@ conf = {
 	"email": "4shadoww0@gmail.com",
 	"initdate": "29.4.2016",
 	"apisupport": False,
-	"needroot": 1
+	"needroot": 1,
+	"dependencies": ["xterm", "dsniff"]
 }
 
 
