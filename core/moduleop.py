@@ -3,7 +3,7 @@ import os
 from core import colors
 import traceback
 import sys
-from core.prettytable import PrettyTable
+from prettytable import PrettyTable
 from core import getpath
 
 def count():
