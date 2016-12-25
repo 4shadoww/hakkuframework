@@ -20,7 +20,7 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	("file", ["none", "target zip file"]),
+	("file", ["none", "target rar file"]),
 	("dict", ["none", "dictionary of words"]),
 	("tc", [8, "thread count (int)"]),
 	("exto", ["none", "extract directory"])
