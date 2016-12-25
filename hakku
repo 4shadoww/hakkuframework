@@ -43,6 +43,12 @@ try:
 	# Disable scapy warning
 	logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
+	# Import getpath for lib path
+	from core import getpath
+
+	# Append lib path
+	sys.path.append(getpath.lib())
+
 	# Import core modules
 	from core import colors
 	from core import header

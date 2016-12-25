@@ -24,7 +24,7 @@ from core import helpin
 from core import info
 from core import colors
 from core import moduleop
-from core.prettytable import PrettyTable
+from prettytable import PrettyTable
 from core import module_database
 import core.cowsay
 from core import dsag

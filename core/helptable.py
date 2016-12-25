@@ -1,4 +1,4 @@
-from core.prettytable import PrettyTable
+from prettytable import PrettyTable
 from core import colors
 
 def generateTable(hlist):
