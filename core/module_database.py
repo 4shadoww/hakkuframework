@@ -40,8 +40,15 @@ database = [
 
 # File modules
 [colors.uline+colors.red+"File modules"+colors.end, colors.uline+colors.red+"Description"+colors.end],
-["zip_cracker", "zip file brute-force attack using dictionary"],
-["rar_cracker", "rar file brute-force attack using dictionary"],
+["zip_cracker", "zip file brute-force attack using word list"],
+["rar_cracker", "rar file brute-force attack using word list"],
 
 # End of file modules
+["",""],
+
+# Generator modules
+[colors.uline+colors.red+"Generator Modules"+colors.end, colors.uline+colors.red+"Description"+colors.end],
+["wordlist_gen", "word list generator"],
+
+# End of generator modules
 ]
