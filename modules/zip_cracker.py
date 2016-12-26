@@ -6,6 +6,7 @@ import threading, queue
 from core import getpath
 from os.path import relpath
 import sys
+from core.animline import animline
 
 conf = {
 	"name": "zip_cracker", # Module's name (should be same as file name)
@@ -74,8 +75,7 @@ class Worker(threading.Thread):
 				word = word.decode("utf-8").replace("\n", "")
 				if word[0] == "#":
 					continue
-				print("trying password: "+word, end="\r")
-				sys.stdout.write("\033[K")
+				#animline("trying password: "+word)
 				zipf.extractall(variables["exto"][0], pwd=word.encode("utf-8"))
 				self.pwdh.pwd = word
 				return
@@ -108,6 +108,7 @@ def run():
 		t = Worker(words[i::u], pwdh)
 		threads.append(t)
 		t.start()
+	print(colors.bold+"now cracking..."+colors.end)
 	try:
 		for thread in threads:
 			thread.join()

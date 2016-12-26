@@ -6,11 +6,12 @@ import threading, queue
 from core import getpath
 from os.path import relpath
 import sys
+from core.animline import animline
 
 conf = {
 	"name": "rar_cracker", # Module's name (should be same as file name)
 	"version": "1.0", # Module version
-	"shortdesc": "rar file brute-force attack using dictionary", # Short description
+	"shortdesc": "rar file brute-force attack using word list", # Short description
 	"github": "4shadoww", # Author's github
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com", # Email
@@ -75,8 +76,7 @@ class Worker(threading.Thread):
 				word = word.decode("utf-8").replace("\n", "")
 				if word[0] == "#":
 					continue
-				print("trying password: "+word, end="\r")
-				sys.stdout.write("\033[K")
+				#animline("trying password: "+word)
 				rf.extractall(path=variables["exto"][0], pwd=word)
 				self.pwdh.pwd = word
 				return
@@ -112,6 +112,8 @@ def run():
 		t = Worker(words[i::u], pwdh)
 		threads.append(t)
 		t.start()
+		
+	print(colors.bold+"now cracking..."+colors.end)
 	try:
 		for thread in threads:
 			thread.join()
