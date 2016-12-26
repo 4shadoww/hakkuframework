@@ -247,47 +247,71 @@ class Cmethods:
 			raise UnknownCommand("unknown command")
 
 	def reload(self, args):
-		if self.mm.moduleLoaded == 0:
-			try:
-				mod = "modules."+args[0]
-				value_holder.save_values(sys.modules[mod].variables)
-				imp.reload(sys.modules[mod])
-				sys.modules[mod]
-				value_holder.set_values(sys.modules[mod].variables)
+		try:
+			if self.mm.moduleLoaded == 0:
 				try:
-					self.modadd.init()
-				except AttributeError:
-					pass
-				print (colors.bold+"module "+ args[0] +" reloaded"+colors.end)
-			except IndexError:
-				print (colors.red+"please enter module's name"+colors.end)
-			except KeyError:
-				print (colors.red+"module not found or not loaded"+colors.end)
-		else:
-			try:
-				mod = "modules."+args[0]
-				value_holder.save_values(sys.modules[mod].variables)
-				imp.reload(sys.modules[mod])
-				sys.modules[mod]
-				value_holder.set_values(sys.modules[mod].variables)
+					mod = "modules."+args[0]
+					if mod in sys.modules:
+						value_holder.save_values(sys.modules[mod].variables)
+						importlib.reload(sys.modules[mod])
+						value_holder.set_values(sys.modules[mod].variables)
+						try:
+							self.modadd.init()
+						except AttributeError:
+							pass
+						print (colors.bold+"module "+ args[0] +" reloaded"+colors.end)
+					else:
+						importlib.import_module(mod)
+						try:
+							self.modadd.init()
+						except AttributeError:
+							pass
+						print(colors.bold+"module "+ args[0] +" imported"+colors.end)
+
+				except IndexError:
+					print (colors.red+"please enter module's name"+colors.end)
+			else:
 				try:
-					self.modadd.init()
-				except AttributeError:
-					pass				
-				print (colors.bold+"module "+ args[0] +" reloaded"+colors.end)
-			except IndexError:
-				mod = "modules."+self.mm.moduleName
-				value_holder.save_values(sys.modules[mod].variables)
-				imp.reload(sys.modules[mod])
-				sys.modules[mod]
-				value_holder.set_values(sys.modules[mod].variables)
-				try:
-					self.modadd.init()
-				except AttributeError:
-					pass
-				print (colors.bold+"module "+ self.mm.moduleName +" reloaded"+colors.end)
-			except KeyError:
-				print (colors.red+"module not found or loaded"+colors.end)
+					mod = "modules."+args[0]
+					if mod in sys.modules:
+						value_holder.save_values(sys.modules[mod].variables)
+						importlib.reload(sys.modules[mod])
+						value_holder.set_values(sys.modules[mod].variables)
+						try:
+							self.modadd.init()
+						except AttributeError:
+							pass				
+						print (colors.bold+"module "+ args[0] +" reloaded"+colors.end)
+					else:
+						importlib.import_module(mod)
+						try:
+							self.modadd.init()
+						except AttributeError:
+							pass
+						print(colors.bold+"module "+ self.mm.moduleName +" reloaded"+colors.end)
+				except IndexError:
+					mod = "modules."+self.mm.moduleName
+					if mod in sys.modules:
+						value_holder.save_values(sys.modules[mod].variables)
+						importlib.reload(sys.modules[mod])
+						value_holder.set_values(sys.modules[mod].variables)
+						try:
+							self.modadd.init()
+						except AttributeError:
+							pass
+						print (colors.bold+"module "+ self.mm.moduleName +" reloaded"+colors.end)
+
+					else:
+						modadd = importlib.import_module(mod)
+						try:
+							self.modadd.init()
+						except AttributeError:
+							pass
+						print(colors.bold+"module "+ self.mm.moduleName +" reloaded"+colors.end)
+		except:
+			print(colors.red+"faced unexpected error during reimporting:\n")
+			traceback.print_exc()
+			print(colors.end)
 
 	def run(self, args):
 
@@ -450,5 +474,15 @@ class Cmethods:
 						print(dep)
 				except KeyError:
 					print("this module doesn't require any dependencies")
+		else:
+			raise UnknownCommand("unknown command")
+
+	def init(self, args):
+		if self.mm.moduleLoaded == 1:
+			try:
+				self.modadd.init()
+				print("module initialized")
+			except AttributeError:
+				print("this module doesn't have init function")
 		else:
 			raise UnknownCommand("unknown command")
