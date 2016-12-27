@@ -38,6 +38,10 @@ def check_module(modadd):
 		print(colors.red+'\ninitdate variable has default value'+colors.green)
 		testfailed()
 
+	if modadd.conf["lastmod"] == "none":
+		print(colors.red+'\nlastmod variable has default value'+colors.green)
+		testfailed()
+
 	try:
 		if modadd.conf["dependencies"][0] == None:
 			print(colors.red+"\ndependencies has default value")
