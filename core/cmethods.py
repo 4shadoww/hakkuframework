@@ -25,7 +25,6 @@ from core import info
 from core import colors
 from core import moduleop
 from prettytable import PrettyTable
-from core import module_database
 import core.cowsay
 from core import dsag
 import core.matrix
@@ -34,6 +33,7 @@ from core.hftest import check_module
 from core import update
 from core import mscop
 from core import value_holder
+from core import moddbparser
 
 # Import exceptions
 from core.exceptions import UnknownCommand
@@ -123,29 +123,37 @@ class Cmethods:
 	def about(self, args):
 		if self.mm.moduleLoaded == 1:
 			try:
-				print(self.modadd.conf["name"]+" "+self.modadd.conf["version"])
-				print("author: "+self.modadd.conf["author"])
-				print("github: "+self.modadd.conf["github"])
-				print("email: "+self.modadd.conf["email"])
-				print("description: "+self.modadd.conf["shortdesc"])
-				print("initial date: "+self.modadd.conf["initdate"])
+				t = PrettyTable([self.modadd.conf["name"]+" "+self.modadd.conf["version"], ""])
+				t.add_row(["",""])
+				t.align = 'l'
+				t.valing = 'm'
+				t.border = False
+				t.add_row(["author:", self.modadd.conf["author"]])
+				t.add_row(["github:", self.modadd.conf["github"]])
+				t.add_row(["email:", self.modadd.conf["email"]])
+				t.add_row(["description:", self.modadd.conf["shortdesc"]])
+				t.add_row(["initial date:", self.modadd.conf["initdate"]])
+				t.add_row(["last modification:", self.modadd.conf["lastmod"]])
+			
 				if self.modadd.conf["apisupport"] == True:
 					support = "supported"
 				else:
 					support = "not supported"
-				print("api support: "+support)
+				t.add_row(["api support:", support])
 				try:
 					self.modadd.conf["dependencies"]
-					print("dependencies: ", end="")
+					deps = ""
 					i = 0
 					for dep in self.modadd.conf["dependencies"]:
 						i += 1
 						if i == len(self.modadd.conf["dependencies"]):
-							print(dep)
+							deps += dep
 						else:
-							print(dep+", ", end="")
+							deps += dep+", "
+					t.add_row(["dependencies:", deps])
 				except KeyError:
 					pass
+				print(t)
 			except:
 				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
@@ -215,18 +223,27 @@ class Cmethods:
 
 	def show(self, args):
 		try:
-			if args[0] == "modules" and self.mm.moduleLoaded == 0:
+			if args[0] == "modules":
 				t = PrettyTable([colors.bold+'Modules:', ''+colors.end])
-				t.add_row(['',''])
 				t.align = 'l'
 				t.valing = 'm'
 				t.border = False
+				xml = moddbparser.parsemoddb()
+				root = xml[0]
+				for category in root:
+					if category.tag == "category":
+						t.add_row(["", ""])
+						t.add_row([colors.red+colors.uline+category.attrib["name"]+colors.end, colors.red+colors.uline+"Description"+colors.end])
 
-				for val in module_database.database:
-					t.add_row([val[0], val[1]])
+					for item in category:
+						if item.tag == "module":
+							for child in item:
+								if child.tag == "shortdesc":
+									t.add_row([item.attrib["name"], child.text])
+									break
 
-				t.add_row(['',''])
-				print (t)
+				print(t)				
+
 			elif args[0] == "options" and self.mm.moduleLoaded == 1:
 				try:
 					moduleop.printoptions(self.modadd)
@@ -362,6 +379,7 @@ class Cmethods:
 						template_contents = f.readlines()
 						template_contents[5] = "	\"name\": \""+args[1]+"\", # Module's name (should be same as file name)\n"
 						template_contents[11] = "	\"initdate\": \""+(time.strftime("%d.%m.%Y"))+"\", # Initial date\n"
+						template_contents[12] = "	\"lastmod\": \""+(time.strftime("%d.%m.%Y"))+"\", # Last modification\n"
 						mfile.writelines(template_contents)
 						mfile.close()
 						print(colors.bold+"module "+ args[1] +".py" +" created to modules folder"+colors.end)
@@ -486,3 +504,35 @@ class Cmethods:
 				print("this module doesn't have init function")
 		else:
 			raise UnknownCommand("unknown command")
+
+	def redb(self, args):
+		if self.mm.moduleLoaded == 1:
+			try:
+				moduleop.addtodb(self.modadd)
+			except PermissionError:
+				print(colors.red+"error: permission denied"+colors.end)
+			except KeyboardInterrupt:
+				print()
+			except:
+				print(colors.red+"faced unexpected:\n")
+				traceback.print_exc(file=sys.stdout)
+				print(colors.end)
+
+		else:
+			answer = input("do you want to update whole database? ")
+			if answer == "yes" or answer == "y":
+				try:
+					modules = glob.glob(getpath.modules()+"*.py")
+					for module in modules:
+						module = module.replace(getpath.modules(), '').replace('.py', '')
+						if module != '__init__' and module != "test":
+							modadd = importlib.import_module("modules."+module)
+							moduleop.addtodb(modadd)
+				except PermissionError:
+					print(colors.red+"error: permission denied"+colors.end)
+				except KeyboardInterrupt:
+					print()
+				except:
+					print(colors.red+"faced unexpected:\n")
+					traceback.print_exc(file=sys.stdout)
+					print(colors.end)
