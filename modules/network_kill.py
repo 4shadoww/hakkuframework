@@ -1,5 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
+from core.messages import *
 from optparse import OptionParser
 import os
 import signal
@@ -41,8 +42,8 @@ customcommands = {
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	print(colors.blue + "[*] arp poisoning has been started!" + colors.end)
-	print(colors.blue + "[*] ctrl + c to end" + colors.end)
+	printInfo("arp poisoning has been started!")
+	printInfo("[*] ctrl + c to end")
 	packet = ARP()
 	packet.psrc = variables['router'][0]
 	packet.pdst = variables['target'][0]

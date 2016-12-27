@@ -31,7 +31,7 @@ def run():
 		try:
 			socket.setdefaulttimeout(float(variables['timeout'][0]))
 		except ValueError:
-			printerror('invalid timeout')
+			printError('invalid timeout')
 		conn = http.client.HTTPConnection(variables['target'][0])
 		conn.request("HEAD","/index.html")
 		res = conn.getresponse()
@@ -42,11 +42,11 @@ def run():
 		print('')
 		return results
 	except http.client.InvalidURL:
-		printerror('invalid url')
+		printError('invalid url')
 		return "error: invalid url"
 	except socket.gaierror:
-		printerror('name or service not known')
+		printError('name or service not known')
 		return "error: name or service not known"
 	except socket.timeout:
-		printerror('timeout')
+		printError('timeout')
 		return "error: timeout"

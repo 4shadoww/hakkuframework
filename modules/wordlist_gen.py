@@ -1,11 +1,12 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+
+from core.messages import *
 from core import colors
 from collections import OrderedDict
 import threading, queue
 import itertools
 from os.path import relpath
 from core import getpath
-from core.animline import animline
 
 conf = {
 	"name": "wordlist_gen", # Module's name (should be same as file name)
@@ -68,7 +69,7 @@ class Worker(threading.Thread):
 		try:
 			f = open(variables["output"][0], "a")
 		except Exception as error:
-			print(colors.red+error+colors.end)
+			printError(error)
 			return error
 
 		for L in range(self.lenmin, self.lenmax):
@@ -77,7 +78,6 @@ class Worker(threading.Thread):
 					f.close()
 					return
 				word = ''.join(word)
-				#animline("generated word: "+word)
 				f.write(word+"\n")
 
 		f.close()
@@ -103,14 +103,14 @@ def run():
 	try:
 		variables["maxlen"][0] = int(variables["maxlen"][0])
 	except ValueError:
-		print(colors.red+"error: invalid maxlen"+colors.end)
-		return "error: invalid maxlen"
+		printError("invalid maxlen")
+		return "[err] invalid maxlen"
 
 	try:
 		variables["minlen"][0] = int(variables["minlen"][0])
 	except ValueError:
-		print(colors.red+"error: invalid minlen"+colors.end)
-		return "error: invalid minlen"
+		printError("invalid minlen")
+		return "[err] invalid minlen"
 
 	sh = StatHolder()
 	sh.reset()
@@ -119,22 +119,22 @@ def run():
 	d = variables["maxlen"][0] - variables["minlen"][0]
 
 	if d < 0:
-		print(colors.red+"error: minlen can't be greater than minlen")
-		return "error: minlen can't be greater than minlen"
+		printError("minlen can't be greater than minlen")
+		return "[err] minlen can't be greater than minlen"
 	for i in range(variables["minlen"][0], variables["maxlen"][0]+1):
 		t = Worker(sh, i+1, i, chars)
 		threads.append(t)
 		t.start()
 
-	print(colors.bold+"generating..."+colors.end)
+	printInfo(colors.bold+"generating..."+colors.end)
 	try:
 		for thread in threads:
 			thread.join()
 	except KeyboardInterrupt:
 		sh.kill = True
-		print(colors.bold+"word generator terminated"+colors.end)
+		printInfo("word generator terminated")
 
-	print(colors.green+"word list genereted\ndone"+colors.end)
+	printSuccess("word list genereted")
 
 def addchar(args):
 	global addchr
@@ -142,5 +142,5 @@ def addchar(args):
 		addchr += args[0]
 		return "[suf] chars added"
 	except IndexError:
-		print("error: args not given")
-		return "error: args not given"
+		printError("args not given")
+		return "[err] args not given"

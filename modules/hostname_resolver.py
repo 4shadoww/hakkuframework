@@ -1,5 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-from core import colors
+
+from core.messages import *
 from collections import OrderedDict
 import socket
 
@@ -26,11 +27,11 @@ changelog = "Version 1.0:\nrelease"
 def run():
 	try:
 		querly = socket.gethostbyaddr(variables['target'][0])
-		print(colors.yellow+"resolved hostname:", querly[0]+colors.end)
+		printSuccess("resolved hostname: "+ querly[0])
 		return querly[0]
 	except(socket.herror):
-		print(colors.red+"unknown host"+colors.end)
-		return "error: unknown host"
+		printError("unknown host")
+		return "[err] unknown host"
 	except(socket.gaierror):
-		print(colors.red+"name or service not known"+colors.end)
-		return "error: name or service not known"
+		printError("name or service not known")
+		return "[err] name or service not known"

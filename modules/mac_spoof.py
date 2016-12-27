@@ -1,4 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+
+from core.messages import *
 import os
 from core import colors
 from collections import OrderedDict
@@ -48,12 +50,12 @@ def run():
 	xterm1 = "service network-manager stop"
 	xterm2 = "ifconfig "+variables['interface'][0]+" hw ether "+variables['fake_mac'][0]
 	xterm3 = "service network-manager start"
-	print(colors.blue+"[*] starting mac spoof"+colors.yellow)
+	printInfo("status: starting mac spoof")
 	os.system(xterm1)
-	print(colors.green+"trying to set fake mac address..."+colors.yellow)
+	printInfo("status: trying to set fake mac address...")
 	os.system(xterm2)
 	os.system(xterm3)
-	print(colors.green+"done!"+colors.end)
+	printSuccess("status: done!")
 
 def scan(args):
 	network_scanner.scan()
@@ -74,15 +76,16 @@ def reset(args):
 	realmac = realmac.replace("'", "")
 	realmac =  realmac[:-2]
 	if not realmac:
-		print(colors.red+"[!] error"+colors.end)
+		printError("error")
+		return "[err]"
 	else:
-		print(colors.blue+"realmac: "+realmac)
+		printInfo("realmac: "+realmac)
 		xterm1a = "service network-manager stop"
 		xterm2a = "ifconfig "+variables['interface'][0]+" hw ether "+realmac
 		xterm3a = "service network-manager start"
-		print("[*] setting real mac"+colors.yellow)
+		printInfo("setting real mac")
 		os.system(xterm1a)
-		print(colors.green+"trying to set real mac address..."+colors.yellow)
+		printInfo("trying to set real mac address...")
 		os.system(xterm2a)
 		os.system(xterm3a)
-		print(colors.green+"done!"+colors.end)
+		printSuccess("done!")

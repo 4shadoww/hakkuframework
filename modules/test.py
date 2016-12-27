@@ -1,6 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core import colors
+from core.messages import *
 from collections import OrderedDict
 
 # Info about the module
@@ -34,6 +34,7 @@ changelog = "Version 1.0:\nrelease"
 def run():
 	print(variables['value'][0])
 	print(variables['value'][1])
+	printWarning("warning")
 	return variables
 
 def test(args):

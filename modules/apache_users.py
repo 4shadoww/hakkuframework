@@ -1,6 +1,5 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-from core import colors
-from time import sleep
+from core.messages import *
 import http.client
 import socket
 from collections import OrderedDict
@@ -28,9 +27,8 @@ changelog = "Version 1.0:\nrelease"
 def run():
 	variables['target'][0] = variables['target'][0].replace("http://", "")
 	variables['target'][0] = variables['target'][0].replace("https://", "")
-	print(colors.green + "[*] Your Target : " + variables['target'][0] + colors.end)
-	print(colors.blue + "[*] Loading Path List ... Please Wait ..." + colors.end)
-	sleep(2)
+	printInfo("your target : " + variables['target'][0])
+	printInfo("loading path list...")
 	paths = ['~root',
 '~toor',
 '~bin',
@@ -8955,11 +8953,11 @@ def run():
 			conn.request("GET", path)
 			res = conn.getresponse()
 			if(res.status==200):
-				print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
+				printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
 				paths_found.append(path)
 			else:
-				print(colors.yellow + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
+				printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
 		return paths_found
 	except(socket.gaierror):
-		print(colors.red+"[!] host is down"+colors.end)
-		return "error: host is down"
+		printError("host is down")
+		return "[err] host is down"

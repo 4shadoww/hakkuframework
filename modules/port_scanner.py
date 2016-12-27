@@ -1,5 +1,5 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-import sys
+from core.messages import *
 from core import colors
 from collections import OrderedDict
 import socket
@@ -35,13 +35,13 @@ def run():
 	try:
 		targetip = socket.gethostbyname(variables['target'][0])
 	except(socket.gaierror):
-		print(colors.red+'Hostname could not be resolved'+colors.end)
-		return "error: hostname could not be resolved"
+		printError('hostname could not be resolved')
+		return "[err] hostname could not be resolved"
 
 	socket.setdefaulttimeout(0.5)
 
 	print(colors.blue+"-" * 60)
-	print("Please wait, scanning target", targetip)
+	print("please wait, scanning target", targetip)
 	print("-" * 60+colors.end)
 
 	t1 = datetime.now()
@@ -61,14 +61,14 @@ def run():
 			sock.close()
 
 	except(socket.gaierror):
-		print(colors.red+'Hostname could not be resolved'+colors.end)
-		return "error: hostname could not be resolved"
+		printError('hostname could not be resolved')
+		return "[err] hostname could not be resolved"
 	except(socket.error):
-		print(colors.red+"Couldn't connect to server"+colors.end)
-		return "error: couldn't connect to server"
+		printError(colors.red+"couldn't connect to server"+colors.end)
+		return "[err] couldn't connect to server"
 	except(ValueError):
-		print(colors.red+"Port value must be integer"+colors.end)
-		return "error: port value must be integer"
+		printError("port value must be integer")
+		return "[err] port value must be integer"
 
 	# Checking the time again
 	t2 = datetime.now()
@@ -77,5 +77,5 @@ def run():
 	total =  t2 - t1
 
 	# Printing the information to screen
-	print(colors.blue+'Scanning Completed in: ', total, colors.end)
+	printInfo('scanning Completed in: '+ str(total))
 	return open_ports

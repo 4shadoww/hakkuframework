@@ -1,7 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
 import http.client
-from core import colors
 from collections import OrderedDict
 import socket
 from core.messages import *
@@ -31,7 +30,7 @@ changelog = "Version 1.0:\nrelease\n\nVersion 1.1:\n+ added timeout variable"
 def run():
 	variables['target'][0] = variables['target'][0].replace("http://", "")
 	variables['target'][0] = variables['target'][0].replace("https://", "")
-	print (colors.green + "[*] Your Target : " + variables['target'] + colors.end)
+	printInfo("your target : " + variables['target'])
 	paths = ['index',
 'images',
 'download',
@@ -220589,12 +220588,12 @@ def run():
 				try:
 					conn.timeout = float(variables['timeout'][0])
 				except ValueError:
-					printerror('invalid timeout')
+					printError('invalid timeout')
 					return "error: invalid timeout"
 				conn.request("GET", path)
 				res = conn.getresponse()
 				if(res.status==200):
-					print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colorss.end)
+					printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
 					paths_found.append(path)
 		else:
 			for path in paths:
@@ -220603,18 +220602,18 @@ def run():
 				try:
 					conn.timeout = float(variables['timeout'][0])
 				except ValueError:
-					printerror('invalid timeout')
+					printError('invalid timeout')
 					return "error: invalid timeout"
 				conn.request("GET", path)
 				res = conn.getresponse()
 				if(res.status==200):
-					print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colorss.end)
+					printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
 					paths_found.append(path)
 				else:
-					print(colors.yellow + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
+					printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
 	except (socket.gaierror):
-		print (colors.red+"target "+variables['target'][0]+" not found"+colors.end)
-		return "error: not found"
+		printError("target "+variables['target'][0]+" not found")
+		return "[err] not found"
 	except (socket.timeout):
-		printerror("time out "+variables['target'][0])
-		return "error: timeout"
+		printError("time out "+variables['target'][0])
+		return "[err] timeout"

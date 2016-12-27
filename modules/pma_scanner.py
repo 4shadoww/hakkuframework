@@ -1,5 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-from core import colors
+
+from core.messages import *
 from collections import OrderedDict
 import http.client
 import socket
@@ -27,8 +28,8 @@ changelog = "Version 1.0:\nrelease"
 def run():
 	variables['target'][0] = variables['target'][0].replace("http://", "")
 	variables['target'][0] = variables['target'][0].replace("https://", "")
-	print(colors.green + "[*] your target : " + variables['target'][0] + colors.end)
-	print(colors.blue + "[*] loading path list ... please wait ..." + colors.end)
+	printInfo("your target : " + variables['target'][0])
+	printInfo("loading path list... please wait...")
 	paths = ['/phpMyAdmin/',
 '/phpmyadmin/',
 '/PMA/',
@@ -115,7 +116,7 @@ def run():
 '/webdb/',
 '/mysqladmin/',
 '/mysql-admin/',]
-	print(colors.blue+"[*] starting scan..."+colors.end)
+	printInfo("starting scan...")
 	paths_found = []
 	try:
 		for path in paths:
@@ -124,14 +125,14 @@ def run():
 			conn.request("GET", path)
 			res = conn.getresponse()
 			if(res.status==200):
-				print(colors.bold + colors.green + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
+				printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
 				paths_found.append(path)
 			else:
-				print(colors.yellow + "[%s] ... [%s %s]" % (path, res.status, res.reason) + colors.end)
+				printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
 		return paths_found
 	except(socket.gaierror):
-		print(colors.red+"[!] host is down!"+colors.end)
-		return "error: host is down"
+		printError("host is down!")
+		return "[err] host is down"
 	except socket.timeout:
-		print(colors.red+"[!] timeout")
-		return "error: timeout"
+		printError("timeout")
+		return "[err] timeout"

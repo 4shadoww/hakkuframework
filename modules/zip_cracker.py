@@ -1,4 +1,6 @@
 #		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+
+from core.messages import *
 from core import colors
 from collections import OrderedDict
 import zipfile
@@ -63,7 +65,7 @@ class Worker(threading.Thread):
 			zipf = zipfile.ZipFile(variables["file"][0])
 		
 		except FileNotFoundError:
-			self.pwdh.error = "error: zip file not found"
+			self.pwdh.error = "[err] zip file not found"
 			return
 		for word in self.words:
 			if self.pwdh.pwd != None:
@@ -88,12 +90,12 @@ class Worker(threading.Thread):
 def run():
 	try:
 		wordlist = open(variables["dict"][0], "rb")
-		print("reading word list...")
+		printInfo("reading word list...")
 		words = wordlist.read().splitlines()
 	except FileNotFoundError:
-		print(colors.red+"error: word list not found"+colors.end)
-		return "error: word list not found"
-	print("brute-force attack started...")
+		printError("word list not found")
+		return "[err] word list not found"
+	printInfo("brute-force attack started...")
 
 	pwdh = PwdHolder
 	pwdh.reset()
@@ -101,26 +103,26 @@ def run():
 	try:
 		u = int(variables["tc"][0])
 	except TypeError:
-		print(colors.red+"error: invalid thread count"+colors.end)
-		return "error: invalid thread count"
+		printError("invalid thread count")
+		return "[err] invalid thread count"
 	threads = []
 
 	for i in range(variables["tc"][0]):
 		t = Worker(words[i::u], pwdh)
 		threads.append(t)
 		t.start()
-	print(colors.bold+"now cracking..."+colors.end)
+	printInfo("now cracking...")
 	try:
 		for thread in threads:
 			thread.join()
 	except KeyboardInterrupt:
 		pwdh.kill = True
-		print(colors.bold+"brute-force attack terminated"+colors.end)
+		printInfo("brute-force attack terminated")
 
 	if pwdh.pwd != None:
-		print(colors.green+"password found: "+pwdh.pwd+colors.end)
+		printSuccess("password found: "+pwdh.pwd)
 		return pwdh.pwd
 
 	elif pwdh.error != None:
-		print(colors.red+pwdh.error+colors.end)
+		printError(pwdh.error)
 		return pwdh.error

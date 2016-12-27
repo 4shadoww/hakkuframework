@@ -1,4 +1,6 @@
 #		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+
+from core.messages import *
 from core import colors
 from collections import OrderedDict
 import smtplib
@@ -43,7 +45,7 @@ s_verbs = ["eats", "kicks", "gives", "treats", "meets with", "creates", "hacks",
 p_verbs = ["eat", "kick", "give", "treat", "meet with", "create", "hack", "configure", "spy on", "retard", "meow on", "flee from", "try to automate", "explode"]
 infinitives = ["to make a pie.", "for no apparent reason.", "because the sky is green.", "for a disease.", "to be able to make toast explode.", "to know more about archeology.", "because the sky is blue"]
 
-option_notes = colors.yellow+" this module will not work with gmail, yahoo, yandex\n please run your own smtp!"+colors.end
+option_notes = colors.yellow+" this module may not work with gmail, yahoo, yandex\n please run your own smtp!"+colors.end
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
 
@@ -63,17 +65,17 @@ def run():
 	try:
 		server = smtplib.SMTP(variables['smtp'][0], int(variables['smtp_port'][0]))
 	except(ValueError):
-		print(colors.red+"error: port number must be int"+colors.end)
-		return "error: port number must be int"
+		printError("port number must be int")
+		return "[err] port number must be int"
 	except socket.gaierror:
-		print(colors.red+"error: cannot reach smtp server"+colors.end)
-		return "error: cannot reach smtp server"
+		printError("cannot reach smtp server")
+		return "[err] cannot reach smtp server"
 	except(ConnectionRefusedError):
-		print(colors.red+"error: connection refused"+colors.end)
-		return "error: connection refused"
+		printError("connection refused")
+		return "[err] connection refused"
 	except(TimeoutError):
-		print(colors.red+"error: timeout cannot reach smtp server"+colors.end)
-		return "error: timeout cannot reach smtp server"
+		printError("timeout cannot reach smtp server")
+		return "[err] timeout cannot reach smtp server"
 	if int(variables['starttls'][0]) == 1:
 		server.starttls()
 	if int(variables['login'][0]) == 1:
@@ -90,10 +92,10 @@ def run():
 					words = " ".join(list0)
 					msg.attach(MIMEText(words, 'html'))
 				server.sendmail(fromaddr, toaddr, text)
-				print(colors.green+"email sended"+colors.end)
+				printSuccess("email sended")
 
 	if int(variables['amount'][0]) == 0:
-		print(colors.yellow+'starting infinite loop (ctrl+c) to end')
+		printInfo("starting infinite loop (ctrl+c) to end")
 		while True:
 			if int(variables['random_email'][0]) == 1:
 					fakemail = generate_random_email()
@@ -103,7 +105,7 @@ def run():
 					words = " ".join(list0)
 					msg.attach(MIMEText(words, 'html'))
 			server.sendmail(fromaddr, toaddr, text)
-			print(colors.green+"email sended"+colors.end)
+			printSuccess("email sended")
 	server.quit()
 
 def get_random_domain(domains):

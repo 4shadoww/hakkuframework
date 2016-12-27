@@ -1,4 +1,5 @@
 #		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+from core.messages import *
 from core import colors
 import subprocess
 from scapy.all import *
@@ -34,10 +35,8 @@ help_notes = colors.red+"this module will not work without root permission!"+col
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	print (colors.blue + "[*]Setting Up ..." + colors.end)
-	print(colors.green + "[OK]" + colors.end)
-	sleep(1)
-	print(colors.blue + "[*]ARP Poisoning Has Been Started ..." + colors.end)
+	printInfo("setting up...")
+	printInfo("ARP poisoning has been started...")
 	packet = ARP()
 	packet.psrc = variables['router'][0]
 	packet.pdst = variables['target'][0]
