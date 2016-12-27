@@ -1,0 +1,78 @@
+<data>
+	<category key="wireless_bluetooth" name="Wireless / Bluetooth">
+		<module name="wifi_jammer">
+			<shortdesc>jam wifi</shortdesc>
+		</module>
+		<module name="bluetooth_pod">
+			<shortdesc>bluetooth ping of death</shortdesc>
+		</module>
+	</category>
+	<category key="web_modules" name="Web Modules">
+		<module name="cloudflare_resolver">
+			<shortdesc>tries to resolve ip from subdomains</shortdesc>
+		</module>
+		<module name="dir_scanner">
+			<shortdesc>scans dirs from website</shortdesc>
+		</module>
+		<module name="web_killer">
+			<shortdesc>TCP Attack</shortdesc>
+		</module>
+		<module name="apache_users">
+			<shortdesc>scan directory of apache users</shortdesc>
+		</module>
+		<module name="pma_scanner">
+			<shortdesc>PHPMyAdmin login page scanner</shortdesc>
+		</module>
+		<module name="port_scanner">
+			<shortdesc>scan open ports</shortdesc>
+		</module>
+		<module name="email_bomber">
+			<shortdesc>spam email to target email</shortdesc>
+		</module>
+		<module name="hostname_resolver">
+			<shortdesc>resolve hostname using ip</shortdesc>
+		</module>
+		<module name="webserver_scout">
+			<shortdesc>get information from webserver</shortdesc>
+		</module>
+		<module name="proxy_scout">
+			<shortdesc>verify http proxy</shortdesc>
+		</module>
+		<module name="whois">
+			<shortdesc>perform whois query</shortdesc>
+		</module>
+	</category>
+	<category key="network_modules" name="Network Modules">
+		<module name="network_kill">
+			<shortdesc>blocks communication between router and target</shortdesc>
+		</module>
+		<module name="arp_dos">
+			<shortdesc>ARP cache denial of service attack</shortdesc>
+		</module>
+		<module name="arp_spoof">
+			<shortdesc>arp spoof</shortdesc>
+		</module>
+		<module name="mac_spoof">
+			<shortdesc>mac spoof</shortdesc>
+		</module>
+		<module name="mitm">
+			<shortdesc>man in the middle attack</shortdesc>
+		</module>
+		<module name="dns_spoof">
+			<shortdesc>dns spoof</shortdesc>
+		</module>
+	</category>
+	<category key="file_modules" name="File Modules">
+		<module name="zip_cracker">
+			<shortdesc>zip file brute-force attack using dictionary</shortdesc>
+		</module>
+		<module name="rar_cracker">
+			<shortdesc>rar file brute-force attack using word list</shortdesc>
+		</module>
+	</category>
+	<category key="generator_modules" name="Generator Modules">
+		<module name="wordlist_gen">
+			<shortdesc>word list generator</shortdesc>
+		</module>
+	</category>
+</data>
