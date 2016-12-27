@@ -9,7 +9,8 @@ conf = {
 	"github": "none", # Author's github
 	"author": "none", # Author
 	"email": "none", # Email
-#	"initdate": "none" # Initial date
+#	"initdate": "none", # Initial date
+#	"lastmod": "none", # Last modification
 	"apisupport": False, # Api support
 	"needroot": 1, # Alert user if root permissions not available (remove variable below if root permissions not needed)
 	"dependencies": [None] # Remove this if your module doesn't have any dependencies
