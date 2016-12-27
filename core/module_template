@@ -1,9 +1,10 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 from core import colors
+from core.messages import *
 from collections import OrderedDict
 
 conf = {
-#	"name": = "module_name", # Module's name (should be same as file name)
+#	"name": "module_name", # Module's name (should be same as file name)
 	"version": "1.0", # Module version
 	"shortdesc": "none", # Short description
 	"github": "none", # Author's github
@@ -36,9 +37,10 @@ customcommands = {
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
 
+# Run function
 def run():
-	# Run
 	print(variables)
+	printInfo("you have successfully created module")
 
 # Just example of custom command "example" (remove this function below)
 def example(args):
