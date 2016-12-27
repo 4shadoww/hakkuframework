@@ -1,15 +1,19 @@
+import sys
 from core import colors
 
-def printerror(message):
-    if "\n" in message[0:1]:
-            message = message.replace(message[0:1], "")
-            print(colors.red+'\nerror:',message+colors.end)
-    else:
-        print(colors.red+'error:',message+colors.end)
+error = "["+colors.bold+colors.red+"err"+colors.end+"] "
+info = "["+colors.bold+colors.blue+"inf"+colors.end+"] "
+warning = "["+colors.bold+colors.yellow+"war"+colors.end+"] "
+success = "["+colors.bold+colors.green+"suf"+colors.end+"] "
 
-def printsuccess(message):
-    if "\n" in message[0:1]:
-        message = message.replace(message[0:1], "")
-        print(colors.green+'\n'+message+colors.end)
-    else:
-         print(colors.green+message+colors.end)
+def printError(message, end="\n"):
+	sys.stdout.write(error+message+end)
+
+def printWarning(message, end="\n"):
+	sys.stdout.write(warning+message+end)
+
+def printInfo(message, end="\n"):
+	sys.stdout.write(info+message+end)
+
+def printSuccess(message, end="\n"):
+	sys.stdout.write(success+message+end)
