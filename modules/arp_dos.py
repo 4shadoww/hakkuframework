@@ -13,6 +13,7 @@ conf = {
 	"author": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "3.3.2016",
+	"lastmod": "27.12.2016",
 	"needroot": 1,
 	"apisupport": False,
 	"dependencies": ["xterm", "ettercap"]

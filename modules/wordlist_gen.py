@@ -15,6 +15,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com", # Email
 	"initdate": "26.12.2016", # Initial date
+	"lastmod": "27.12.2016",
 	"apisupport": True, # Api support
 }
 

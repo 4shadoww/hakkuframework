@@ -15,6 +15,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "24.2.2016",
+	"lastmod": "27.12.2016",
 	"apisupport": False,
 	"needroot": 1,
 	"dependencies": ["xterm", "aircrack-ng"]
