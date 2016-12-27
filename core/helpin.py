@@ -3,7 +3,7 @@ from core import colors
 
 commands = [
 ["use [module name]", "load module"],
-["show modules", "show modules"],
+["show modules", "list all modules"],
 ["clear", "clear terminal"],
 ["exit", "exit from Hakku Framework"],
 ["version", "show Hakku Framework version"],
@@ -14,12 +14,14 @@ commands = [
 ["changelog", "show changelog"],
 ["new module [module name]", "create new module"],
 ["check module [module name]", "check module"],
-["reload [module name]", "reload module [useful for developers]"],
+["reload [module name]", "reload module"],
+["redb", "update whole module database"]
 ["list dependencies", "list every dependencie"]
 ]
 
 mcommands = [
-["show options", "show options"],
+["show options", "show module's options"],
+["show modules", "list all modules"],
 ["set [option name] [value]", "set value to option"],
 ["run", "run module"],
 ["exit", "exit from module"],
@@ -30,6 +32,7 @@ mcommands = [
 ["about", "information about this module"],
 ["cl [command]", "run terminal command"],
 ["changelog", "show changelog"],
-["reload", "reload this module [useful for developers]"],
+["reload", "reload this module"],
+["redb", "add this module to database"]
 ["list dependencies", "list this module's dependencies"]
 ]
