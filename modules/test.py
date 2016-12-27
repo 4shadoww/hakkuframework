@@ -2,7 +2,6 @@
 
 from core import colors
 from collections import OrderedDict
-from core import getpath
 
 # Info about the module
 
