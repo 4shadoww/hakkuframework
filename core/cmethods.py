@@ -34,6 +34,7 @@ from core import update
 from core import mscop
 from core import value_holder
 from core import moddbparser
+from core.messages import *
 
 # Import exceptions
 from core.exceptions import UnknownCommand
@@ -176,7 +177,7 @@ class Cmethods:
 				print (file_contents)
 				f.close()
 			except IOError:
-				print(colors.red + "error: changelog file not found (have you removed it?)" + colors.end)
+				printError("changelog file not found (have you removed it?)")
 
 	def use(self, args):
 		init = False
@@ -194,13 +195,13 @@ class Cmethods:
 					pass
 				try:
 					if self.modadd.conf["outdated"] == 1:
-						print(colors.red + "this module is outdated and might not be working" + colors.end)
+						printWarning("this module is outdated and might not be working")
 				except KeyError:
 					pass
 				try:
 					if self.modadd.conf["needroot"] == 1:
 						if not os.geteuid() == 0:
-							print(colors.red+"this module requires root permissions for full functionality!"+colors.end)
+							printWarning("this module requires root permissions for full functionality!")
 				except KeyError:
 					pass
 				if init == True:
@@ -339,7 +340,7 @@ class Cmethods:
 			except KeyboardInterrupt:
 				print(colors.red+"module terminated"+colors.end)
 			except PermissionError:
-				print(colors.red+"error: permission denied"+colors.end)
+				printError("permission denied")
 				return "[err] permission denied"
 			except:
 				print(colors.red+"unexpected error in module:\n")
@@ -461,10 +462,10 @@ class Cmethods:
 			try:
 				update.update()
 			except PermissionError:
-				print(colors.red+"error: permission denied"+colors.end)
+				printError("permission denied")
 
 			except Exception as error:
-				print(colors.red+"error: "+str(error)+colors.end)
+				printError(str(error))
 
 	def loaded(self, args):
 		print(sys.modules.keys())
