@@ -71,13 +71,13 @@ def addtodb(modadd):
 							printSuccess("database updated")
 							return
 	if new == True:
-		printInfo("\n"+modadd.conf["name"]+" doesn't exist in database")
+		printInfo(modadd.conf["name"]+" doesn't exist in database\n", start="\n")
 		print("available categorie keys:"+colors.yellow)
 		for category in root:
 			if category.tag == "category":
 				print(category.attrib["key"])
 		print(colors.end, end="")
-		catkey = input("\n\ngive new or exist key? ")
+		catkey = input("\ngive new or exist key? ")
 
 		for category in root:
 			if category.tag == "category" and category.attrib["key"] == catkey:
