@@ -8,6 +8,7 @@ from core import getpath
 from core import moddbparser
 from xml.etree import ElementTree
 from xml.dom import minidom
+from core.messages import *
 
 def count():
 	isfile = os.path.isfile
@@ -67,10 +68,10 @@ def addtodb(modadd):
 							info.text = modadd.conf["shortdesc"]
 							new = False
 							tree.write(getpath.core()+"module_database.xml")
-							print("database updated")
+							printSuccess("database updated")
 							return
 	if new == True:
-		print("\n"+modadd.conf["name"]+" doesn't exist in database")
+		printInfo("\n"+modadd.conf["name"]+" doesn't exist in database")
 		print("available categorie keys:"+colors.yellow)
 		for category in root:
 			if category.tag == "category":
@@ -88,11 +89,12 @@ def addtodb(modadd):
 				category.append(module)
 				writedb(root)
 				newcat = False
-				print("module added to "+category.attrib["name"])
+				printSuccess("module added to "+category.attrib["name"])
 				break
 
 		if newcat == True:
-			print("category not found\ngoing to add new category")
+			printInfo("category not found")
+			printInfo("going to add new category")
 			catname = input("give new category's name: ")
 			newcat = ElementTree.Element("category")
 			newcat.set("name", catname)
@@ -105,5 +107,5 @@ def addtodb(modadd):
 			newcat.append(module)
 			root.append(newcat)
 			writedb(root)
-			print("new category created")
-			print("module added to "+newcat.attrib["name"])
+			printSuccess("new category created")
+			printSuccess("module added to "+newcat.attrib["name"])
