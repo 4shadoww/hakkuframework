@@ -1,5 +1,3 @@
-#        Copyright [C] 2015 Noa-Emil Nissinen [4shadoww]
-from core import colors
 
 commands = [
 ["use [module name]", "load module"],
@@ -24,8 +22,7 @@ mcommands = [
 ["show modules", "list all modules"],
 ["set [option name] [value]", "set value to option"],
 ["run", "run module"],
-["exit", "exit from module"],
-["back", "exit from module"],
+["exit / back", "exit from module"],
 ["clear", "clear terminal"],
 ["ifconfig", "run terminal command ifconfig"],
 ["scan", "scan devices from lan"],
