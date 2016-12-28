@@ -1,41 +1,35 @@
-#µSploit Framework [![Build Status](https://travis-ci.org/4shadoww/usploit.svg?branch=master)](https://travis-ci.org/4shadoww/usploit) [![Code Climate](https://codeclimate.com/github/4shadoww/usploit/badges/gpa.svg)](https://codeclimate.com/github/4shadoww/usploit)
+#Hakku Framework [![Build Status](https://travis-ci.org/4shadoww/usploit.svg?branch=master)](https://travis-ci.org/4shadoww/usploit)
 
 
-####What is µSploit Framework?
+####What is Hakku Framework?
 
-* µSploit framework is collection of simple penetration testing tools
-* Tools will be used with simple cli
-* µSploit framework is aimed to be easy to use
-* Has been inspired by websploit and metasploit
+Hakku is simple framework that has been made for penetration testing tools.
+Hakku framework offers simple structure, basic CLI, and useful features for penetration testing tools developing.
+Hakku is on early stages and may be unstable, so please download the released versions from github or sourceforge,
+don't just clone github repository except you don't want stability, you want to try out latest features, or you just want to develop Hakku.
+Hakku is under MIT license, in other words you can do what you ever want with the source code.
 
+####What will i need to run Hakku framework?
 
-####What will i need to run µSploit framework?
-
-µSploit framework is written in python 3, and developed mainly on Arch Linux.
-So you will need Linux based operating system, python 3, and the dependencies.
+Hakku framework is written in python 3, and developed mainly on Arch Linux.
+So you should get Hakku framework running with Linux based operating system, python 3.5, and the dependencies.
 
 ####How i can get started?
 
-If you are new to µSploit framework you should look at official wiki.
+If you are new to Hakku framework you should look at the official wiki.
 
-Official wiki: https://github.com/4shadoww/usploit/wiki
-
-
-####OS support:
+####OS support
 
 * Linux       supported, and developed on/for linux
 * OS X        support not planned
 * Windows     support not planned
 
-####Basic features:
+####Basic features
 
-* Simple CLI
-* Easy to write your own tool
-* Simple "scripting feature"
+Hakku framework features basic CLI to load up and run penetration testing tools, simple scripting interface, and python api.
 
-available modules: 18
-
-list of modules:
+####Modules
+total count of modules: 22
 
 * apache_users
 * arp_dos
@@ -52,21 +46,31 @@ list of modules:
 * pma_scanner
 * port_scanner
 * proxy_scout
+* whois
 * web_killer
 * web_scout
 * wifi_jammer
+* zip_cracker
+* rar_cracker
+* wordlist_gen
 
-dependencies: ethtool aircrack-ng ettercap-text-only dsniff xterm driftnet tcpdump (ubuntu/debian) and of course you will need python 3
-NOTE: PLEASE USE PYTHON 3.5 OR GREATER
+####Dependencies
+Hakku framework itself doesn't need nothing more than python 3.5, but it's network scanner requires tcpdump.
+Hakku includes all python dependencies so you don't have to install them.
+All module dependencies are listed below.
+ethtool, aircrack-ng, ettercap-text-only, dsniff, xterm, driftnet, tcpdump
 
+####Web pages
 
-* Official website: http://usploitproject.xyz
-* Official wiki: https://github.com/4shadoww/usploit/wiki/
-* Github page: https://github.com/4shadoww/usploit/
-* SourceForge page: https://sourceforge.net/projects/usploit/
+* Official website: http://hakkuproject.org
+* Official wiki: https://github.com/4shadoww/hakkuproject/wiki/
+* Github page: https://github.com/4shadoww/hakkuproject/
+* SourceForge page: https://sourceforge.net/projects/hakkuproject/
 
-
-µSploit Framework is under MIT license
+####Contact
+If you do have any questions etc. about Hakku Framework, then i don't mind if you send me email.
 
 * email: 4shadoww0@gmail.com
 * bug reports to github or here: 4shadoww0@gmail.com
+
+Hakku Framework is under MIT license
