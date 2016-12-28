@@ -32,7 +32,6 @@ try:
 	import logging
 	import getopt
 	import csv
-	import os
 
 	# Check python version
 	req_version = (3,5)
@@ -63,9 +62,6 @@ try:
 
 except KeyboardInterrupt:
 	sys.exit(0)
-
-if not os.geteuid() == 0:
-	print(colors.red+'some modules will not work without root permission!\nrecommended to login as root!\n'+colors.end)
 
 # Exception handling
 
