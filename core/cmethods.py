@@ -111,7 +111,7 @@ class Cmethods:
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
 		else:
-			print("Hakku Framework " + info.version)
+			print("Hakku Framework " + info.version + " " + info.codename)
 
 	def ifconfig(self, args):
 		os.system("ifconfig"+" "+' '.join(args))
@@ -493,7 +493,7 @@ class Cmethods:
 					for dep in self.modadd.conf["dependencies"]:
 						print(dep)
 				except KeyError:
-					print("this module doesn't require any dependencies")
+					printInfo("this module doesn't require any dependencies")
 		else:
 			raise UnknownCommand("unknown command")
 
