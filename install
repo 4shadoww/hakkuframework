@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
+
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-#!/usr/bin/env python3
 import shutil
 import distutils
 import getopt
