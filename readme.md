@@ -1,4 +1,4 @@
-#Hakku Framework [![Build Status](https://travis-ci.org/4shadoww/usploit.svg?branch=master)](https://travis-ci.org/4shadoww/usploit)
+#Hakku Framework [![Build Status](https://travis-ci.org/4shadoww/hakkuframework.svg?branch=master)](https://travis-ci.org/4shadoww/hakkuframework)
 
 
 ####What is Hakku Framework?
