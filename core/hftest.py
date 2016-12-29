@@ -1,6 +1,5 @@
 from core import colors
 import traceback, sys, os
-from modules import *
 import glob
 import py_compile
 from core import getpath
