@@ -1,9 +1,8 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core.messages import *
+from core.hakkuframework import *
 import os
 from core import colors
-from collections import OrderedDict
 from scapy.all import *
 from core import network_scanner
 import random
@@ -18,7 +17,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "9.3.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": True,
 	"needroot": 1,
 	"dependencies": ["ethtool"]

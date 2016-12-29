@@ -1,8 +1,7 @@
 #		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core.messages import *
+from core.hakkuframework import *
 from core import colors
-from collections import OrderedDict
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -18,7 +17,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "5.4.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": True
 }
 

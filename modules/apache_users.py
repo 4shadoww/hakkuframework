@@ -1,8 +1,8 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-from core.messages import *
+
+from core.hakkuframework import *
 import http.client
 import socket
-from collections import OrderedDict
 
 conf = {
 	"name": "apache_users", # Module's name (should be same as file's name)
@@ -12,7 +12,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com",
 	"initdate": "1.3.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": True
 }
 

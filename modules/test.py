@@ -1,7 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core.messages import *
-from collections import OrderedDict
+from core.hakkuframework import *
 
 # Info about the module
 
@@ -13,7 +12,7 @@ conf = {
 	"github": "4shadoww", # Author's github
 	"email": "4shadoww0@gmail.com", # Email
 	"initdate": "24.2.2016", # Initial date
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": True, # Api support
 
 	"message": "hello"

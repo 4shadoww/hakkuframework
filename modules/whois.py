@@ -1,5 +1,5 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-from collections import OrderedDict
+from core.hakkuframework import *
 import whois
 
 conf = {
@@ -10,7 +10,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com", # Email
 	"initdate": "18.12.2016", # Initial date
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": True
 }
 

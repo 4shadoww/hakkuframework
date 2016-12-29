@@ -1,10 +1,9 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 import sys
 from core import colors
-from collections import OrderedDict
 import urllib.request
 import socket
-from core.messages import *
+from core.hakkuframework import *
 import http.client
 import re
 
@@ -16,7 +15,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "19.5.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": False
 
 }

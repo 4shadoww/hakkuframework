@@ -1,9 +1,8 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core.messages import *
+from core.hakkuframework import *
 from core.anim import *
 from core import colors
-from collections import OrderedDict
 import os
 import time
 from core import getpath
@@ -16,7 +15,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "29.4.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": True,
 	"needroot": 1,
 	"dependencies": ["xterm", "dsniff"]

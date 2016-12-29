@@ -1,9 +1,8 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
 import http.client
-from collections import OrderedDict
 import socket
-from core.messages import *
+from core.hakkuframework import *
 
 conf = {
 	"name": "dir_scanner",
@@ -13,7 +12,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "24.2.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": True
 }
 

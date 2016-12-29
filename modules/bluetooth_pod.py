@@ -1,10 +1,9 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core.messages import *
+from core.hakkuframework import *
 import os
 import subprocess
 import time
-from collections import OrderedDict
 
 conf = {
 	"name": "bluetooth_pod",
@@ -14,7 +13,7 @@ conf = {
 	"author": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "24.2.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": False,
 	"needroot": 1,
 	"dependencies": ["xterm", "hcitool", "l2ping"]

@@ -1,11 +1,10 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core.messages import *
+from core.hakkuframework import *
 import time
 import os
 import subprocess
 from core import colors
-from collections import OrderedDict
 
 conf = {
 	"name": "web_killer",
@@ -15,7 +14,7 @@ conf = {
 	"github": "4shadoww",
 	"email":  "4shadoww0@gmail.com",
 	"initdate": "24.2.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": False,
 	"dependencies": ["dnsiff"]
 }

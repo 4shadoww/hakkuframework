@@ -1,11 +1,9 @@
 #		Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-from core.messages import *
+from core.hakkuframework import *
 from core import colors
 import subprocess
 from scapy.all import *
 from time import sleep
-from collections import OrderedDict
-
 
 conf = {
 	"name": "arp_spoof",
@@ -15,7 +13,7 @@ conf = {
 	"author": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "10.3.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": False,
 	"needroot": 1
 }

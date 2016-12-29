@@ -1,15 +1,12 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core.messages import *
-from optparse import OptionParser
+from core.hakkuframework import *
 import os
 import signal
 from time import sleep
 import logging
 from scapy.all import *
-from collections import OrderedDict
 from core import colors
-from core import network_scanner
 
 conf = {
 	"name": "network_kill",
@@ -19,7 +16,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "24.2.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": False,
 	"needroot": 1
 }
@@ -33,11 +30,6 @@ variables = OrderedDict((
 # Additional help notes
 help_notes = colors.red+"this module will not work without root permission!\n this doesn't work if target refuses from arp request!"+colors.end
 
-#custom commands
-customcommands = {
-	'scan': 'scan for targets'
-}
-
 #simple changelog
 changelog = "Version 1.0:\nrelease"
 
@@ -50,6 +42,3 @@ def run():
 	while 1:
 		send(packet, verbose=False)
 		sleep(10)
-
-def scan(args):
-	network_scanner.scan()

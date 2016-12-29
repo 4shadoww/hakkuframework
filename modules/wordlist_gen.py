@@ -1,8 +1,7 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core.messages import *
+from core.hakkuframework import *
 from core import colors
-from collections import OrderedDict
 import threading, queue
 import itertools
 from os.path import relpath
@@ -16,7 +15,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com", # Email
 	"initdate": "26.12.2016", # Initial date
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": True, # Api support
 }
 

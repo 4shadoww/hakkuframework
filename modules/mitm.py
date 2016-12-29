@@ -1,8 +1,7 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core.messages import *
+from core.hakkuframework import *
 from core import colors
-from collections import OrderedDict
 import subprocess
 import os
 
@@ -14,7 +13,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "26.4.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"apisupport": False,
 	"needroot": 1,
 	"dependencies": ["xterm", "dsniff", "driftnet", "sslstrip"]

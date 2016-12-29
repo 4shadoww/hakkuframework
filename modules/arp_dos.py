@@ -1,10 +1,9 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-from core.messages import *
+from core.hakkuframework import *
 from core import colors
 import subprocess
 from time import sleep
 import os
-from collections import OrderedDict
 
 conf = {
 	"name": "arp_dos",
@@ -14,7 +13,7 @@ conf = {
 	"author": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "3.3.2016",
-	"lastmod": "27.12.2016",
+	"lastmod": "29.12.2016",
 	"needroot": 1,
 	"apisupport": False,
 	"dependencies": ["xterm", "ettercap"]
