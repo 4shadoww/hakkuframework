@@ -1,7 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-from core.messages import *
-from collections import OrderedDict
+from core.hakkuframework import *
 
 conf = {
 #	"name": "module_name", # Module's name (should be same as file name)

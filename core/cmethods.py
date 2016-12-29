@@ -379,9 +379,9 @@ class Cmethods:
 						template = os.path.join('core', 'module_template')
 						f = open(template, 'r')
 						template_contents = f.readlines()
-						template_contents[6] = "	\"name\": \""+args[1]+"\", # Module's name (should be same as file name)\n"
-						template_contents[12] = "	\"initdate\": \""+(time.strftime("%d.%m.%Y"))+"\", # Initial date\n"
-						template_contents[13] = "	\"lastmod\": \""+(time.strftime("%d.%m.%Y"))+"\", # Last modification\n"
+						template_contents[5] = "	\"name\": \""+args[1]+"\", # Module's name (should be same as file name)\n"
+						template_contents[11] = "	\"initdate\": \""+(time.strftime("%d.%m.%Y"))+"\", # Initial date\n"
+						template_contents[12] = "	\"lastmod\": \""+(time.strftime("%d.%m.%Y"))+"\", # Last modification\n"
 						mfile.writelines(template_contents)
 						mfile.close()
 						print(colors.bold+"module "+ args[1] +".py" +" created to modules folder"+colors.end)
