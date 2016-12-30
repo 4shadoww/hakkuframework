@@ -1,7 +1,6 @@
 #        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
 from core.hakkuframework import *
-from core.anim import *
 from core import colors
 import os
 from core import getpath
@@ -129,7 +128,7 @@ def callback(packet):
 		packet.accept()
 	else:
 		for record in hostlist:
-			if record[1] in pkt[DNS].qd.qname:
+			if record[1] in pkt[DNS].qd.qname or record[1] == b'*':
 				printInfo(record[1].decode()+" -> "+record[0].decode())
 				found = True
 				spoofed_pkt = bytes(IP(dst=pkt[IP].src, src=pkt[IP].dst)/\
@@ -195,5 +194,6 @@ def run():
 		traceback.print_exc(file=sys.stdout)
 		controller.kill = True
 
-	printInfo("stopping arp spoof")
-	arpspoof.join()
+	if variables["arp_spoof"][0] == "true":
+		printInfo("stopping arp spoof")
+		arpspoof.join()
