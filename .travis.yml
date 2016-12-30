@@ -8,7 +8,7 @@ addons:
       - python3.5
 
 install:
- - sudo apt-get install python3.5 libnetfilter-queue-dev
+ - sudo apt-get install python3.5 libnetfilter-queue-dev python3.5-dev
 
 python:
  - "3.5"
