@@ -1,7 +1,7 @@
-#Hakku Framework [![Build Status](https://travis-ci.org/4shadoww/hakkuframework.svg?branch=master)](https://travis-ci.org/4shadoww/hakkuframework)
+# Hakku Framework [![Build Status](https://travis-ci.org/4shadoww/hakkuframework.svg?branch=master)](https://travis-ci.org/4shadoww/hakkuframework)
 
 
-####What is Hakku Framework?
+#### What is Hakku Framework?
 
 Hakku is simple framework that has been made for penetration testing tools.
 Hakku framework offers simple structure, basic CLI, and useful features for penetration testing tools developing.
@@ -9,26 +9,26 @@ Hakku is on early stages and may be unstable, so please download the released ve
 don't just clone github repository except you don't want stability, you want to try out latest features, or you just want to develop Hakku.
 Hakku is under MIT license, in other words you can do what you ever want with the source code.
 
-####What will i need to run Hakku framework?
+#### What will i need to run Hakku framework?
 
 Hakku framework is written in python 3, and developed mainly on Arch Linux.
 So you should get Hakku framework running with Linux based operating system, python 3.5, and the dependencies.
 
-####How i can get started?
+#### How i can get started?
 
 If you are new to Hakku framework you should look at the official wiki.
 
-####OS support
+#### OS support
 
 * Linux       supported, and developed on/for linux
 * OS X        support not planned
 * Windows     support not planned
 
-####Basic features
+#### Basic features
 
 Hakku framework features basic CLI to load up and run penetration testing tools, simple scripting interface, and python api.
 
-####Modules
+#### Modules
 total count of modules: 22
 
 * apache_users
@@ -54,20 +54,20 @@ total count of modules: 22
 * rar_cracker
 * wordlist_gen
 
-####Dependencies
+#### Dependencies
 Hakku framework itself doesn't need nothing more than python 3.5, but it's network scanner requires tcpdump.
 Hakku includes all python dependencies so you don't have to install them.
 All module dependencies are listed below.
-ethtool, aircrack-ng, ettercap-text-only, dsniff, xterm, driftnet, tcpdump
+ethtool, aircrack-ng, ettercap-text-only, dsniff, xterm, driftnet, tcpdump, libnetfilter-queue-dev, python3.5-dev, hcitool, sslstrip, l2ping
 
-####Web pages
+#### Web pages
 
 * Official website: http://hakkuproject.org
 * Official wiki: https://github.com/4shadoww/hakkuproject/wiki/
-* Github page: https://github.com/4shadoww/hakkuproject/
-* SourceForge page: https://sourceforge.net/projects/hakkuproject/
+* Github: https://github.com/4shadoww/hakkuproject/
+* SourceForge: https://sourceforge.net/projects/hakkuframework/
 
-####Contact
+#### Contact
 If you do have any questions etc. about Hakku Framework, then i don't mind if you send me email.
 
 * email: 4shadoww0@gmail.com
