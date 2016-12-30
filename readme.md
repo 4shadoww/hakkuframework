@@ -63,8 +63,8 @@ ethtool, aircrack-ng, ettercap-text-only, dsniff, xterm, driftnet, tcpdump, libn
 #### Web pages
 
 * Official website: http://hakkuproject.org
-* Official wiki: https://github.com/4shadoww/hakkuproject/wiki/
-* Github: https://github.com/4shadoww/hakkuproject/
+* Official wiki: https://github.com/4shadoww/hakkuframework/wiki/
+* Github: https://github.com/4shadoww/hakkuframework/
 * SourceForge: https://sourceforge.net/projects/hakkuframework/
 
 #### Contact
