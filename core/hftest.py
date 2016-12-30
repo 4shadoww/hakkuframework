@@ -3,7 +3,6 @@ import traceback, sys, os
 import glob
 import py_compile
 from core import getpath
-sys.path.append(getpath.lib())
 import importlib
 
 def check_modules():
