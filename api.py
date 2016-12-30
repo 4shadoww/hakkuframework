@@ -49,8 +49,7 @@ class Hakkuapi:
 			raise ModuleNotFound("error: module not found")
 		except:
 			self.enablePrint()
-			print("unexpected error:")
-			traceback.print_exc()
+			raise
 
 		self.enablePrint()
 
@@ -60,8 +59,7 @@ class Hakkuapi:
 			self.ch.handle("back")
 		except:
 			self.enablePrint()
-			print("unexpected error:")
-			traceback.print_exc()
+			raise
 		self.enablePrint()
 
 	def setVariable(self, target, value):
@@ -73,8 +71,7 @@ class Hakkuapi:
 			raise VariableError("error: variable not found")
 		except:
 			self.enablePrint()
-			print("unexpected error:")
-			traceback.print_exc()
+			raise
 
 		self.enablePrint()
 
@@ -84,8 +81,7 @@ class Hakkuapi:
 			answer = self.ch.handle("run")
 		except:
 			self.enablePrint()
-			print("unexpected error:")
-			traceback.print_exc()
+			raise
 		self.enablePrint()
 		return answer
 
@@ -95,8 +91,7 @@ class Hakkuapi:
 			answer = self.ch.handle(command)
 		except:
 			self.enablePrint()
-			print("unexpected error:")
-			traceback.print_exc()
+			raise
 
 		self.enablePrint()
 		return answer
@@ -107,8 +102,7 @@ class Hakkuapi:
 			self.ch.handle(command)
 		except:
 			self.enablePrint()
-			print("unexpected error:")
-			traceback.print_exc()
+			raise
 
 		self.enablePrint()
 
