@@ -1,4 +1,4 @@
-# Hakku Framework [![Build Status](https://travis-ci.org/4shadoww/hakkuframework.svg?branch=master)](https://travis-ci.org/4shadoww/hakkuframework)
+# Hakku Framework [![Build Status][build]][build link] ![License][license] ![Version][version] ![Modules][modules] ![Python][python]
 
 
 #### What is Hakku Framework?
@@ -74,3 +74,10 @@ If you do have any questions etc. about Hakku Framework, then i don't mind if yo
 * bug reports to github or here: 4shadoww0@gmail.com
 
 Hakku Framework is under MIT license
+
+[build]: https://img.shields.io/travis/4shadoww/hakkuframework.svg?style=flat-square
+[build link]: https://travis-ci.org/4shadoww/hakkuframework
+[license]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
+[version]: https://img.shields.io/badge/version-3.0--alpha-brightgreen.svg?style=flat-square
+[modules]: https://img.shields.io/badge/modules-22-brightgreen.svg?style=flat-square
+[python]: https://img.shields.io/badge/python-3.5-brightgreen.svg?style=flat-square
