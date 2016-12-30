@@ -1,4 +1,7 @@
 # Sample hosts file for dns_spoof module
+# Records will be read up to down
+# Example line below means every address will be forwarded to 127.0.0.1
+# 127.0.0.1 * 
 
 127.0.0.1 google.com
 127.0.0.1 facebook.com
