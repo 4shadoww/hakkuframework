@@ -5,10 +5,19 @@ from core.anim import *
 from core import colors
 import os
 from core import getpath
-from netfilterqueue import NetfilterQueue
 from scapy.all import *
 import threading, queue
 import time
+import traceback
+
+importerror = False
+try:
+	from netfilterqueue import NetfilterQueue
+except:
+	importerror = True
+	terror = traceback.format_exc()
+	printError("cannot import netfilterqueue! have you installed dependencies?")
+
 
 conf = {
 	"name": "dns_spoof",
@@ -21,6 +30,7 @@ conf = {
 	"lastmod": "29.12.2016",
 	"apisupport": False,
 	"needroot": 1,
+	"dependencies": ["libnetfilter-queue-dev", "python3.5-dev"]
 }
 
 
@@ -39,7 +49,7 @@ customcommands = {
 }
 
 #simple changelog
-changelog = "Version 1.0:\nrelease\nVersion 2.0:\n dsniff replaced with scapy and netfilterqueue"
+changelog = "Version 1.0:\nrelease\nVersion 2.0:\n rewritten"
 
 class Controller:
 	kill = False
@@ -104,7 +114,7 @@ class ArpSpoofer(threading.Thread):
 			if self.controller.kill == True:
 				self.restore(self.router, self.victim, routerMAC, victimMAC)
 				os.system('echo "0" >> /proc/sys/net/ipv4/ip_forward')
-				printInfo("arp spoofing ended [hit enter]", start="\n")
+				printInfo("arp spoofing ended")
 				return
 			self.poison(self.router, self.victim, routerMAC, victimMAC)
 			time.sleep(1.5)
@@ -137,6 +147,12 @@ controller = Controller()
 hostlist = []
 
 def run():
+	if importerror == True:
+		printError("netfilterqueue isn't imported")
+		printInfo("install the dependencies and reload this module")
+		print("traceback:\n"+str(error))
+		return
+
 	controller.reset()
 	printInfo("loading host list...")
 	try:
@@ -153,9 +169,6 @@ def run():
 	for item in hostlist:
 		item[0] = item[0].encode()
 		item[1] = item[1].encode()
-
-	#print(hostlist)
-	#return
 
 	if variables["arp_spoof"][0] == "true":
 		printInfo("ipv4 forwarding...")
@@ -182,5 +195,5 @@ def run():
 		traceback.print_exc(file=sys.stdout)
 		controller.kill = True
 
-	printInfo("dns spoof ended")
 	printInfo("stopping arp spoof")
+	arpspoof.join()
