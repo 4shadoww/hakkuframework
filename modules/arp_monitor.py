@@ -6,7 +6,7 @@ from scapy.all import *
 conf = {
 	"name": "arp_monitor", # Module's name (should be same as file name)
 	"version": "1.0", # Module version
-	"shortdesc": "arp package monitor", # Short description
+	"shortdesc": "arp packet monitor", # Short description
 	"github": "4shadoww", # Author's github
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com", # Email
