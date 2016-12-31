@@ -6,10 +6,10 @@ from scapy.all import *
 conf = {
 	"name": "arp_monitor", # Module's name (should be same as file name)
 	"version": "1.0", # Module version
-	"shortdesc": "none", # Short description
-	"github": "none", # Author's github
-	"author": "none", # Author
-	"email": "none", # Email
+	"shortdesc": "arp package monitor", # Short description
+	"github": "4shadoww", # Author's github
+	"author": "4shadoww", # Author
+	"email": "4shadoww0@gmail.com", # Email
 	"initdate": "31.12.2016", # Initial date
 	"lastmod": "31.12.2016", # Last modification
 	"apisupport": False, # Api support
