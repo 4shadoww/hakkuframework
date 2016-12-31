@@ -81,19 +81,10 @@ def compile_core():
 		py_compile.compile(item)
 
 def compile_lib():
-	libs1 = glob.glob(getpath.lib()+"*.p")
-	libs2 = glob.glob(getpath.lib()+"*/*.py")
-
 	print(colors.green+'\ntesting libs...\n'+colors.green)
-
-	for lib in libs1:
-		print(colors.yellow+'compiling',lib+colors.green)
-		py_compile.compile(lib)
+	for file in glob.iglob(getpath.lib()+'/**/*.py', recursive=True):
+		print(colors.yellow+'compiling',file+colors.green)
 	
-	for lib in libs2:
-		print(colors.yellow+'compiling',lib+colors.green)
-		py_compile.compile(lib)
-
 def check_cmethods():
 
 	print(colors.green+"\ntesting cmethods...\n"+colors.end)
