@@ -62,7 +62,7 @@
 			<shortdesc>dns spoof</shortdesc>
 		</module>
 		<module name="arp_monitor">
-			<shortdesc>arp package monitor</shortdesc>
+			<shortdesc>arp packet monitor</shortdesc>
 		</module>
 	</category>
 	<category key="file_modules" name="File Modules">
