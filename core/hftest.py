@@ -81,7 +81,7 @@ def compile_core():
 		py_compile.compile(item)
 
 def compile_lib():
-	print(colors.green+'\ntesting libs...\n'+colors.green)
+	print(colors.green+'\ntesting libraries...\n'+colors.green)
 	for file in glob.iglob(getpath.lib()+'/**/*.py', recursive=True):
 		print(colors.yellow+'compiling',file+colors.green)
 	
