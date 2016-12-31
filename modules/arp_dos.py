@@ -8,12 +8,12 @@ import os
 conf = {
 	"name": "arp_dos",
 	"version": "1.0",
-	"shortdesc": "ARP cache denial of service attack",
+	"shortdesc": "arp cache denial of service attack",
 	"github": "4shadoww",
 	"author": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "3.3.2016",
-	"lastmod": "29.12.2016",
+	"lastmod": "31.12.2016",
 	"needroot": 1,
 	"apisupport": False,
 	"dependencies": ["xterm", "ettercap"]
