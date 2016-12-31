@@ -26,7 +26,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "29.4.2016",
-	"lastmod": "30.12.2016",
+	"lastmod": "31.12.2016",
 	"apisupport": False,
 	"needroot": 1,
 	"dependencies": ["libnetfilter-queue-dev", "python3.5-dev"]
@@ -129,7 +129,7 @@ def callback(packet):
 	else:
 		for record in hostlist:
 			if record[1] in pkt[DNS].qd.qname or record[1] == b'*':
-				printInfo(record[1].decode()+" -> "+record[0].decode())
+				printInfo(pkt[DNS].qd.qname.decode()+" -> "+record[0].decode())
 				found = True
 				spoofed_pkt = bytes(IP(dst=pkt[IP].src, src=pkt[IP].dst)/\
 					UDP(dport=pkt[UDP].sport, sport=pkt[UDP].dport)/\
