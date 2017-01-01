@@ -1,3 +1,4 @@
+<?xml version="1.0" ?>
 <data>
 	<category key="wireless_bluetooth" name="Wireless / Bluetooth">
 		<module name="wifi_jammer">
@@ -63,6 +64,9 @@
 		</module>
 		<module name="arp_monitor">
 			<shortdesc>arp packet monitor</shortdesc>
+		</module>
+		<module name="dhcp_dos">
+			<shortdesc>dhcp denial of service</shortdesc>
 		</module>
 	</category>
 	<category key="file_modules" name="File Modules">
