@@ -72,7 +72,7 @@ def addtodb(modadd):
 							return
 	if new == True:
 		printInfo(modadd.conf["name"]+" doesn't exist in database\n", start="\n")
-		print("available categorie keys:"+colors.yellow)
+		print("available categories keys:"+colors.yellow)
 		for category in root:
 			if category.tag == "category":
 				print(category.attrib["key"])
@@ -95,7 +95,7 @@ def addtodb(modadd):
 		if newcat == True:
 			printInfo("category not found")
 			printInfo("going to add new category")
-			catname = input("give new category's name: ")
+			catname = input("give new category name: ")
 			newcat = ElementTree.Element("category")
 			newcat.set("name", catname)
 			newcat.set("key", catkey)
