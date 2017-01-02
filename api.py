@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 # Import core modules
 from core import command_handler
 from core.module_manager import ModuleManager
-from core.apistate import *
+from core.apistatus import *
 api.enabled = True
 
 # Exceptions
