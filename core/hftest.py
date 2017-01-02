@@ -84,6 +84,7 @@ def compile_lib():
 	print(colors.green+'\ntesting libraries...\n'+colors.green)
 	for file in glob.iglob(getpath.lib()+'/**/*.py', recursive=True):
 		print(colors.yellow+'compiling',file+colors.green)
+		py_compile.compile(file)
 	
 def check_cmethods():
 
@@ -101,6 +102,9 @@ def check_cmethods():
 				testfailed()
 		linenum += 1
 
+def compile_api():
+	print(colors.green+"compiling api...\n"+colors.end)
+	py_compile.compile("api.py")
 
 def challenge():
 	try:
@@ -111,6 +115,7 @@ def challenge():
 		compile_core()		
 		compile_lib()
 		check_cmethods()
+		compile_api()
 
 		print(colors.green+"test passed!"+colors.end)
 
