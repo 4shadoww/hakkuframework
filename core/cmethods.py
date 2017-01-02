@@ -35,6 +35,7 @@ from core import mscop
 from core import value_holder
 from core import moddbparser
 from core.messages import *
+from core.apistatus import *
 
 # Import exceptions
 from core.exceptions import UnknownCommand
@@ -65,6 +66,8 @@ class Cmethods:
 					print(colors.red+"unexpected error in module:\n")
 					traceback.print_exc(file=sys.stdout)
 					print(colors.end)
+					if api.enabled == True:
+						raise
 			else:
 				raise UnknownCommand("unknown command")
 		except AttributeError:
@@ -110,6 +113,8 @@ class Cmethods:
 				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
+				if api.enabled == True:
+					raise
 		else:
 			print("Hakku Framework " + info.version + " " + info.codename)
 
@@ -159,6 +164,8 @@ class Cmethods:
 				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
+				if api.enabled == True:
+					raise
 		else:
 			print(info.about)
 
@@ -170,6 +177,8 @@ class Cmethods:
 				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
+				if api.enabled == True:
+					raise
 		else:
 			try:
 				f = open('changelog', 'r')
@@ -219,6 +228,8 @@ class Cmethods:
 				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
+				if api.enabled == True:
+					raise
 		else:
 			raise UnknownCommand("module in use")
 
@@ -252,6 +263,8 @@ class Cmethods:
 					print(colors.red+"unexpected error in module:\n")
 					traceback.print_exc(file=sys.stdout)
 					print(colors.end)
+					if api.enabled == True:
+						raise
 			else:
 				raise UnknownCommand("module not loaded or unknown command")
 		except IndexError:
@@ -330,6 +343,8 @@ class Cmethods:
 			print(colors.red+"faced unexpected error during reimporting:\n")
 			traceback.print_exc()
 			print(colors.end)
+			if api.enabled == True:
+				raise
 
 	def run(self, args):
 
@@ -346,7 +361,8 @@ class Cmethods:
 				print(colors.red+"unexpected error in module:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
-				return traceback.format_exc()
+				if api.enabled == True:
+					raise
 		else:
 			raise UnknownCommand("module not loaded")
 
@@ -365,6 +381,8 @@ class Cmethods:
 			print(colors.red+"unexpected error in module:\n")
 			traceback.print_exc(file=sys.stdout)
 			print(colors.end)
+			if api.enabled == True:
+				raise
 
 	def new(self, args):
 		try:
@@ -519,6 +537,8 @@ class Cmethods:
 				print(colors.red+"faced unexpected:\n")
 				traceback.print_exc(file=sys.stdout)
 				print(colors.end)
+				if api.enabled == True:
+					raise
 
 		else:
 			answer = input("do you want to update whole database? ")
@@ -538,3 +558,5 @@ class Cmethods:
 					print(colors.red+"faced unexpected:\n")
 					traceback.print_exc(file=sys.stdout)
 					print(colors.end)
+					if api.enabled == True:
+						raise
