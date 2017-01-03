@@ -17,7 +17,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "9.3.2016",
-	"lastmod": "29.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True,
 	"needroot": 1,
 	"dependencies": ["ethtool"]
@@ -76,7 +76,7 @@ def reset(args):
 	realmac =  realmac[:-2]
 	if not realmac:
 		printError("error")
-		return "[err]"
+		return ModuleError("error")
 	else:
 		printInfo("realmac: "+realmac)
 		xterm1a = "service network-manager stop"

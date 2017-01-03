@@ -12,7 +12,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "17.5.2016",
-	"lastmod": "29.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True
 }
 
@@ -31,6 +31,7 @@ def run():
 			socket.setdefaulttimeout(float(variables['timeout'][0]))
 		except ValueError:
 			printError('invalid timeout')
+			return ModuleError("invalid timeout")
 		conn = http.client.HTTPConnection(variables['target'][0])
 		conn.request("HEAD","/index.html")
 		res = conn.getresponse()
@@ -42,10 +43,10 @@ def run():
 		return results
 	except http.client.InvalidURL:
 		printError('invalid url')
-		return "error: invalid url"
+		return ("invalid url")
 	except socket.gaierror:
 		printError('name or service not known')
-		return "error: name or service not known"
+		return ModuleError("name or service not known")
 	except socket.timeout:
 		printError('timeout')
-		return "error: timeout"
+		return ModuleError("timeout")

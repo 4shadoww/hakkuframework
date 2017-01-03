@@ -15,7 +15,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com", # Email
 	"initdate": "26.12.2016", # Initial date
-	"lastmod": "29.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True, # Api support
 }
 
@@ -69,7 +69,7 @@ class Worker(threading.Thread):
 			f = open(variables["output"][0], "a")
 		except Exception as error:
 			printError(error)
-			return error
+			return ModuleError(error)
 
 		for L in range(self.lenmin, self.lenmax):
 			for word in itertools.combinations_with_replacement(self.chars, L):
@@ -103,13 +103,13 @@ def run():
 		variables["maxlen"][0] = int(variables["maxlen"][0])
 	except ValueError:
 		printError("invalid maxlen")
-		return "[err] invalid maxlen"
+		return ModuleError("invalid maxlen")
 
 	try:
 		variables["minlen"][0] = int(variables["minlen"][0])
 	except ValueError:
 		printError("invalid minlen")
-		return "[err] invalid minlen"
+		return ModuleError("invalid minlen")
 
 	sh = StatHolder()
 	sh.reset()
@@ -119,7 +119,7 @@ def run():
 
 	if d < 0:
 		printError("minlen can't be greater than minlen")
-		return "[err] minlen can't be greater than minlen"
+		return ModuleError("minlen can't be greater than minlen")
 	for i in range(variables["minlen"][0], variables["maxlen"][0]+1):
 		t = Worker(sh, i+1, i, chars)
 		threads.append(t)
@@ -142,4 +142,4 @@ def addchar(args):
 		return "[suf] chars added"
 	except IndexError:
 		printError("args not given")
-		return "[err] args not given"
+		return ModuleError("args not given")

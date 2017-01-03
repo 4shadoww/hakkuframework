@@ -17,7 +17,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "5.4.2016",
-	"lastmod": "29.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True
 }
 
@@ -65,16 +65,16 @@ def run():
 		server = smtplib.SMTP(variables['smtp'][0], int(variables['smtp_port'][0]))
 	except(ValueError):
 		printError("port number must be int")
-		return "[err] port number must be int"
+		return ModuleError("port number must be int")
 	except socket.gaierror:
 		printError("cannot reach smtp server")
-		return "[err] cannot reach smtp server"
+		return ModuleError("cannot reach smtp server")
 	except(ConnectionRefusedError):
 		printError("connection refused")
-		return "[err] connection refused"
+		return ModuleError("connection refused")
 	except(TimeoutError):
 		printError("timeout cannot reach smtp server")
-		return "[err] timeout cannot reach smtp server"
+		return ModuleError("timeout cannot reach smtp server")
 	if int(variables['starttls'][0]) == 1:
 		server.starttls()
 	if int(variables['login'][0]) == 1:

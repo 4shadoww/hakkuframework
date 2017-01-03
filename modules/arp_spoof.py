@@ -16,7 +16,7 @@ conf = {
 	"author": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "10.3.2016",
-	"lastmod": "30.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True,
 	"needroot": 1
 }
@@ -60,7 +60,7 @@ class SpoofController(threading.Thread):
 		except(ValueError, KeyError):
 			printError("invalid interface")
 			self.controller.kill = True
-			self.controller.error = "[err] invalid interface"
+			self.controller.error = "invalid interface"
 			return
 		ips = ip+"/24"
 
@@ -69,7 +69,7 @@ class SpoofController(threading.Thread):
 			ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst = ips), timeout = 2,iface=variables["interface"][0],inter=0.1)
 		except PermissionError:
 			self.controller.kill = True
-			self.controller.error = "[err] permission error"
+			self.controller.error = "permission error"
 			return
 		for snd,rcv in ans:
 			ip = rcv.sprintf("%ARP.psrc%")
@@ -181,7 +181,7 @@ def get(args):
 		elif controller.error != None:
 			printError("faced error: "+controller.error)
 			os.system('echo "0" >> /proc/sys/net/ipv4/ip_forward')
-			return controller.error
+			return ModuleError(controller.error)
 
 	else:
 		raise UnknownCommand("unknown command")

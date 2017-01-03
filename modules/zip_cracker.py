@@ -16,7 +16,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww", # Email
 	"initdate": "22.12.2016", # Initial date
-	"lastmod": "29.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True, # Api support
 }
 
@@ -63,7 +63,7 @@ class Worker(threading.Thread):
 			zipf = zipfile.ZipFile(variables["file"][0])
 		
 		except FileNotFoundError:
-			self.pwdh.error = "[err] zip file not found"
+			self.pwdh.error = "zip file not found"
 			return
 		for word in self.words:
 			if self.pwdh.pwd != None:
@@ -92,7 +92,7 @@ def run():
 		words = wordlist.read().splitlines()
 	except FileNotFoundError:
 		printError("word list not found")
-		return "[err] word list not found"
+		return ModuleError("word list not found")
 	printInfo("brute-force attack started...")
 
 	pwdh = PwdHolder
@@ -102,7 +102,7 @@ def run():
 		u = int(variables["tc"][0])
 	except TypeError:
 		printError("invalid thread count")
-		return "[err] invalid thread count"
+		return ModuleError("invalid thread count")
 	threads = []
 
 	for i in range(variables["tc"][0]):
@@ -123,4 +123,4 @@ def run():
 
 	elif pwdh.error != None:
 		printError(pwdh.error)
-		return pwdh.error
+		return ModuleError(pwdh.error)

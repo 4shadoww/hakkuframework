@@ -13,7 +13,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "4.3.2016",
-	"lastmod": "29.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True
 }
 
@@ -35,7 +35,7 @@ def run():
 		targetip = socket.gethostbyname(variables['target'][0])
 	except(socket.gaierror):
 		printError('hostname could not be resolved')
-		return "[err] hostname could not be resolved"
+		return ModuleError("hostname could not be resolved")
 
 	socket.setdefaulttimeout(0.5)
 
@@ -61,13 +61,13 @@ def run():
 
 	except(socket.gaierror):
 		printError('hostname could not be resolved')
-		return "[err] hostname could not be resolved"
+		return ModuleError("hostname could not be resolved")
 	except(socket.error):
 		printError(colors.red+"couldn't connect to server"+colors.end)
-		return "[err] couldn't connect to server"
+		return ModuleError("couldn't connect to server")
 	except(ValueError):
 		printError("port value must be integer")
-		return "[err] port value must be integer"
+		return ModuleError("port value must be integer")
 
 	# Checking the time again
 	t2 = datetime.now()

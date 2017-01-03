@@ -15,7 +15,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com", # Email
 	"initdate": "25.12.2016", # Initial date
-	"lastmod": "29.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True, # Api support
 }
 
@@ -63,7 +63,7 @@ class Worker(threading.Thread):
 			rf = rarfile.RarFile(variables["file"][0])
 		
 		except FileNotFoundError:
-			self.pwdh.error = "[err] rar file not found"
+			self.pwdh.error = "rar file not found"
 			return
 		for word in self.words:
 			if self.pwdh.pwd != None:
@@ -95,7 +95,7 @@ def run():
 		words = wordlist.read().splitlines()
 	except FileNotFoundError:
 		printError("word list not found")
-		return "[err] word list not found"
+		return ModuleError("word list not found")
 	printInfo("brute-force attack started...")
 
 	pwdh = PwdHolder
@@ -105,7 +105,7 @@ def run():
 		u = int(variables["tc"][0])
 	except TypeError:
 		printError("invalid thread count")
-		return "[err] invalid thread count"
+		return ModuleError("invalid thread count")
 	threads = []
 
 	for i in range(variables["tc"][0]):
@@ -127,4 +127,4 @@ def run():
 
 	elif pwdh.error != None:
 		printError(pwdh.error)
-		return pwdh.error
+		return ModuleError(pwdh.error)

@@ -11,7 +11,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "9.5.2016",
-	"lastmod": "29.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True
 }
 
@@ -30,7 +30,7 @@ def run():
 		return querly[0]
 	except(socket.herror):
 		printError("unknown host")
-		return "[err] unknown host"
+		return ModuleError("unknown host")
 	except(socket.gaierror):
 		printError("name or service not known")
-		return "[err] name or service not known"
+		return ModuleError("name or service not known")

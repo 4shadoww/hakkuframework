@@ -12,7 +12,7 @@ conf = {
 	"author": "4shadoww", # Author
 	"email": "4shadoww0@gmail.com",
 	"initdate": "1.3.2016",
-	"lastmod": "29.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True
 }
 
@@ -8960,4 +8960,4 @@ def run():
 		return paths_found
 	except(socket.gaierror):
 		printError("host is down")
-		return "[err] host is down"
+		return ModuleError("host is down")

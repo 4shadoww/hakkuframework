@@ -12,7 +12,7 @@ conf = {
 	"github": "4shadoww",
 	"email": "4shadoww0@gmail.com",
 	"initdate": "24.2.2016",
-	"lastmod": "29.12.2016",
+	"lastmod": "3.1.2017",
 	"apisupport": True
 }
 
@@ -220588,7 +220588,7 @@ def run():
 					conn.timeout = float(variables['timeout'][0])
 				except ValueError:
 					printError('invalid timeout')
-					return "error: invalid timeout"
+					return ModuleError("invalid timeout")
 				conn.request("GET", path)
 				res = conn.getresponse()
 				if(res.status==200):
@@ -220602,7 +220602,7 @@ def run():
 					conn.timeout = float(variables['timeout'][0])
 				except ValueError:
 					printError('invalid timeout')
-					return "error: invalid timeout"
+					return ModuleError("invalid timeout")
 				conn.request("GET", path)
 				res = conn.getresponse()
 				if(res.status==200):
@@ -220612,7 +220612,7 @@ def run():
 					printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
 	except (socket.gaierror):
 		printError("target "+variables['target'][0]+" not found")
-		return "[err] not found"
+		return ModuleError("not found")
 	except (socket.timeout):
 		printError("time out "+variables['target'][0])
-		return "[err] timeout"
+		return ModuleError("timeout")
