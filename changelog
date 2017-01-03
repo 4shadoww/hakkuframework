@@ -70,3 +70,14 @@ CHANGELOG:
 + added wordlist_gen module
 - removed sys lib from module template
 - removed useless libs from modules
+
+	VERSION 3.1-alpha:
++ rewritten dns_spoof module
++ rewritten arp_spoof module
++ updated core/conf/hosts file
++ added netfilterqueue lib
++ added core module apistatus
++ new api version 1.0.1-alpha
++ added arp_monitor module
++ added dhcp_dos module
++ fixed typo from core module moduleop
