@@ -81,3 +81,4 @@ CHANGELOG:
 + added arp_monitor module
 + added dhcp_dos module
 + fixed typo from core module moduleop
++ fixed updating feature
