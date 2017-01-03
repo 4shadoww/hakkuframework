@@ -1,8 +1,8 @@
 from core import colors
 
-version = "3.0-alpha"
-apiversion = "1.0-alpha"
-update_date = "28.12.2016"
+version = "3.1-alpha"
+apiversion = "1.0.1-alpha"
+update_date = "31.12.2016"
 codename = "uranium"
 
 about = ("Hakku Framework "+version+" "+codename+
