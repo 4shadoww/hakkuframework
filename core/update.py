@@ -22,7 +22,7 @@ from core import mscop
 def check_for_updates():
 	try:
 		print(colors.green+"checking for updates..."+colors.end)
-		r = requests.get("https://api.github.com/repos/4shadoww/hakkuproject/releases/latest")
+		r = requests.get("https://api.github.com/repos/4shadoww/hakkuframework/releases/latest")
 		if(r.ok):
 			items = json.loads(r.text or r.content)
 			rver = items['tag_name']
@@ -55,7 +55,7 @@ def update():
 		return
 
 
-	url = "https://github.com/4shadoww/hakkuproject/tarball/master"
+	url = "https://github.com/4shadoww/hakkuframework/tarball/master"
 	print(colors.green+"downloading..."+colors.end)
 
 	u = urllib.request.urlopen(url)
