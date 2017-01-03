@@ -51,7 +51,7 @@ def check_for_updates():
 def update():
 	answer = input("do you want to start update? ")
 
-	if answer != "yes" or answer != "y":
+	if answer != "yes" and answer != "y":
 		return
 
 
