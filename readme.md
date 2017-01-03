@@ -29,13 +29,15 @@ If you are new to Hakku framework you should look at the official wiki.
 Hakku framework features basic CLI to load up and run penetration testing tools, simple scripting interface, and python api.
 
 #### Modules
-total count of modules: 22
+total count of modules: 24
 
 * apache_users
 * arp_dos
+* arp_monitor
 * arp_spoof
 * bluetooth_pod
 * cloudflare_resolver
+* dhcp_dos
 * dir_scanner
 * dns_spoof
 * email_bomber
