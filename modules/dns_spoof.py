@@ -35,7 +35,7 @@ conf = {
 
 # List of the variables
 variables = OrderedDict((
-	('victim', ['192.168.1.2', 'target address']),
+	('target', ['192.168.1.2', 'target address']),
 	('router', ['192.168.1.1', 'router address']),
 	("arp_spoof", ["true", "arp spoof [true/false]"])
 ))
@@ -166,14 +166,20 @@ def run():
 			hostlist.append(line.split())
 
 	for item in hostlist:
-		item[0] = item[0].encode()
-		item[1] = item[1].encode()
+		try:
+			item[0] = item[0].encode()
+		except AttributeError:
+			pass
+		try:
+			item[1] = item[1].encode()
+		except AttributeError:
+			pass
 
 	if variables["arp_spoof"][0] == "true":
 		printInfo("ipv4 forwarding...")
 		os.system('echo "1" >> /proc/sys/net/ipv4/ip_forward')
 		printInfo("starting arp spoof...")
-		arpspoof = ArpSpoofer(variables["router"][0], variables["victim"][0], controller)
+		arpspoof = ArpSpoofer(variables["router"][0], variables["target"][0], controller)
 		arpspoof.start()
 
 	printInfo("ctrl + c to end")
