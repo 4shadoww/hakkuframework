@@ -22,6 +22,7 @@ class Hakkuapi:
 	mm = None
 	ch = None
 	allowPrint = False
+	ModuleError = False
 
 	def disablePrint(self):
 		if self.allowPrint == False:
@@ -76,6 +77,7 @@ class Hakkuapi:
 		self.enablePrint()
 
 	def runModule(self):
+		self.ModuleError = False
 		self.disablePrint()
 		try:
 			answer = self.ch.handle("run")
@@ -83,6 +85,10 @@ class Hakkuapi:
 			self.enablePrint()
 			raise
 		self.enablePrint()
+
+		if type(answer) is core.exceptions.ModuleError:
+			self.ModuleError = True
+
 		return answer
 
 	def customCommand(self, command):
