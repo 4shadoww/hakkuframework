@@ -1,131 +1,143 @@
 #!/usr/bin/env python3
 
-# 			 --------------------------------------------------
-#							Hakku Framework
-# 			 --------------------------------------------------
-#		 Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+#              --------------------------------------------------
+#                            Hakku Framework
+#              --------------------------------------------------
+#         Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
-# 		 Permission is hereby granted, free of charge, to any person obtaining
-#		 a copy of this software and associated documentation files (the
-#		 "Software"), to deal in the Software without restriction, including
-#		 without limitation the rights to use, copy, modify, merge, publish,
-#		 distribute, sublicense, and/or sell copies of the Software, and to
-#		 permit persons to whom the Software is furnished to do so, subject to
-#		 the following conditions:
+#          Permission is hereby granted, free of charge, to any person obtaining
+#         a copy of this software and associated documentation files (the
+#         "Software"), to deal in the Software without restriction, including
+#         without limitation the rights to use, copy, modify, merge, publish,
+#         distribute, sublicense, and/or sell copies of the Software, and to
+#         permit persons to whom the Software is furnished to do so, subject to
+#         the following conditions:
 
-#		 The above copyright notice and this permission notice shall be included
-#		 in all copies or substantial portions of the Software.
+#         The above copyright notice and this permission notice shall be included
+#         in all copies or substantial portions of the Software.
 
-#		 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-#		 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-#		 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-#		 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-#		 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-#		 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-#		 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#         THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#         EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#         MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#         IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+#         CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+#         TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+#         SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 try:
 
-	# Import python modules
-	import traceback
-	import sys
-	import logging
-	import getopt
-	import csv
+    # Import python modules
+    import traceback
+    import sys
+    import logging
+    import getopt
+    import csv
 
-	# Check python version
-	req_version = (3,5)
-	cur_version = sys.version_info
-	if cur_version < req_version:
-		print('python3.5 or greater is recommended')
+    # Check python version
+    req_version = (3,5)
+    cur_version = sys.version_info
+    if cur_version < req_version:
+        print('python3.5 or greater is recommended')
 
-	# Disable scapy warning
-	logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
+    # Disable scapy warning
+    logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
-	# Import getpath for lib path
-	from core import getpath
+    # Import getpath for lib path
+    from core import getpath
 
-	# Append lib path
-	sys.path.append(getpath.lib())
+    # Append lib path
+    sys.path.append(getpath.lib())
 
-	# Import core modules
-	from core import colors
-	from core import header
-	from core import hftest
-	from core import shell
-	from core import scriptio
-	from core import getpath
-
-	# Print header
-	print(header.hakku)
-	header.print_info()
+    # Import core modules
+    from core import colors
+    from core import header
+    from core import hftest
+    from core import shell
+    from core import scriptio
+    from core import getpath
 
 except KeyboardInterrupt:
-	sys.exit(0)
+    sys.exit(0)
 
 # Exception handling
 
 def fatalerror():
-	print(colors.red+"unexpected error:")
-	traceback.print_exc()
-	print(colors.end)
-	forcetokr = input('Do you want to force to keep Hakku Framework running? ')
-	if forcetokr == 'yes':
-		main(0, None)
-	elif forcetokr == 'y':
-		main(0, None)
+    print(colors.red+"unexpected error:")
+    traceback.print_exc()
+    print(colors.end)
+    forcetokr = input('Do you want to force to keep Hakku Framework running? ')
+    if forcetokr == 'yes':
+        main(0, None)
+    elif forcetokr == 'y':
+        main(0, None)
+
+def print_usage():
+    print(sys.argv[0], "[options]")
+    print("\nOptions:\n-t challenge\t\trun tests\n-s \x1B[3mscript_name\x1B[0m\t\trun scripts\n")
 
 # Start up shell
 
 try:
-	def main(scripting, scf):
-		try:
-			if scripting == 1:
-				scriptio.run(scf)
+    def main(scripting, scf):
+        try:
+            if scripting == 1:
+                scriptio.run(scf)
 
-			else:
-				shell.run()
+            else:
+                print(header.hakku)
+                header.print_info()
+                shell.run()
 
-		except SystemExit as e:
-			sys.exit(e)
+        except SystemExit as e:
+            sys.exit(e)
 
-		except:
-			fatalerror()
+        except:
+            fatalerror()
 
-	if __name__ == '__main__':
-		scripting = 0
-		scf = ""
+    if __name__ == '__main__':
+        scripting = 0
+        scf = ""
 
-		try:
-			opts, args = getopt.getopt(sys.argv[1:], 's:t:')
-			for opt, arg in opts:
-				if opt in ('-t'):
-					if arg == 'challenge':
-						hftest.challenge()
-					else:
-						print(colors.red+'invalid arguments'+colors.end)
+        try:
+            if sys.argv[1] == '-h':
+                print_usage()
+                sys.exit(0)
 
-				if opt in ('-s'):
-					try:
-						scriptfile = open(getpath.scripts()+arg+'.hfs', 'r')
-						reader = csv.reader(scriptfile)
-						scf = [row for row in reader]
-						scripting = 1
-						print(colors.green+"entering scripting mode..."+colors.end)
-					except FileNotFoundError:
-						print(colors.red+'error: script not found'+colors.end)
-		except getopt.GetoptError:
-			print(colors.red+'invalid arguments'+colors.end)
-		main(scripting, scf)
+            opts, args = getopt.getopt(sys.argv[1:], 's:t:')
+
+            for opt, arg in opts:
+                if opt == '-t':
+                    if arg == 'challenge':
+                        hftest.challenge()
+                    else:
+                        print(colors.red+'invalid arguments'+colors.end)
+                        print_usage()
+                        sys.exit(1)
+
+                if opt == '-s':
+                    try:
+                        scriptfile = open(getpath.scripts()+arg+'.hfs', 'r')
+                        reader = csv.reader(scriptfile)
+                        scf = [row for row in reader]
+                        scripting = 1
+                        print(colors.green+"entering scripting mode..."+colors.end)
+                    except FileNotFoundError:
+                        print(colors.red+'error: script not found'+colors.end)
+
+        except getopt.GetoptError:
+            print(colors.red+'invalid arguments'+colors.end)
+            print_usage()
+            sys.exit(1)
+        main(scripting, scf)
 
 # Exceptions
 
 except KeyboardInterrupt:
-	print()
+    print()
 
 except SystemExit as e:
-	print(colors.bold+"Thank you for using Hakku Framework!"+colors.end)
-	sys.exit(e)
+    print(colors.bold+"Thank you for using Hakku Framework!"+colors.end)
+    sys.exit(e)
 
 except:
-	fatalerror()
+    fatalerror()
