@@ -1,4 +1,4 @@
-#        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+# Copyright (C) 2015 – 2021 Noa-Emil Nissinen (4shadoww)
 
 purple = '\033[95m'
 blue = '\033[94m'
