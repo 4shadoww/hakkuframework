@@ -30,7 +30,6 @@ from core import dsag
 import core.matrix
 import core.touchingsky
 from core.hftest import check_module
-from core import update
 from core import mscop
 from core import value_holder
 from core import moddbparser
@@ -475,21 +474,11 @@ class Cmethods:
     def touchingsky(self, args):
         core.touchingsky.main()
 
-    def update(self, args):
-        if update.check_for_updates() == True:
-            try:
-                update.update()
-            except PermissionError:
-                printError("permission denied")
-
-            except Exception as error:
-                printError(str(error))
-
     def loaded(self, args):
         print(sys.modules.keys())
 
     def list(self, args):
-        if args[0] == "dependencies":
+        if len(args) != 0 and args[0] == "dependencies":
             if self.mm.moduleLoaded == 0:
                 modules = glob.glob(getpath.modules()+"*.py")
                 dependencies = []
