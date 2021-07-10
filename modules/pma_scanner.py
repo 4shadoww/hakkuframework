@@ -5,31 +5,31 @@ import http.client
 import socket
 
 conf = {
-	"name": "pma_scanner",
-	"version": "1.0",
-	"shortdesc": "PHPMyAdmin login page scanner",
-	"author": "4shadoww",
-	"github": "4shadoww",
-	"email": "4shadoww0@gmail.com",
-	"initdate": "1.3.2016",
-	"lastmod": "3.1.2017",
-	"apisupport": True
+    "name": "pma_scanner",
+    "version": "1.0",
+    "shortdesc": "PHPMyAdmin login page scanner",
+    "author": "4shadoww",
+    "github": "4shadoww",
+    "email": "4shadoww0@gmail.com",
+    "initdate": "1.3.2016",
+    "lastmod": "3.1.2017",
+    "apisupport": True
 }
 
 # List of the variables
 variables = OrderedDict((
-	('target', ['google.com', 'target address']),
+    ('target', ['google.com', 'target address']),
 ))
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	variables['target'][0] = variables['target'][0].replace("http://", "")
-	variables['target'][0] = variables['target'][0].replace("https://", "")
-	printInfo("your target : " + variables['target'][0])
-	printInfo("loading path list... please wait...")
-	paths = ['/phpMyAdmin/',
+    variables['target'][0] = variables['target'][0].replace("http://", "")
+    variables['target'][0] = variables['target'][0].replace("https://", "")
+    printInfo("your target : " + variables['target'][0])
+    printInfo("loading path list... please wait...")
+    paths = ['/phpMyAdmin/',
 '/phpmyadmin/',
 '/PMA/',
 '/admin/',
@@ -115,23 +115,23 @@ def run():
 '/webdb/',
 '/mysqladmin/',
 '/mysql-admin/',]
-	printInfo("starting scan...")
-	paths_found = []
-	try:
-		for path in paths:
-			path = path.replace("\n", "")
-			conn = http.client.HTTPConnection(variables['target'][0])
-			conn.request("GET", path)
-			res = conn.getresponse()
-			if(res.status==200):
-				printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
-				paths_found.append(path)
-			else:
-				printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
-		return paths_found
-	except(socket.gaierror):
-		printError("host is down!")
-		return ModuleError("host is down")
-	except socket.timeout:
-		printError("timeout")
-		return ModuleError("timeout")
+    printInfo("starting scan...")
+    paths_found = []
+    try:
+        for path in paths:
+            path = path.replace("\n", "")
+            conn = http.client.HTTPConnection(variables['target'][0])
+            conn.request("GET", path)
+            res = conn.getresponse()
+            if(res.status==200):
+                printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
+                paths_found.append(path)
+            else:
+                printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
+        return paths_found
+    except(socket.gaierror):
+        printError("host is down!")
+        return ModuleError("host is down")
+    except socket.timeout:
+        printError("timeout")
+        return ModuleError("timeout")

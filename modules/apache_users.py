@@ -5,31 +5,31 @@ import http.client
 import socket
 
 conf = {
-	"name": "apache_users", # Module's name (should be same as file's name)
-	"version": "1.0", # Module version
-	"shortdesc": "scan directory of apache users", # Short description
-	"github": "4shadoww", # Author's github
-	"author": "4shadoww", # Author
-	"email": "4shadoww0@gmail.com",
-	"initdate": "1.3.2016",
-	"lastmod": "3.1.2017",
-	"apisupport": True
+    "name": "apache_users", # Module's name (should be same as file's name)
+    "version": "1.0", # Module version
+    "shortdesc": "scan directory of apache users", # Short description
+    "github": "4shadoww", # Author's github
+    "author": "4shadoww", # Author
+    "email": "4shadoww0@gmail.com",
+    "initdate": "1.3.2016",
+    "lastmod": "3.1.2017",
+    "apisupport": True
 }
 
 # List of the variables
 variables = OrderedDict((
-	("target", ["google.com", "target address"]),
+    ("target", ["google.com", "target address"]),
 ))
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease"
 
 def run():
-	variables['target'][0] = variables['target'][0].replace("http://", "")
-	variables['target'][0] = variables['target'][0].replace("https://", "")
-	printInfo("your target : " + variables['target'][0])
-	printInfo("loading path list...")
-	paths = ['~root',
+    variables['target'][0] = variables['target'][0].replace("http://", "")
+    variables['target'][0] = variables['target'][0].replace("https://", "")
+    printInfo("your target : " + variables['target'][0])
+    printInfo("loading path list...")
+    paths = ['~root',
 '~toor',
 '~bin',
 '~daemon',
@@ -8945,19 +8945,19 @@ def run():
 '~zsazsa',
 '~zulema',
 '~zuzana',]
-	try:
-		paths_found = []
-		for path in paths:
-			path = path.replace("\n", "")
-			conn = http.client.HTTPConnection(variables['target'][0])
-			conn.request("GET", path)
-			res = conn.getresponse()
-			if(res.status==200):
-				printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
-				paths_found.append(path)
-			else:
-				printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
-		return paths_found
-	except(socket.gaierror):
-		printError("host is down")
-		return ModuleError("host is down")
+    try:
+        paths_found = []
+        for path in paths:
+            path = path.replace("\n", "")
+            conn = http.client.HTTPConnection(variables['target'][0])
+            conn.request("GET", path)
+            res = conn.getresponse()
+            if(res.status==200):
+                printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
+                paths_found.append(path)
+            else:
+                printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
+        return paths_found
+    except(socket.gaierror):
+        printError("host is down")
+        return ModuleError("host is down")

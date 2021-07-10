@@ -5,32 +5,32 @@ import socket
 from core.hakkuframework import *
 
 conf = {
-	"name": "dir_scanner",
-	"version": "1.1",
-	"shortdesc": "scans dirs from website",
-	"author": "4shadoww",
-	"github": "4shadoww",
-	"email": "4shadoww0@gmail.com",
-	"initdate": "24.2.2016",
-	"lastmod": "3.1.2017",
-	"apisupport": True
+    "name": "dir_scanner",
+    "version": "1.1",
+    "shortdesc": "scans dirs from website",
+    "author": "4shadoww",
+    "github": "4shadoww",
+    "email": "4shadoww0@gmail.com",
+    "initdate": "24.2.2016",
+    "lastmod": "3.1.2017",
+    "apisupport": True
 }
 
 # List of variables
 variables = OrderedDict((
-	('target', ['google.com', 'target address']),
-	('timeout', ['10', 'timeout (default: 10)']),
-	('pos', ['false', 'print only success[true/false]']),
+    ('target', ['google.com', 'target address']),
+    ('timeout', ['10', 'timeout (default: 10)']),
+    ('pos', ['false', 'print only success[true/false]']),
 ))
 
 # Simple changelog
 changelog = "Version 1.0:\nrelease\n\nVersion 1.1:\n+ added timeout variable"
 
 def run():
-	variables['target'][0] = variables['target'][0].replace("http://", "")
-	variables['target'][0] = variables['target'][0].replace("https://", "")
-	printInfo("your target : " + variables['target'][0])
-	paths = ['index',
+    variables['target'][0] = variables['target'][0].replace("http://", "")
+    variables['target'][0] = variables['target'][0].replace("https://", "")
+    printInfo("your target : " + variables['target'][0])
+    paths = ['index',
 'images',
 'download',
 '2006',
@@ -220578,41 +220578,41 @@ def run():
 'ntservpk',
 't1551',
 'nt4stopc',]
-	try:
-		paths_found = []
-		if variables['pos'][0] == 'true':
-			for path in paths:
-				path = path.replace("\n", "")
-				conn = http.client.HTTPConnection(variables['target'][0])
-				try:
-					conn.timeout = float(variables['timeout'][0])
-				except ValueError:
-					printError('invalid timeout')
-					return ModuleError("invalid timeout")
-				conn.request("GET", path)
-				res = conn.getresponse()
-				if(res.status==200):
-					printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
-					paths_found.append(path)
-		else:
-			for path in paths:
-				path = path.replace("\n", "")
-				conn = http.client.HTTPConnection(variables['target'][0])
-				try:
-					conn.timeout = float(variables['timeout'][0])
-				except ValueError:
-					printError('invalid timeout')
-					return ModuleError("invalid timeout")
-				conn.request("GET", path)
-				res = conn.getresponse()
-				if(res.status==200):
-					printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
-					paths_found.append(path)
-				else:
-					printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
-	except (socket.gaierror):
-		printError("target "+variables['target'][0]+" not found")
-		return ModuleError("not found")
-	except (socket.timeout):
-		printError("time out "+variables['target'][0])
-		return ModuleError("timeout")
+    try:
+        paths_found = []
+        if variables['pos'][0] == 'true':
+            for path in paths:
+                path = path.replace("\n", "")
+                conn = http.client.HTTPConnection(variables['target'][0])
+                try:
+                    conn.timeout = float(variables['timeout'][0])
+                except ValueError:
+                    printError('invalid timeout')
+                    return ModuleError("invalid timeout")
+                conn.request("GET", path)
+                res = conn.getresponse()
+                if(res.status==200):
+                    printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
+                    paths_found.append(path)
+        else:
+            for path in paths:
+                path = path.replace("\n", "")
+                conn = http.client.HTTPConnection(variables['target'][0])
+                try:
+                    conn.timeout = float(variables['timeout'][0])
+                except ValueError:
+                    printError('invalid timeout')
+                    return ModuleError("invalid timeout")
+                conn.request("GET", path)
+                res = conn.getresponse()
+                if(res.status==200):
+                    printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
+                    paths_found.append(path)
+                else:
+                    printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
+    except (socket.gaierror):
+        printError("target "+variables['target'][0]+" not found")
+        return ModuleError("not found")
+    except (socket.timeout):
+        printError("time out "+variables['target'][0])
+        return ModuleError("timeout")
