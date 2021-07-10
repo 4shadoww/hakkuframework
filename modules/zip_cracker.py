@@ -1,4 +1,4 @@
-#        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+# Copyright (C) 2015 – 2021 Noa-Emil Nissinen (4shadoww)
 
 from core.hakkuframework import *
 from core import colors
