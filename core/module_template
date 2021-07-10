@@ -1,5 +1,3 @@
-#        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
-
 from core.hakkuframework import *
 
 conf = {
