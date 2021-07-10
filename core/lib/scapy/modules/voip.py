@@ -1,140 +1,168 @@
-## This file is part of Scapy
-## See http://www.secdev.org/projects/scapy for more informations
-## Copyright (C) Philippe Biondi <phil@secdev.org>
-## This program is published under a GPLv2 license
+# This file is part of Scapy
+# See http://www.secdev.org/projects/scapy for more information
+# Copyright (C) Philippe Biondi <phil@secdev.org>
+# This program is published under a GPLv2 license
 
 """
 VoIP (Voice over IP) related functions
 """
 
-import os
+from __future__ import absolute_import
+import subprocess
 ###################
-## Testing stuff ##
+#   Listen VoIP   #
 ###################
 
-from fcntl import fcntl
 from scapy.sendrecv import sniff
-from scapy.layers.inet import IP,UDP
+from scapy.layers.inet import IP, UDP
 from scapy.layers.rtp import RTP
-from scapy.utils import get_temp_file
+from scapy.consts import WINDOWS
+from scapy.config import conf
+from scapy.modules.six.moves import range
 
 
-def merge(x,y,sample_size=2):
-    if len(x) > len(y):
-        y += "\x00"*(len(x)-len(y))
-    elif len(x) < len(y):
-        x += "\x00"*(len(y)-len(x))
+sox_base = (["sox", "-t", ".ul"], ["-", "-t", "ossdsp", "/dev/dsp"])
+
+if WINDOWS:
+    if conf.prog.sox is None:
+        raise OSError("Sox must be installed to play VoIP packets")
+    sox_base = ([conf.prog.sox, "-t", ".ul"], ["-", "-t", "waveaudio"])
+
+
+def _merge_sound_bytes(x, y, sample_size=2):
+    # TODO: find a better way to merge sound bytes
+    # This will only add them one next to each other:
+    # \xff + \xff ==> \xff\xff
     m = ""
-    ss=sample_size
-    for i in range(len(x)/ss):
-        m += x[ss*i:ss*(i+1)]+y[ss*i:ss*(i+1)]
-    return  m
-#    return  "".join(map(str.__add__, x, y))
+    ss = sample_size
+    min_ = 0
+    if len(x) >= len(y):
+        min_ = y
+    elif len(x) < len(y):
+        min_ = x
+    r_ = len(min_)
+    for i in range(r_ / ss):
+        m += x[ss * i:ss * (i + 1)] + y[ss * i:ss * (i + 1)]
+    return x[r_:], y[r_:], m
 
 
-def voip_play(s1,list=None,**kargs):
-    FIFO=get_temp_file()
-    FIFO1=FIFO % 1
-    FIFO2=FIFO % 2
-    
-    os.mkfifo(FIFO1)
-    os.mkfifo(FIFO2)
-    try:
-        os.system("soxmix -t .ul %s -t .ul %s -t ossdsp /dev/dsp &" % (FIFO1,FIFO2))
-        
-        c1=open(FIFO1,"w", 4096)
-        c2=open(FIFO2,"w", 4096)
-        fcntl.fcntl(c1.fileno(),fcntl.F_SETFL, os.O_NONBLOCK)
-        fcntl.fcntl(c2.fileno(),fcntl.F_SETFL, os.O_NONBLOCK)
-    
-    #    dsp,rd = os.popen2("sox -t .ul -c 2 - -t ossdsp /dev/dsp")
-        def play(pkt,last=[]):
-            if not pkt:
-                return 
-            if not pkt.haslayer(UDP):
-                return 
-            ip=pkt.getlayer(IP)
-            if s1 in [ip.src, ip.dst]:
-                if not last:
-                    last.append(pkt)
-                    return
-                load=last.pop()
-    #            x1 = load.load[12:]
-                c1.write(load.load[12:])
-                if load.getlayer(IP).src == ip.src:
-    #                x2 = ""
-                    c2.write("\x00"*len(load.load[12:]))
-                    last.append(pkt)
-                else:
-    #                x2 = pkt.load[:12]
-                    c2.write(pkt.load[12:])
-    #            dsp.write(merge(x1,x2))
-    
-        if list is None:
-            sniff(store=0, prn=play, **kargs)
-        else:
-            for p in list:
-                play(p)
-    finally:
-        os.unlink(FIFO1)
-        os.unlink(FIFO2)
+def voip_play(s1, lst=None, **kargs):
+    """Play VoIP packets with RAW data that
+    are either sniffed either from an IP, or
+    specified as a list.
 
+    It will play only the incoming packets !
 
+    :param s1: The IP of the src of all VoIP packets.
+    :param lst: (optional) A list of packets to load
+    :type s1: string
+    :type lst: list
 
-def voip_play1(s1,list=None,**kargs):
+    :Example:
 
-    
-    dsp,rd = os.popen2("sox -t .ul - -t ossdsp /dev/dsp")
+    >>> voip_play("64.2.142.189")
+    while calling '411@ideasip.com'
+
+    >>> voip_play("64.2.142.189", lst)
+    with list a list of packets with VoIP data
+    in their RAW layer
+
+    .. seealso:: voip_play2
+    to play both the outcoming and incoming packets
+    at the same time.
+
+    .. seealso:: voip_play3
+    to read RTP VoIP packets
+    """
+
+    proc = subprocess.Popen(sox_base[0] + sox_base[1], stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE)
+    dsp, rd = proc.stdin, proc.stdout
+
     def play(pkt):
         if not pkt:
-            return 
-        if not pkt.haslayer(UDP):
-            return 
-        ip=pkt.getlayer(IP)
-        if s1 in [ip.src, ip.dst]:
+            return
+        if not pkt.haslayer(UDP) or not pkt.haslayer(IP):
+            return
+        ip = pkt.getlayer(IP)
+        if s1 == ip.src:
             dsp.write(pkt.getlayer(conf.raw_layer).load[12:])
     try:
-        if list is None:
+        if lst is None:
             sniff(store=0, prn=play, **kargs)
         else:
-            for p in list:
+            for p in lst:
                 play(p)
     finally:
         dsp.close()
         rd.close()
 
-def voip_play2(s1,**kargs):
-    dsp,rd = os.popen2("sox -t .ul -c 2 - -t ossdsp /dev/dsp")
-    def play(pkt,last=[]):
-        if not pkt:
-            return 
-        if not pkt.haslayer(UDP):
-            return 
-        ip=pkt.getlayer(IP)
-        if s1 in [ip.src, ip.dst]:
-            if not last:
-                last.append(pkt)
-                return
-            load=last.pop()
-            x1 = load.load[12:]
-#            c1.write(load.load[12:])
-            if load.getlayer(IP).src == ip.src:
-                x2 = ""
-#                c2.write("\x00"*len(load.load[12:]))
-                last.append(pkt)
-            else:
-                x2 = pkt.load[:12]
-#                c2.write(pkt.load[12:])
-            dsp.write(merge(x1,x2))
-            
-    sniff(store=0, prn=play, **kargs)
 
-def voip_play3(lst=None,**kargs):
-    dsp,rd = os.popen2("sox -t .ul - -t ossdsp /dev/dsp")
+def voip_play1(s1, lst=None, **kargs):
+    """Same than voip_play, backward compatibility
+    """
+    return voip_play(s1, lst, **kargs)
+
+
+def voip_play2(s1, **kargs):
+    """
+    Same than voip_play, but will play
+    both incoming and outcoming packets.
+    The sound will surely suffer distortion.
+
+    Only supports sniffing.
+
+    .. seealso:: voip_play
+    to play only incoming packets.
+    """
+    proc = subprocess.Popen(sox_base[0] + ["-c", "2"] + sox_base[1],
+                            stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    dsp, rd = proc.stdin, proc.stdout
+    global x1, x2
+    x1 = ""
+    x2 = ""
+
+    def play(pkt):
+        global x1, x2
+        if not pkt:
+            return
+        if not pkt.haslayer(UDP) or not pkt.haslayer(IP):
+            return
+        ip = pkt.getlayer(IP)
+        if s1 in [ip.src, ip.dst]:
+            if ip.dst == s1:
+                x1 += pkt.getlayer(conf.raw_layer).load[12:]
+            else:
+                x2 += pkt.getlayer(conf.raw_layer).load[12:]
+            x1, x2, r = _merge_sound_bytes(x1, x2)
+            dsp.write(r)
+
     try:
-        def play(pkt, dsp=dsp):
-            if pkt and pkt.haslayer(UDP) and pkt.haslayer(conf.raw_layer):
-                dsp.write(pkt.getlayer(RTP).load)
+        sniff(store=0, prn=play, **kargs)
+    finally:
+        try:
+            dsp.close()
+            rd.close()
+        except Exception:
+            pass
+
+
+def voip_play3(lst=None, **kargs):
+    """Same than voip_play, but made to
+    read and play VoIP RTP packets, without
+    checking IP.
+
+    .. seealso:: voip_play
+    for basic VoIP packets
+    """
+    proc = subprocess.Popen(sox_base[0] + sox_base[1], stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE)
+    dsp, rd = proc.stdin, proc.stdout
+
+    def play(pkt, dsp=dsp):
+        if pkt and pkt.haslayer(UDP) and pkt.haslayer(RTP):
+            dsp.write(pkt.getlayer(RTP).load)
+    try:
         if lst is None:
             sniff(store=0, prn=play, **kargs)
         else:
@@ -144,6 +172,5 @@ def voip_play3(lst=None,**kargs):
         try:
             dsp.close()
             rd.close()
-        except:
+        except Exception:
             pass
-

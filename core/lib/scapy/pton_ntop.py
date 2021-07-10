@@ -1,7 +1,7 @@
-## This file is part of Scapy
-## See http://www.secdev.org/projects/scapy for more informations
-## Copyright (C) Philippe Biondi <phil@secdev.org>
-## This program is published under a GPLv2 license
+# This file is part of Scapy
+# See http://www.secdev.org/projects/scapy for more information
+# Copyright (C) Philippe Biondi <phil@secdev.org>
+# This program is published under a GPLv2 license
 
 """
 Convert IPv6 addresses between textual representation and binary.
@@ -10,81 +10,137 @@ These functions are missing when python is compiled
 without IPv6 support, on Windows for instance.
 """
 
-import socket,struct
+from __future__ import absolute_import
+import socket
+import re
+import binascii
+from scapy.modules.six.moves import range
+from scapy.compat import plain_str, hex_bytes, bytes_encode, bytes_hex
+
+from scapy.compat import (
+    AddressFamily,
+    Union,
+)
+
+_IP6_ZEROS = re.compile('(?::|^)(0(?::0)+)(?::|$)')
+_INET6_PTON_EXC = socket.error("illegal IP address string passed to inet_pton")
+
+
+def _inet6_pton(addr):
+    # type: (str) -> bytes
+    """Convert an IPv6 address from text representation into binary form,
+used when socket.inet_pton is not available.
+
+    """
+    joker_pos = None
+    result = b""
+    addr = plain_str(addr)
+    if addr == '::':
+        return b'\x00' * 16
+    if addr.startswith('::'):
+        addr = addr[1:]
+    if addr.endswith('::'):
+        addr = addr[:-1]
+    parts = addr.split(":")
+    nparts = len(parts)
+    for i, part in enumerate(parts):
+        if not part:
+            # "::" indicates one or more groups of 2 null bytes
+            if joker_pos is None:
+                joker_pos = len(result)
+            else:
+                # Wildcard is only allowed once
+                raise _INET6_PTON_EXC
+        elif i + 1 == nparts and '.' in part:
+            # The last part of an IPv6 address can be an IPv4 address
+            if part.count('.') != 3:
+                # we have to do this since socket.inet_aton('1.2') ==
+                # b'\x01\x00\x00\x02'
+                raise _INET6_PTON_EXC
+            try:
+                result += socket.inet_aton(part)
+            except socket.error:
+                raise _INET6_PTON_EXC
+        else:
+            # Each part must be 16bit. Add missing zeroes before decoding.
+            try:
+                result += hex_bytes(part.rjust(4, "0"))
+            except (binascii.Error, TypeError):
+                raise _INET6_PTON_EXC
+    # If there's a wildcard, fill up with zeros to reach 128bit (16 bytes)
+    if joker_pos is not None:
+        if len(result) == 16:
+            raise _INET6_PTON_EXC
+        result = (result[:joker_pos] + b"\x00" * (16 - len(result)) +
+                  result[joker_pos:])
+    if len(result) != 16:
+        raise _INET6_PTON_EXC
+    return result
+
+
+_INET_PTON = {
+    socket.AF_INET: socket.inet_aton,
+    socket.AF_INET6: _inet6_pton,
+}
+
 
 def inet_pton(af, addr):
-    """Convert an IP address from text representation into binary form"""
-    print('hello')
-    if af == socket.AF_INET:
-        return inet_aton(addr)
-    elif af == socket.AF_INET6:
-        # IPv6: The use of "::" indicates one or more groups of 16 bits of zeros.
-        # We deal with this form of wildcard using a special marker. 
-        JOKER = b"*"
-        while b"::" in addr:
-            addr = addr.replace(b"::", b":" + JOKER + b":")
-        joker_pos = None 
-        
-        # The last part of an IPv6 address can be an IPv4 address
-        ipv4_addr = None
-        if b"." in addr:
-            ipv4_addr = addr.split(b":")[-1]
-           
-        result = b""
-        parts = addr.split(b":")
-        for part in parts:
-            if part == JOKER:
-                # Wildcard is only allowed once
-                if joker_pos is None:
-                   joker_pos = len(result)
-                else:
-                   raise Exception("Illegal syntax for IP address")
-            elif part == ipv4_addr: # FIXME: Make sure IPv4 can only be last part
-                # FIXME: inet_aton allows IPv4 addresses with less than 4 octets 
-                result += socket.inet_aton(ipv4_addr)
-            else:
-                # Each part must be 16bit. Add missing zeroes before decoding. 
-                try:
-                    result += part.rjust(4, b"0").decode("hex")
-                except TypeError:
-                    raise Exception("Illegal syntax for IP address")
-                    
-        # If there's a wildcard, fill up with zeros to reach 128bit (16 bytes) 
-        if JOKER in addr:
-            result = (result[:joker_pos] + b"\x00" * (16 - len(result))
-                      + result[joker_pos:])
-    
-        if len(result) != 16:
-            raise Exception("Illegal syntax for IP address")
-        return result 
-    else:
-        raise Exception("Address family not supported")
+    # type: (AddressFamily, Union[bytes, str]) -> bytes
+    """Convert an IP address from text representation into binary form."""
+    # Will replace Net/Net6 objects
+    addr = plain_str(addr)
+    # Use inet_pton if available
+    try:
+        return socket.inet_pton(af, addr)
+    except AttributeError:
+        try:
+            return _INET_PTON[af](addr)
+        except KeyError:
+            raise socket.error("Address family not supported by protocol")
+
+
+def _inet6_ntop(addr):
+    # type: (bytes) -> str
+    """Convert an IPv6 address from binary form into text representation,
+used when socket.inet_pton is not available.
+
+    """
+    # IPv6 addresses have 128bits (16 bytes)
+    if len(addr) != 16:
+        raise ValueError("invalid length of packed IP address string")
+
+    # Decode to hex representation
+    address = ":".join(plain_str(bytes_hex(addr[idx:idx + 2])).lstrip('0') or '0'  # noqa: E501
+                       for idx in range(0, 16, 2))
+
+    try:
+        # Get the longest set of zero blocks. We need to take a look
+        # at group 1 regarding the length, as 0:0:1:0:0:2:3:4 would
+        # have two matches: 0:0: and :0:0: where the latter is longer,
+        # though the first one should be taken. Group 1 is in both
+        # cases 0:0.
+        match = max(_IP6_ZEROS.finditer(address),
+                    key=lambda m: m.end(1) - m.start(1))
+        return '{}::{}'.format(address[:match.start()], address[match.end():])
+    except ValueError:
+        return address
+
+
+_INET_NTOP = {
+    socket.AF_INET: socket.inet_ntoa,
+    socket.AF_INET6: _inet6_ntop,
+}
 
 
 def inet_ntop(af, addr):
-    """Convert an IP address from binary form into text represenation"""
-    if af == socket.AF_INET:
-        return inet_ntoa(addr)
-    elif af == socket.AF_INET6:
-        # IPv6 addresses have 128bits (16 bytes)
-        if len(addr) != 16:
-            raise Exception("Illegal syntax for IP address")
-        parts = []
-        for left in [0, 2, 4, 6, 8, 10, 12, 14]:
-            try: 
-                value = struct.unpack("!H", addr[left:left+2])[0]
-                hexstr = hex(value)[2:]
-            except TypeError:
-                raise Exception("Illegal syntax for IP address")
-            parts.append(hexstr.lstrip("0").lower())
-        result = b":".join(parts)
-        while b":::" in result:
-            result = result.replace(b":::", b"::")
-        # Leaving out leading and trailing zeros is only allowed with ::
-        if result.endswith(b":") and not result.endswith(b"::"):
-            result = result + b"0"
-        if result.startswith(b":") and not result.startswith(b"::"):
-            result = b"0" + result
-        return result
-    else:
-        raise Exception("Address family not supported yet")        
+    # type: (AddressFamily, bytes) -> str
+    """Convert an IP address from binary form into text representation."""
+    # Use inet_ntop if available
+    addr = bytes_encode(addr)
+    try:
+        return socket.inet_ntop(af, addr)
+    except AttributeError:
+        try:
+            return _INET_NTOP[af](addr)
+        except KeyError:
+            raise ValueError("unknown address family %d" % af)
