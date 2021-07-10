@@ -1,14 +1,14 @@
 class UnknownCommand(Exception):
-	pass
+    pass
 
 class ModuleNotFound(Exception):
-	pass
+    pass
 
 class VariableError(Exception):
-	pass
+    pass
 
 class ModuleError:
-	error = ""
+    error = ""
 
-	def __init__(self, error):
-		self.error = error
+    def __init__(self, error):
+        self.error = error

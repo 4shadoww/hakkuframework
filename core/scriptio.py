@@ -1,4 +1,4 @@
-#		 Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+#         Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
 
 # Import python modules
 import readline
@@ -12,20 +12,20 @@ from core import command_handler
 mm = ModuleManager
 
 def run(scf):
-	global mm
+    global mm
 
-	scriptline = 0
-	ch = command_handler.Commandhandler(mm, False)
+    scriptline = 0
+    ch = command_handler.Commandhandler(mm, False)
 
-	while True:
-		try:
-			if scriptline == len(scf):
-				sys.exit(0)
+    while True:
+        try:
+            if scriptline == len(scf):
+                sys.exit(0)
 
-			command = scf[scriptline][0]
-			scriptline += 1
+            command = scf[scriptline][0]
+            scriptline += 1
 
-			ch.handle(command)
-		except KeyboardInterrupt:
-			print()
-			sys.exit(0)
+            ch.handle(command)
+        except KeyboardInterrupt:
+            print()
+            sys.exit(0)
