@@ -1,4 +1,4 @@
-#        Copyright (C) 2015 Noa-Emil Nissinen (4shadoww)
+# Copyright (C) 2015 – 2021 Noa-Emil Nissinen (4shadoww)
 
 
 # Import python modules
@@ -19,105 +19,105 @@ api.enabled = True
 import core.exceptions
 
 class Hakkuapi:
-	mm = None
-	ch = None
-	allowPrint = False
-	ModuleError = False
+    mm = None
+    ch = None
+    allowPrint = False
+    ModuleError = False
 
-	def disablePrint(self):
-		if self.allowPrint == False:
-			f = open(os.devnull, 'w')
-			sys.stdout = f
+    def disablePrint(self):
+        if self.allowPrint == False:
+            f = open(os.devnull, 'w')
+            sys.stdout = f
 
-	def enablePrint(self):
-		if self.allowPrint == False:
-			sys.stdout = sys.__stdout__
+    def enablePrint(self):
+        if self.allowPrint == False:
+            sys.stdout = sys.__stdout__
 
-	def __init__(self, allowPrint):
-		self.allowPrint = allowPrint
-		self.mm = ModuleManager
-		self.ch = command_handler.Commandhandler(self.mm, True)
+    def __init__(self, allowPrint):
+        self.allowPrint = allowPrint
+        self.mm = ModuleManager
+        self.ch = command_handler.Commandhandler(self.mm, True)
 
-	def loadModule(self, module):
-		self.disablePrint()
-		try:
-			self.ch.handle("use "+module)
-			modadd = sys.modules["modules."+module]
-			if modadd.conf['apisupport'] == False:
-				raise ApiNotSupported("this module doesn't support api")
-		except core.exceptions.ModuleNotFound:
-			self.enablePrint()
-			raise ModuleNotFound("error: module not found")
-		except:
-			self.enablePrint()
-			raise
+    def loadModule(self, module):
+        self.disablePrint()
+        try:
+            self.ch.handle("use "+module)
+            modadd = sys.modules["modules."+module]
+            if modadd.conf['apisupport'] == False:
+                raise ApiNotSupported("this module doesn't support api")
+        except core.exceptions.ModuleNotFound:
+            self.enablePrint()
+            raise ModuleNotFound("error: module not found")
+        except:
+            self.enablePrint()
+            raise
 
-		self.enablePrint()
+        self.enablePrint()
 
-	def unloadModule(self):
-		self.disablePrint()
-		try:
-			self.ch.handle("back")
-		except:
-			self.enablePrint()
-			raise
-		self.enablePrint()
+    def unloadModule(self):
+        self.disablePrint()
+        try:
+            self.ch.handle("back")
+        except:
+            self.enablePrint()
+            raise
+        self.enablePrint()
 
-	def setVariable(self, target, value):
-		self.disablePrint()
-		try:
-			self.ch.handle("set "+target+" "+value)
-		except core.exceptions.VariableError:
-			self.enablePrint()
-			raise VariableError("error: variable not found")
-		except:
-			self.enablePrint()
-			raise
+    def setVariable(self, target, value):
+        self.disablePrint()
+        try:
+            self.ch.handle("set "+target+" "+value)
+        except core.exceptions.VariableError:
+            self.enablePrint()
+            raise VariableError("error: variable not found")
+        except:
+            self.enablePrint()
+            raise
 
-		self.enablePrint()
+        self.enablePrint()
 
-	def runModule(self):
-		self.ModuleError = False
-		self.disablePrint()
-		try:
-			answer = self.ch.handle("run")
-		except:
-			self.enablePrint()
-			raise
-		self.enablePrint()
+    def runModule(self):
+        self.ModuleError = False
+        self.disablePrint()
+        try:
+            answer = self.ch.handle("run")
+        except:
+            self.enablePrint()
+            raise
+        self.enablePrint()
 
-		if type(answer) is core.exceptions.ModuleError:
-			self.ModuleError = True
+        if type(answer) is core.exceptions.ModuleError:
+            self.ModuleError = True
 
-		return answer
+        return answer
 
-	def customCommand(self, command):
-		self.disablePrint()
-		try:
-			answer = self.ch.handle(command)
-		except:
-			self.enablePrint()
-			raise
+    def customCommand(self, command):
+        self.disablePrint()
+        try:
+            answer = self.ch.handle(command)
+        except:
+            self.enablePrint()
+            raise
 
-		self.enablePrint()
-		return answer
+        self.enablePrint()
+        return answer
 
-	def runCommand(self, command):
-		self.disablePrint()
-		try:
-			self.ch.handle(command)
-		except:
-			self.enablePrint()
-			raise
+    def runCommand(self, command):
+        self.disablePrint()
+        try:
+            self.ch.handle(command)
+        except:
+            self.enablePrint()
+            raise
 
-		self.enablePrint()
+        self.enablePrint()
 
 
 class ModuleNotFound(Exception):
-	pass
+    pass
 
 class VariableError(Exception):
-	pass
+    pass
 
 class ApiNotSupported(Exception):
-	pass
+    pass
