@@ -1,0 +1,12 @@
+README
+setup.py
+whois/_1_query.py
+whois/_2_parse.py
+whois/_3_adjust.py
+whois/__init__.py
+whois/exceptions.py
+whois/tld_regexpr.py
+whois.egg-info/PKG-INFO
+whois.egg-info/SOURCES.txt
+whois.egg-info/dependency_links.txt
+whois.egg-info/top_level.txt

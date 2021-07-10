@@ -1,0 +1,22 @@
+Metadata-Version: 2.1
+Name: whois
+Version: 0.9.13
+Summary: Python package for retrieving WHOIS information of domains.
+Home-page: https://github.com/DannyCork/python-whois/
+Author: DannyCork
+Author-email: ddarko@ddarko.org
+License: MIT http://www.opensource.org/licenses/mit-license.php
+Download-URL: https://github.com/DannyCork/python-whois/releases/tag/0.9.11
+Keywords: Python,whois,tld,domain,expiration,cctld,domainer,.com,registrar
+Platform: any
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Intended Audience :: Developers
+Classifier: Environment :: Console
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.5
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Topic :: Internet
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+
+UNKNOWN
+
