@@ -27,8 +27,8 @@ changelog = "Version 1.0:\nrelease"
 def run():
     variables['target'][0] = variables['target'][0].replace("http://", "")
     variables['target'][0] = variables['target'][0].replace("https://", "")
-    printInfo("your target : " + variables['target'][0])
-    printInfo("loading path list...")
+    print_info("your target : " + variables['target'][0])
+    print_info("loading path list...")
     paths = ['~root',
 '~toor',
 '~bin',
@@ -8953,11 +8953,11 @@ def run():
             conn.request("GET", path)
             res = conn.getresponse()
             if(res.status==200):
-                printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
+                print_success("[%s] ... [%s %s]" % (path, res.status, res.reason))
                 paths_found.append(path)
             else:
-                printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
+                print_warning("[%s] ... [%s %s]" % (path, res.status, res.reason))
         return paths_found
     except(socket.gaierror):
-        printError("host is down")
+        print_error("host is down")
         return ModuleError("host is down")

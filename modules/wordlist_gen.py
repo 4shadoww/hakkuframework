@@ -68,7 +68,7 @@ class Worker(threading.Thread):
         try:
             f = open(variables["output"][0], "a")
         except Exception as error:
-            printError(error)
+            print_error(error)
             return ModuleError(error)
 
         for L in range(self.lenmin, self.lenmax):
@@ -102,13 +102,13 @@ def run():
     try:
         variables["maxlen"][0] = int(variables["maxlen"][0])
     except ValueError:
-        printError("invalid maxlen")
+        print_error("invalid maxlen")
         return ModuleError("invalid maxlen")
 
     try:
         variables["minlen"][0] = int(variables["minlen"][0])
     except ValueError:
-        printError("invalid minlen")
+        print_error("invalid minlen")
         return ModuleError("invalid minlen")
 
     sh = StatHolder()
@@ -118,22 +118,22 @@ def run():
     d = variables["maxlen"][0] - variables["minlen"][0]
 
     if d < 0:
-        printError("minlen can't be greater than minlen")
+        print_error("minlen can't be greater than minlen")
         return ModuleError("minlen can't be greater than minlen")
     for i in range(variables["minlen"][0], variables["maxlen"][0]+1):
         t = Worker(sh, i+1, i, chars)
         threads.append(t)
         t.start()
 
-    printInfo(colors.bold+"generating..."+colors.end)
+    print_info(colors.bold+"generating..."+colors.end)
     try:
         for thread in threads:
             thread.join()
     except KeyboardInterrupt:
         sh.kill = True
-        printInfo("word generator terminated")
+        print_info("word generator terminated")
 
-    printSuccess("word list genereted")
+    print_success("word list genereted")
 
 def addchar(args):
     global addchr
@@ -141,5 +141,5 @@ def addchar(args):
         addchr += args[0]
         return "[suf] chars added"
     except IndexError:
-        printError("args not given")
+        print_error("args not given")
         return ModuleError("args not given")

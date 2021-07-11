@@ -26,11 +26,11 @@ changelog = "Version 1.0:\nrelease"
 def run():
     try:
         querly = socket.gethostbyaddr(variables['target'][0])
-        printSuccess("resolved hostname: "+ querly[0])
+        print_success("resolved hostname: "+ querly[0])
         return querly[0]
     except(socket.herror):
-        printError("unknown host")
+        print_error("unknown host")
         return ModuleError("unknown host")
     except(socket.gaierror):
-        printError("name or service not known")
+        print_error("name or service not known")
         return ModuleError("name or service not known")

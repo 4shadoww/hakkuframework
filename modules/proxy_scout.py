@@ -37,13 +37,13 @@ def run():
     commonports = ['80', '8080', '8888', '25', '3128', '8003', '9529', '8088', '8118', '4624', '9090', '82', '8090', '5555', '81', '7004', '9797', '7777', '8998', '9999', '10200']
     variables['target'][0] = variables['target'][0].replace("http://", "").replace("https://", "")
     if variables['target'][0] == 'google.com':
-        printError('not valid address')
+        print_error('not valid address')
         return
     try:
         try:
             socket.setdefaulttimeout(int(variables['timeout'][0]))
         except ValueError:
-            printError('not valid timeout')
+            print_error('not valid timeout')
             return
         if variables['use_range'][0] != '1' and variables['scan_common'][0] != '1':
             proxy_support = urllib.request.ProxyHandler({"http":variables['target'][0]+':'+variables['port'][0]})
@@ -51,7 +51,7 @@ def run():
             urllib.request.install_opener(opener)
 
             html = urllib.request.urlopen("http://www.google.com").read()
-            printSuccess('proxy server detected')
+            print_success('proxy server detected')
         if variables['scan_common'][0] == '1':
             for port in commonports:
                 try:
@@ -66,7 +66,7 @@ def run():
                     print(' :'+colors.green+' proxy detected'+colors.end)
 
                 except http.client.BadStatusLine:
-                    printSuccess('\nproxy server detected')
+                    print_success('\nproxy server detected')
                     break
 
                 except urllib.error.URLError:
@@ -77,7 +77,7 @@ def run():
                 
                 except ConnectionResetError:
                     print(' :'+colors.green+' proxy detected'+colors.end)
-            printSuccess('\ndone')
+            print_success('\ndone')
 
         if variables['use_range'][0] == '1':
             ports = re.sub("-", " ",  variables['port_range'][0]).split()
@@ -94,7 +94,7 @@ def run():
                     print(' :'+colors.green+' proxy detected'+colors.end)
 
                 except http.client.BadStatusLine:
-                    printSuccess('\nproxy server detected')
+                    print_success('\nproxy server detected')
                     break
 
                 except urllib.error.URLError:
@@ -105,16 +105,16 @@ def run():
                 
                 except ConnectionResetError:
                     print(' :'+colors.green+' proxy detected'+colors.end)
-            printSuccess('\ndone')
+            print_success('\ndone')
 
     except http.client.BadStatusLine:
-        printSuccess('proxy server detected')
+        print_success('proxy server detected')
 
     except urllib.error.URLError:
-        printError('URLError')
+        print_error('URLError')
     
     except socket.timeout:
-        printError('timeout')
+        print_error('timeout')
     
     except ConnectionResetError:
-        printSuccess('proxy detected')
+        print_success('proxy detected')

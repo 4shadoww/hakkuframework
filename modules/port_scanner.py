@@ -34,7 +34,7 @@ def run():
     try:
         targetip = socket.gethostbyname(variables['target'][0])
     except(socket.gaierror):
-        printError('hostname could not be resolved')
+        print_error('hostname could not be resolved')
         return ModuleError("hostname could not be resolved")
 
     socket.setdefaulttimeout(0.5)
@@ -60,13 +60,13 @@ def run():
             sock.close()
 
     except(socket.gaierror):
-        printError('hostname could not be resolved')
+        print_error('hostname could not be resolved')
         return ModuleError("hostname could not be resolved")
     except(socket.error):
-        printError(colors.red+"couldn't connect to server"+colors.end)
+        print_error(colors.red+"couldn't connect to server"+colors.end)
         return ModuleError("couldn't connect to server")
     except(ValueError):
-        printError("port value must be integer")
+        print_error("port value must be integer")
         return ModuleError("port value must be integer")
 
     # Checking the time again
@@ -76,5 +76,5 @@ def run():
     total =  t2 - t1
 
     # Printing the information to screen
-    printInfo('scanning Completed in: '+ str(total))
+    print_info('scanning Completed in: '+ str(total))
     return open_ports

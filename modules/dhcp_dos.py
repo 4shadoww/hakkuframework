@@ -50,11 +50,11 @@ class DhcpRequest(threading.Thread):
         sendp(dhcp_discover, verbose=0)
 
 def run():
-    printInfo("attack has been started...")
+    print_info("attack has been started...")
     try:
         last = int(variables["packet_count"][0])
     except ValueError:
-        printError("invalid packets count")
+        print_error("invalid packets count")
     threads = []
     try:
         if last != 0:
@@ -71,7 +71,7 @@ def run():
                 threads.append(dhcpr)
                 i += 1
     except KeyboardInterrupt:
-        printInfo("kill signal received stopping attack...")
+        print_info("kill signal received stopping attack...")
         for thread in threads:
             thread.join()
-    printInfo("attack ended")
+    print_info("attack ended")

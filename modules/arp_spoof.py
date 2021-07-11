@@ -58,7 +58,7 @@ class SpoofController(threading.Thread):
         try:
             ip = netifaces.ifaddresses(variables["interface"][0])[2][0]['addr']
         except(ValueError, KeyError):
-            printError("invalid interface")
+            print_error("invalid interface")
             self.controller.kill = True
             self.controller.error = "invalid interface"
             return
@@ -146,40 +146,40 @@ controller = Controller()
 controller.kill = True
 
 def run():
-    printInfo("setting up...")
+    print_info("setting up...")
     controller.reset()
-    printInfo("ipv4 forwarding...")
+    print_info("ipv4 forwarding...")
     os.system('echo "1" >> /proc/sys/net/ipv4/ip_forward')
 
     if variables["all"][0] == "true":
-        printInfo("starting arp spoof...")
+        print_info("starting arp spoof...")
         spoofcontroller = SpoofController(controller)
         spoofcontroller.start()
 
     else:
-        printInfo("starting arp spoof...")
+        print_info("starting arp spoof...")
         arpspoof = ArpSpoofer(variables["router"][0], variables["target"][0], controller)
         arpspoof.start()
 
-    printInfo("use \"stop\" command to end spoof")
-    printInfo("get spoof status using \"get status\" command")
+    print_info("use \"stop\" command to end spoof")
+    print_info("get spoof status using \"get status\" command")
 
 def stop(args):
     controller.kill = True
     os.system('echo "0" >> /proc/sys/net/ipv4/ip_forward')
-    printInfo("arp spoof ended")
+    print_info("arp spoof ended")
 
 def get(args):
     if args[0] == "status":
         if controller.error == None and controller.kill == False:
-            printInfo("attack is running")
+            print_info("attack is running")
             return "attack is running"
         elif controller.error == None and controller.kill == True:
-            printInfo("attack in ended")
+            print_info("attack in ended")
             os.system('echo "0" >> /proc/sys/net/ipv4/ip_forward')
             return "attack in ended"
         elif controller.error != None:
-            printError("faced error: "+controller.error)
+            print_error("faced error: "+controller.error)
             os.system('echo "0" >> /proc/sys/net/ipv4/ip_forward')
             return ModuleError(controller.error)
 

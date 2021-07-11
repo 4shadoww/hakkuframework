@@ -49,12 +49,12 @@ def run():
     xterm1 = "service network-manager stop"
     xterm2 = "ifconfig "+variables['interface'][0]+" hw ether "+variables['fake_mac'][0]
     xterm3 = "service network-manager start"
-    printInfo("status: starting mac spoof")
+    print_info("status: starting mac spoof")
     os.system(xterm1)
-    printInfo("status: trying to set fake mac address...")
+    print_info("status: trying to set fake mac address...")
     os.system(xterm2)
     os.system(xterm3)
-    printSuccess("status: done!")
+    print_success("status: done!")
 
 def scan(args):
     network_scanner.scan()
@@ -75,16 +75,16 @@ def reset(args):
     realmac = realmac.replace("'", "")
     realmac =  realmac[:-2]
     if not realmac:
-        printError("error")
+        print_error("error")
         return ModuleError("error")
     else:
-        printInfo("realmac: "+realmac)
+        print_info("realmac: "+realmac)
         xterm1a = "service network-manager stop"
         xterm2a = "ifconfig "+variables['interface'][0]+" hw ether "+realmac
         xterm3a = "service network-manager start"
-        printInfo("setting real mac")
+        print_info("setting real mac")
         os.system(xterm1a)
-        printInfo("trying to set real mac address...")
+        print_info("trying to set real mac address...")
         os.system(xterm2a)
         os.system(xterm3a)
-        printSuccess("done!")
+        print_success("done!")

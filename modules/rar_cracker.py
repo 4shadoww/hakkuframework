@@ -91,12 +91,12 @@ class Worker(threading.Thread):
 def run():
     try:
         wordlist = open(variables["dict"][0], "rb")
-        printInfo("reading word list...")
+        print_info("reading word list...")
         words = wordlist.read().splitlines()
     except FileNotFoundError:
-        printError("word list not found")
+        print_error("word list not found")
         return ModuleError("word list not found")
-    printInfo("brute-force attack started...")
+    print_info("brute-force attack started...")
 
     pwdh = PwdHolder
     pwdh.reset()
@@ -104,7 +104,7 @@ def run():
     try:
         u = int(variables["tc"][0])
     except TypeError:
-        printError("invalid thread count")
+        print_error("invalid thread count")
         return ModuleError("invalid thread count")
     threads = []
 
@@ -113,18 +113,18 @@ def run():
         threads.append(t)
         t.start()
         
-    printInfo("now cracking...")
+    print_info("now cracking...")
     try:
         for thread in threads:
             thread.join()
     except KeyboardInterrupt:
         pwdh.kill = True
-        printInfo("brute-force attack terminated")
+        print_info("brute-force attack terminated")
 
     if pwdh.pwd != None:
-        printSuccess("password found: "+pwdh.pwd)
+        print_success("password found: "+pwdh.pwd)
         return pwdh.pwd
 
     elif pwdh.error != None:
-        printError(pwdh.error)
+        print_error(pwdh.error)
         return ModuleError(pwdh.error)

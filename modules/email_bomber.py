@@ -64,16 +64,16 @@ def run():
     try:
         server = smtplib.SMTP(variables['smtp'][0], int(variables['smtp_port'][0]))
     except(ValueError):
-        printError("port number must be int")
+        print_error("port number must be int")
         return ModuleError("port number must be int")
     except socket.gaierror:
-        printError("cannot reach smtp server")
+        print_error("cannot reach smtp server")
         return ModuleError("cannot reach smtp server")
     except(ConnectionRefusedError):
-        printError("connection refused")
+        print_error("connection refused")
         return ModuleError("connection refused")
     except(TimeoutError):
-        printError("timeout cannot reach smtp server")
+        print_error("timeout cannot reach smtp server")
         return ModuleError("timeout cannot reach smtp server")
     if int(variables['starttls'][0]) == 1:
         server.starttls()
@@ -91,10 +91,10 @@ def run():
                     words = " ".join(list0)
                     msg.attach(MIMEText(words, 'html'))
                 server.sendmail(fromaddr, toaddr, text)
-                printSuccess("email sended")
+                print_success("email sended")
 
     if int(variables['amount'][0]) == 0:
-        printInfo("starting infinite loop (ctrl+c) to end")
+        print_info("starting infinite loop (ctrl+c) to end")
         while True:
             if int(variables['random_email'][0]) == 1:
                     fakemail = generate_random_email()
@@ -104,7 +104,7 @@ def run():
                     words = " ".join(list0)
                     msg.attach(MIMEText(words, 'html'))
             server.sendmail(fromaddr, toaddr, text)
-            printSuccess("email sended")
+            print_success("email sended")
     server.quit()
 
 def get_random_domain(domains):

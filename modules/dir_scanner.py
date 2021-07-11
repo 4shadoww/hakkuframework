@@ -29,7 +29,7 @@ changelog = "Version 1.0:\nrelease\n\nVersion 1.1:\n+ added timeout variable"
 def run():
     variables['target'][0] = variables['target'][0].replace("http://", "")
     variables['target'][0] = variables['target'][0].replace("https://", "")
-    printInfo("your target : " + variables['target'][0])
+    print_info("your target : " + variables['target'][0])
     paths = ['index',
 'images',
 'download',
@@ -220587,12 +220587,12 @@ def run():
                 try:
                     conn.timeout = float(variables['timeout'][0])
                 except ValueError:
-                    printError('invalid timeout')
+                    print_error('invalid timeout')
                     return ModuleError("invalid timeout")
                 conn.request("GET", path)
                 res = conn.getresponse()
                 if(res.status==200):
-                    printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
+                    print_success("[%s] ... [%s %s]" % (path, res.status, res.reason))
                     paths_found.append(path)
         else:
             for path in paths:
@@ -220601,18 +220601,18 @@ def run():
                 try:
                     conn.timeout = float(variables['timeout'][0])
                 except ValueError:
-                    printError('invalid timeout')
+                    print_error('invalid timeout')
                     return ModuleError("invalid timeout")
                 conn.request("GET", path)
                 res = conn.getresponse()
                 if(res.status==200):
-                    printSuccess("[%s] ... [%s %s]" % (path, res.status, res.reason))
+                    print_success("[%s] ... [%s %s]" % (path, res.status, res.reason))
                     paths_found.append(path)
                 else:
-                    printWarning("[%s] ... [%s %s]" % (path, res.status, res.reason))
+                    print_warning("[%s] ... [%s %s]" % (path, res.status, res.reason))
     except (socket.gaierror):
-        printError("target "+variables['target'][0]+" not found")
+        print_error("target "+variables['target'][0]+" not found")
         return ModuleError("not found")
     except (socket.timeout):
-        printError("time out "+variables['target'][0])
+        print_error("time out "+variables['target'][0])
         return ModuleError("timeout")

