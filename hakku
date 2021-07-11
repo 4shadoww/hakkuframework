@@ -34,10 +34,10 @@ try:
     import csv
 
     # Check python version
-    req_version = (3,9)
+    req_version = (3,8)
     cur_version = sys.version_info
     if cur_version < req_version:
-        print('python 3.9 or greater is recommended')
+        print('python 3.8 or greater is recommended')
 
     # Disable scapy warning
     logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
