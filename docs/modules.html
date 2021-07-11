@@ -1,0 +1,108 @@
+<h1 id="modules">Modules</h1>
+<p>On this page will be documentation about creating Hakku framework modules.</p>
+<h2 id="basic-commands">Basic commands</h2>
+<p>Here are few commands that can be useful when developing a module.</p>
+<hr />
+<p><strong>new module</strong></p>
+<p>This command creates a new module from the template.</p>
+<p>usage:</p>
+<ul>
+<li><strong>new module</strong> <em>name</em></li>
+</ul>
+<hr />
+<p><strong>reload</strong></p>
+<p>This command reloads the currently loaded or specified module.</p>
+<p>usage:</p>
+<ul>
+<li><strong>reload</strong></li>
+<li><strong>reload</strong> <em>name</em></li>
+</ul>
+<hr />
+<p><strong>check module</strong></p>
+<p>Does basic checks to the module (variables and functions).</p>
+<p>usage:</p>
+<ul>
+<li><strong>check module</strong> <em>name</em></li>
+</ul>
+<hr />
+<p><strong>redb</strong></p>
+<p>Add new modules to the database.</p>
+<p>usage:</p>
+<ul>
+<li><strong>redb</strong></li>
+</ul>
+<hr />
+<h2 id="writing-to-stdout">Writing to stdout</h2>
+<p>Don’t use <strong>print()</strong>, use functions below to print.</p>
+<p>List of functions:</p>
+<ul>
+<li><strong>print_info()</strong></li>
+<li><strong>print_warning()</strong></li>
+<li><strong>print_error()</strong></li>
+<li><strong>print_success()</strong></li>
+</ul>
+<p>These functions have optional arguments <strong>start</strong> and <strong>end</strong> for defining line beginning and ending.</p>
+<hr />
+<h2 id="text-colors">Text colors</h2>
+<p>Please use the colour pallet from “core/colors”.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> core <span class="im">import</span> colors</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(colors.blue<span class="op">+</span><span class="st">&quot;hello world&quot;</span><span class="op">+</span>colors.end)</span></code></pre></div>
+<p>List of colours:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>purple</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>blue</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>green</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cyan</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>yellow</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>red</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>end</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>bold (bold text)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>uline (underline)</span></code></pre></div>
+<hr />
+<h2 id="module-custom-commands">Module custom commands</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>customcommands <span class="op">=</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;example&quot;</span>: <span class="st">&quot;example command&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This variable holds a description for the “example” command and lets the framework know this command exists.</p>
+<p>Custom command function should always have one argument:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> example(args):</span></code></pre></div>
+<hr />
+<h2 id="hello-message">Hello message</h2>
+<p>To print some messages when the module is loaded, use the message variable.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> <span class="st">&quot;hello world&quot;</span></span></code></pre></div>
+<hr />
+<h2 id="needroot-warning">Needroot warning</h2>
+<p>If the module needs root privileges, add this variable:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>needroot <span class="op">=</span> <span class="dv">1</span></span></code></pre></div>
+<hr />
+<h2 id="modifying-module-variables-at-runtime">Modifying module variables at runtime</h2>
+<p>Use prebuild function to modify module variables at runtime (the OrderedDict <em>variables</em>).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> core.setvar <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>setvar(<span class="st">&#39;variable&#39;</span>, <span class="st">&#39;value&#39;</span>, variables)</span></code></pre></div>
+<hr />
+<h2 id="paths">Paths</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> core <span class="im">import</span> getpath</span></code></pre></div>
+<p>getpath module finds absolute paths to various locations.</p>
+<p>List of functions:</p>
+<ul>
+<li><strong>main()</strong> (main executable’s directory path)</li>
+<li><strong>main_module()</strong> (main module path)</li>
+<li><strong>modules()</strong> (modules/)</li>
+<li><strong>core()</strong> (core/)</li>
+<li><strong>lib()</strong> (lib/)</li>
+<li><strong>tools()</strong> (core/tools/)</li>
+<li><strong>conf()</strong> (core/conf/)</li>
+<li><strong>tmp()</strong> (core/tmp/)</li>
+<li><strong>scripts()</strong> (core/scripts/)</li>
+<li><strong>db()</strong> (core/db/)</li>
+</ul>
+<p>Example usage:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> core <span class="im">import</span> getpath</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(getpath.db())</span></code></pre></div>
+<hr />
+<h2 id="init-function">init function</h2>
+<p>init function will be executed if it exists when the module is loaded.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> init():</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;hello world&#39;</span>)</span></code></pre></div>
+<hr />

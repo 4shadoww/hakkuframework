@@ -1,0 +1,25 @@
+<h1 id="python-api">Python API</h1>
+<p>Hakku Framework does have a simple python API, that can be used to run commands. The module must support API if you want some data back from the module when you execute it.</p>
+<p>Here is an example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> hakku <span class="im">import</span> api <span class="co"># Import api</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>hakku <span class="op">=</span> api.Hakkuapi(<span class="va">False</span>) <span class="co"># Create hakku object (agurment: enable stdout)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>hakku.loadModule(<span class="st">&quot;zip_cracker&quot;</span>) <span class="co"># Load modulke zip_cracker</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>hakku.setVariable(<span class="st">&quot;file&quot;</span>, <span class="st">&quot;hakku/core/tmp/test.zip&quot;</span>) <span class="co"># Set target zip file</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hakku.runModule()) <span class="co"># Print results</span></span></code></pre></div>
+<h2 id="api-reference">API reference</h2>
+<ul>
+<li><strong>loadModule(module)</strong> (load module)</li>
+<li><strong>unloadModule(module)</strong> (unload module)</li>
+<li><strong>setVariable(variable, value)</strong> (change option’s value)</li>
+<li><strong>runModule() (run module)</strong></li>
+<li><strong>customCommand(customcommand)</strong> (run module’s custom command)</li>
+<li><strong>runCommand(command)</strong> (run any command)</li>
+</ul>
+<h2 id="exceptions">Exceptions</h2>
+<ul>
+<li><strong>ModuleNotFound</strong> (module not found)</li>
+<li><strong>VariableError</strong> (module’s variable not found)</li>
+<li><strong>ApiNotSupported</strong> (will be raised when you load module that doesn’t support API)</li>
+<li><strong>ModuleError</strong> (will be raised when module faces an error)</li>
+</ul>
