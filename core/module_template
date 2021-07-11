@@ -37,7 +37,7 @@ changelog = "Version 1.0:\nrelease"
 # Run function
 def run():
 	print(variables)
-	printInfo("you have successfully created module")
+	print_info("you have successfully created module")
 
 # Just example of custom command "example" (remove this function below)
 def example(args):

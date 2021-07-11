@@ -1,7 +1,7 @@
 from prettytable import PrettyTable
 from core import colors
 
-def generateTable(hlist):
+def generate_table(hlist):
     t = PrettyTable([colors.bold+"Command"+colors.end, "",colors.bold+"Description"+colors.end])
     t.add_row(["-------"," ","-----------"])
     t.align = 'l'
@@ -13,7 +13,7 @@ def generateTable(hlist):
 
     return t
 
-def generatemTable(hlist1, hlist2):
+def generate_mtable(hlist1, hlist2):
     t = PrettyTable([colors.bold+"Command"+colors.end, "",colors.bold+"Description"+colors.end])
     t.add_row(["-------"," ","-----------"])
     t.align = 'l'

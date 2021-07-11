@@ -3,11 +3,11 @@ class ModuleManager():
     moduleName = None
     modadd = None
 
-    def unloadModule():
+    def unload_module(self):
         ModuleManager.moduleLoaded = 0
 
-    def loadModule():
+    def load_module(self):
         ModuleManager.moduleLoaded = 1
 
-    def setName(name):
+    def set_name(self, name):
         ModuleManager.moduleName = name

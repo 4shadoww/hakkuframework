@@ -68,10 +68,10 @@ def addtodb(modadd):
                             info.text = modadd.conf["shortdesc"]
                             new = False
                             tree.write(getpath.core()+"module_database.xml")
-                            printSuccess("database updated")
+                            print_success("database updated")
                             return
     if new == True:
-        printInfo(modadd.conf["name"]+" doesn't exist in database\n", start="\n")
+        print_info(modadd.conf["name"]+" doesn't exist in database\n", start="\n")
         print("available categories keys:"+colors.yellow)
         for category in root:
             if category.tag == "category":
@@ -89,12 +89,12 @@ def addtodb(modadd):
                 category.append(module)
                 writedb(root)
                 newcat = False
-                printSuccess("module added to "+category.attrib["name"])
+                print_success("module added to "+category.attrib["name"])
                 break
 
         if newcat == True:
-            printInfo("category not found")
-            printInfo("going to add new category")
+            print_info("category not found")
+            print_info("going to add new category")
             catname = input("give new category name: ")
             newcat = ElementTree.Element("category")
             newcat.set("name", catname)
@@ -107,5 +107,5 @@ def addtodb(modadd):
             newcat.append(module)
             root.append(newcat)
             writedb(root)
-            printSuccess("new category created")
-            printSuccess("module added to "+newcat.attrib["name"])
+            print_success("new category created")
+            print_success("module added to "+newcat.attrib["name"])

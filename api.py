@@ -38,7 +38,7 @@ class Hakkuapi:
         self.mm = ModuleManager
         self.ch = command_handler.Commandhandler(self.mm, True)
 
-    def loadModule(self, module):
+    def load_module(self, module):
         self.disablePrint()
         try:
             self.ch.handle("use "+module)
@@ -54,7 +54,7 @@ class Hakkuapi:
 
         self.enablePrint()
 
-    def unloadModule(self):
+    def unload_module(self):
         self.disablePrint()
         try:
             self.ch.handle("back")

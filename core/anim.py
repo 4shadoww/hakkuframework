@@ -15,28 +15,28 @@ def animline(message, last=False):
     else:
         sys.stdout.write(message+"\n")
 
-def animError(message, last=False):
+def anim_error(message, last=False):
     sys.stdout.write("\033[K")
     if last == False:
         sys.stdout.write(errorstr+message+"\r")
     else:
         sys.stdout.write(errorstr+message+"\n")
 
-def animWarning(message, last=False):
+def anim_warning(message, last=False):
     sys.stdout.write("\033[K")
     if last == False:
         sys.stdout.write(warningstr+message+"\r")
     else:
         sys.stdout.write(warningstr+message+"\n")
 
-def animInfo(message, last=False):
+def anim_info(message, last=False):
     sys.stdout.write("\033[K")
     if last == False:
         sys.stdout.write(infostr+message+"\r")
     else:
         sys.stdout.write(infostr+message+"\n")
 
-def animSuccess(message, last=False):
+def anim_success(message, last=False):
     sys.stdout.write("\033[K")
     if last == False:
         sys.stdout.write(successstr+message+"\r")

@@ -185,7 +185,7 @@ class Cmethods:
                 print (file_contents)
                 f.close()
             except IOError:
-                printError("changelog file not found (have you removed it?)")
+                print_error("changelog file not found (have you removed it?)")
 
     def use(self, args):
         init = False
@@ -203,13 +203,13 @@ class Cmethods:
                     pass
                 try:
                     if self.modadd.conf["outdated"] == 1:
-                        printWarning("this module is outdated and might not be working")
+                        print_warning("this module is outdated and might not be working")
                 except KeyError:
                     pass
                 try:
                     if self.modadd.conf["needroot"] == 1:
                         if not os.geteuid() == 0:
-                            printWarning("this module requires root permissions for full functionality!")
+                            print_warning("this module requires root permissions for full functionality!")
                 except KeyError:
                     pass
                 if init == True:
@@ -354,7 +354,7 @@ class Cmethods:
             except KeyboardInterrupt:
                 print(colors.red+"module terminated"+colors.end)
             except PermissionError:
-                printError("permission denied")
+                print_error("permission denied")
                 return "[err] permission denied"
             except:
                 print(colors.red+"unexpected error in module:\n")
@@ -500,7 +500,7 @@ class Cmethods:
                     for dep in self.modadd.conf["dependencies"]:
                         print(dep)
                 except KeyError:
-                    printInfo("this module doesn't require any dependencies")
+                    print_info("this module doesn't require any dependencies")
         else:
             raise UnknownCommand("unknown command")
 
