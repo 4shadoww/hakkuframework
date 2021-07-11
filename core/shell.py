@@ -9,7 +9,7 @@ from core import colors
 from core import command_handler
 
 shellface = "["+colors.bold+"hakku"+colors.end+"]:"
-mm = ModuleManager
+mm = ModuleManager()
 
 def run():
     global shellface
@@ -19,24 +19,24 @@ def run():
 
     while True:
         try:
-            setFace()
+            set_face()
             command = input(shellface+" ")
 
             ch.handle(command)
         except KeyboardInterrupt:
-            if mm.moduleLoaded == 0:
+            if mm.module_loaded == 0:
                 print()
                 sys.exit(0)
             else:
                 print()
-                mm.moduleLoaded = 0
-                mm.moduleName = ""
+                mm.module_loaded = 0
+                mm.module_name = ""
                 print(colors.bold + colors.red + "ctrl + c detected going back..." + colors.end)
 
-def setFace():
+def set_face():
     global shellface
     global mm
-    if mm.moduleLoaded == 0:
+    if mm.module_loaded == 0:
         shellface = "["+colors.bold+"hakku"+colors.end+"]:"
     else:
-        shellface = "["+colors.bold+"hakku"+colors.end+"]"+"("+colors.red+mm.moduleName+colors.end+"):"
+        shellface = "["+colors.bold+"hakku"+colors.end+"]"+"("+colors.red+mm.module_name+colors.end+"):"
