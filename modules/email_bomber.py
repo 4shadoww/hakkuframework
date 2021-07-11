@@ -16,8 +16,8 @@ conf = {
     "author": "4shadoww",
     "github": "4shadoww",
     "email": "4shadoww0@gmail.com",
-    "initdate": "5.4.2016",
-    "lastmod": "3.1.2017",
+    "initdate": "2016-04-05",
+    "lastmod": "2017-01-03",
     "apisupport": True
 }
 
@@ -84,7 +84,7 @@ def run():
     if int(variables['amount'][0]) > 0:
         for i in range(0, int(variables['amount'][0])):
                 if int(variables['random_email'][0] == 1):
-                    fakemail = generate_random_email()
+                    fakemail = generate_random_email(letters, domains)
                     msg['From'] = fakemail[0]
                 if int(variables['random_messagem'][0]) == 1:
                     list0 = random.choice(s_nouns), random.choice(s_verbs), random.choice(s_nouns).lower() or random.choice(p_nouns).lower(), random.choice(infinitives)
@@ -97,7 +97,7 @@ def run():
         print_info("starting infinite loop (ctrl+c) to end")
         while True:
             if int(variables['random_email'][0]) == 1:
-                    fakemail = generate_random_email()
+                    fakemail = generate_random_email(letters, domains)
                     msg['From'] = fakemail[0]
             if int(variables['random_messagem'][0]) == 1:
                     list0 = random.choice(s_nouns), random.choice(s_verbs), random.choice(s_nouns).lower() or random.choice(p_nouns).lower(), random.choice(infinitives)
@@ -113,5 +113,5 @@ def get_random_domain(domains):
 def get_random_name(letters, length):
     return ''.join(random.choice(letters) for i in range(length))
 
-def generate_random_email():
+def generate_random_email(letters, domains):
     return [get_random_name(letters, 8) + '@' + get_random_domain(domains) for i in range(1)]

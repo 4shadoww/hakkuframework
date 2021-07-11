@@ -16,8 +16,8 @@ conf = {
     "author": "4shadoww",
     "github": "4shadoww",
     "email": "4shadoww0@gmail.com",
-    "initdate": "9.3.2016",
-    "lastmod": "3.1.2017",
+    "initdate": "2016-03-09",
+    "lastmod": "2017-01-03",
     "apisupport": True,
     "needroot": 1,
     "dependencies": ["ethtool"]

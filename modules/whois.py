@@ -4,7 +4,7 @@ from whois import query
 
 conf = {
     "name": "whois", # Module's name (should be same as file name)
-    "version": "1.0", # Module version
+    "version": "1.1", # Module version
     "shortdesc": "perform whois query", # Short description
     "github": "4shadoww", # Author's github
     "author": "4shadoww", # Author
@@ -21,7 +21,7 @@ variables = OrderedDict((
 ))
 
 # Simple changelog
-changelog = "Version 1.0:\nrelease"
+changelog = "Version 1.0:\nrelease\nVersion 1.1:\nfixes"
 
 def run():
     # Run

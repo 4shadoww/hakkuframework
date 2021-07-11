@@ -14,8 +14,8 @@ conf = {
     "author": "4shadoww",
     "github": "4shadoww",
     "email": "4shadoww0@gmail.com",
-    "initdate": "19.5.2016",
-    "lastmod": "29.12.2016",
+    "initdate": "2016-05-19",
+    "lastmod": "2016-12-29",
     "apisupport": False
 
 }

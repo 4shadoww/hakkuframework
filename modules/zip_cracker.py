@@ -15,8 +15,8 @@ conf = {
     "github": "4shadoww", # Author's github
     "author": "4shadoww", # Author
     "email": "4shadoww", # Email
-    "initdate": "22.12.2016", # Initial date
-    "lastmod": "3.1.2017",
+    "initdate": "2016-12-22", # Initial date
+    "lastmod": "2017-01-03",
     "apisupport": True, # Api support
 }
 
@@ -45,7 +45,7 @@ class PwdHolder:
         self.error = None
         self.kill = False
 
-    def reset():
+    def reset(self):
         PwdHolder.pwd = None
         PwdHolder.error = None
         PwdHolder.kill = False
@@ -95,7 +95,7 @@ def run():
         return ModuleError("word list not found")
     print_info("brute-force attack started...")
 
-    pwdh = PwdHolder
+    pwdh = PwdHolder()
     pwdh.reset()
 
     try:

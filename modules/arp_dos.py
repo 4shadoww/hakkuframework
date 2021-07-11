@@ -1,9 +1,10 @@
 # Copyright (C) 2015 – 2021 Noa-Emil Nissinen (4shadoww)
-from core.hakkuframework import *
-from core import colors
 import subprocess
 from time import sleep
 import os
+
+from core.hakkuframework import *
+from core import colors
 
 conf = {
     "name": "arp_dos",
@@ -12,8 +13,8 @@ conf = {
     "github": "4shadoww",
     "author": "4shadoww",
     "email": "4shadoww0@gmail.com",
-    "initdate": "3.3.2016",
-    "lastmod": "31.12.2016",
+    "initdate": "2016-03-03",
+    "lastmod": "2021-07-11",
     "needroot": 1,
     "apisupport": False,
     "dependencies": ["xterm", "ettercap"]

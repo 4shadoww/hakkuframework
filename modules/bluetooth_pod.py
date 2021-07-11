@@ -12,8 +12,8 @@ conf = {
     "github": "4shadoww",
     "author": "4shadoww",
     "email": "4shadoww0@gmail.com",
-    "initdate": "24.2.2016",
-    "lastmod": "29.12.2016",
+    "initdate": "2016-02-24",
+    "lastmod": "2016-12-29",
     "apisupport": False,
     "needroot": 1,
     "dependencies": ["xterm", "hcitool", "l2ping"]
