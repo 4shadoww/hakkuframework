@@ -1,16 +1,29 @@
-from core import colors
 import traceback
 import sys
 import os
 import subprocess
 import glob
 import py_compile
-from core import getpath
 import importlib
 import json
 
+from core import getpath
+from core import colors
+
 env = dict(os.environ)
-env['PYTHONPATH'] = getpath.lib() + ':' + getpath.main()
+if 'PYTHONPATH' in env:
+    env['PYTHONPATH'] = getpath.lib() + ':' + getpath.main() + ':' + env['PYTHONPATH']
+else:
+    env['PYTHONPATH'] = getpath.lib() + ':' + getpath.main()
+
+pylint_workarounds = ['scapy.all', 'whois', 'netfilterqueue']
+
+def pylint_ignore(message):
+    for item in pylint_workarounds:
+        if item in message: return True
+
+    return False
+
 
 def pylint_check(path, ignored=None):
     if ignored:
@@ -24,18 +37,17 @@ def pylint_check(path, ignored=None):
         return False
 
     js = json.loads(result.stdout.decode('utf-8'))
+    noerror = True
     for mes in js:
-        if mes['type'] == "error":
+        if mes['type'] == "error" and not pylint_ignore(mes['message']): # pylint cannot load scapy correctly
             print(colors.red+"pylint found error:")
             print(mes['type'], mes['message-id'], mes['path'], 'line:', str(mes['line']) + ':' + str(mes['column']), mes['message'] +colors.end)
-            return False
+            noerror = False
 
-    return True
+    return noerror
 
 def check_modules():
     modules = glob.glob(getpath.modules()+"*.py")
-
-    print("pylint checking modules")
 
     for module in modules:
         module = module.replace(getpath.modules(), '').replace('.py', '')
@@ -104,13 +116,17 @@ def check_customcommands(modadd):
     f.close()
 
 
-def compile_core():
+def check_core():
     core = glob.glob(getpath.core()+"*.py")
 
     print(colors.green+'\ntesting core...\n'+colors.green)
 
     for item in core:
-        print(colors.yellow+'compiling',item+colors.green)
+        print(colors.yellow+'checking',item+colors.green)
+
+        if not pylint_check(item):
+            testfailed()
+
         py_compile.compile(item)
 
 def compile_lib():
@@ -145,7 +161,7 @@ def challenge():
         print(colors.green+"\ntesting modules\n"+colors.green)
 
         check_modules()
-        compile_core()        
+        check_core()
         compile_lib()
         check_cmethods()
         compile_api()
