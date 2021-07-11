@@ -9,7 +9,7 @@ Getting started
 
 Use the "help" command to see all available commands. Here is a Youtube video if you wish to see Hakku in action: https://www.youtube.com/watch?v=1R0slN0vVHU&t=15s
 
-Installion
+Installation
 ----------
 
 If you want to make an installation to your system, you can do it with the "install.py" script. However, this is not required and hakku can be run as "portable" from the directory.
