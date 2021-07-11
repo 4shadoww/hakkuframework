@@ -5,7 +5,7 @@ from core.hakkuframework import *
 import socket
 
 conf = {
-    "name": "webserver_scout",
+    "name": "webserver_info",
     "version": "1.0",
     "shortdesc": "get information from webserver",
     "author": "4shadoww",

@@ -32,14 +32,14 @@
 		<module name="hostname_resolver">
 			<shortdesc>resolve hostname using ip</shortdesc>
 		</module>
-		<module name="webserver_scout">
-			<shortdesc>get information from webserver</shortdesc>
-		</module>
-		<module name="proxy_scout">
-			<shortdesc>verify http proxy</shortdesc>
-		</module>
 		<module name="whois">
 			<shortdesc>perform whois query</shortdesc>
+		</module>
+		<module name="webserver_info">
+			<shortdesc>get information from webserver</shortdesc>
+		</module>
+		<module name="proxy_detector">
+			<shortdesc>detect http proxy</shortdesc>
 		</module>
 	</category>
 	<category key="network_modules" name="Network Modules">

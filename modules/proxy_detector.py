@@ -8,9 +8,9 @@ import http.client
 import re
 
 conf = {
-    "name": "proxy_scout",
+    "name": "proxy_detector",
     "version": "1.0",
-    "shortdesc": "verify http proxy",
+    "shortdesc": "detect http proxy",
     "author": "4shadoww",
     "github": "4shadoww",
     "email": "4shadoww0@gmail.com",
