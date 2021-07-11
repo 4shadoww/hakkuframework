@@ -1,6 +1,6 @@
 # Copyright (C) 2015 – 2021 Noa-Emil Nissinen (4shadoww)
 from core.hakkuframework import *
-import whois
+from whois import query
 
 conf = {
     "name": "whois", # Module's name (should be same as file name)
@@ -9,9 +9,10 @@ conf = {
     "github": "4shadoww", # Author's github
     "author": "4shadoww", # Author
     "email": "4shadoww0@gmail.com", # Email
-    "initdate": "18.12.2016", # Initial date
-    "lastmod": "29.12.2016",
-    "apisupport": True
+    "initdate": "2016-12-18", # Initial date
+    "lastmod": "2021-07-11",
+    "apisupport": True,
+    "dependencies": ["whois"]
 }
 
 # List of the variables
@@ -24,6 +25,18 @@ changelog = "Version 1.0:\nrelease"
 
 def run():
     # Run
-    w = whois.whois(variables["target"][0])
-    print(w)
+    print("loading records for", variables["target"][0])
+    w = query(variables["target"][0])
+    print("creationg date:\t\t", w.creation_date)
+    print("expiration date:\t", w.expiration_date)
+    print("last updated:\t\t", w.last_updated)
+    print("name:\t\t\t", w.name)
+    print("name servers:\t\t", w.name_servers)
+    print("registrant:\t\t", w.registrant)
+    print("registrant country:\t", w.registrant_country)
+    print("registrar:\t\t", w.registrant)
+    print("status:\t\t\t", w.status)
+    print("statuses:\t\t", w.statuses)
+    print("dnssec:\t\t\t", w.dnssec)
+
     return w
