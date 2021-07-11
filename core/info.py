@@ -2,7 +2,7 @@ from core import colors
 
 version = "pre-1.0"
 apiversion = "pre-1.0"
-update_date = "xxxx-xx-xx"
+update_date = "2021-07-11"
 codename = "phoenix"
 
 about = ("Hakku Framework "+version+" "+codename+
