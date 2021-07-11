@@ -24,7 +24,7 @@ def core():
     return path
 
 def lib():
-    path = rchop(os.path.dirname(os.path.abspath(__file__)), "core") + "/lib/"
+    path = rchop(os.path.dirname(os.path.abspath(__file__)), "core") + "lib/"
     return path
 
 def tools():
