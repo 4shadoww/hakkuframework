@@ -24,7 +24,7 @@ class Commandhandler:
         command = command.split()
 
         # Custom command
-        if self.mm.moduleLoaded == 1:
+        if self.mm.module_loaded == 1:
                 try:
                     return self.cm.mcu(command)
                 except IndexError:
