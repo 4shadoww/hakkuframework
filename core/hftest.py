@@ -1,12 +1,41 @@
 from core import colors
-import traceback, sys, os
+import traceback
+import sys
+import os
+import subprocess
 import glob
 import py_compile
 from core import getpath
 import importlib
+import json
+
+env = dict(os.environ)
+env['PYTHONPATH'] = getpath.lib() + ':' + getpath.main()
+
+def pylint_check(path, ignored=None):
+    if ignored:
+        result = subprocess.run(['pylint', path, 'ignore=['+','.join(ignored)+']', '--output-format=json'], capture_output=True, env=env)
+    else:
+        result = subprocess.run(['pylint', path, '--output-format=json'], capture_output=True, env=env)
+    if result.returncode == 1:
+        print(colors.red+"pylint returned 1"+colors.end)
+        print(result.stdout.decode('utf-8'))
+        print(result.stderr.decode('utf-8'))
+        return False
+
+    js = json.loads(result.stdout.decode('utf-8'))
+    for mes in js:
+        if mes['type'] == "error":
+            print(colors.red+"pylint found error:")
+            print(mes['type'], mes['message-id'], mes['path'], 'line:', str(mes['line']) + ':' + str(mes['column']), mes['message'] +colors.end)
+            return False
+
+    return True
 
 def check_modules():
     modules = glob.glob(getpath.modules()+"*.py")
+
+    print("pylint checking modules")
 
     for module in modules:
         module = module.replace(getpath.modules(), '').replace('.py', '')
@@ -16,6 +45,10 @@ def check_modules():
 
 def check_module(modadd):
     print(colors.yellow+'checking',modadd.conf["name"]+colors.green)
+
+    if not pylint_check(modadd.__file__):
+        testfailed()
+
     module = modadd.__name__.replace("modules.", "")
     if modadd.conf["name"] != module:
         print(colors.red+"\nmodules name doesn't match")
