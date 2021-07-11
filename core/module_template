@@ -1,17 +1,17 @@
 from core.hakkuframework import *
 
 conf = {
-#	"name": "module_name", # Module's name (should be same as file name)
+#	"name": "module_name", # Module's name (should be same as the file name)
 	"version": "1.0", # Module version
 	"shortdesc": "none", # Short description
 	"github": "none", # Author's github
 	"author": "none", # Author
 	"email": "none", # Email
-#	"initdate": "none", # Initial date
-#	"lastmod": "none", # Last modification
+#	"initdate": "xxxx-xx-xx", # Initial date
+#	"lastmod": "xxxx-xx-xx", # Last modification
 	"apisupport": False, # Api support
-	"needroot": 1, # Alert user if root permissions not available (remove variable below if root permissions not needed)
-	"dependencies": [None] # Remove this if your module doesn't have any dependencies
+	"needroot": 1, # Alert user if root permissions not available (remove variable below if root permissions are not needed)
+	"dependencies": [None] # Remove this if your module doesn't have any external dependencies
 }
 
 # List of the variables
