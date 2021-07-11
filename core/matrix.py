@@ -179,7 +179,7 @@ def rand():
 r = rand()
 def randint(_min, _max):
     if PYTHON2:
-        n = r.next()
+        n = r.next()# pylint: disable=no-member
     else:
         n = r.__next__()
     return (n % (_max - _min)) + _min
