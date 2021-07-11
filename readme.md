@@ -5,12 +5,12 @@ Hakku is a simple framework that is made for penetration testing tools.
 Hakku framework has a simple structure, basic CLI, and useful features for penetration testing modules development.
 
 Getting started
-----------------------
+---------------
 
 Use the "help" command to see all available commands. Here is a Youtube video if you wish to see Hakku in action: https://www.youtube.com/watch?v=1R0slN0vVHU&t=15s
 
 Installation
-----------
+------------
 
 If you want to make an installation to your system, you can do it with the "install.py" script. However, this is not required and hakku can be run as "portable" from the directory.
 
@@ -72,3 +72,8 @@ License
 -------
 
 Hakku Framework is licensed under MIT license.
+
+
+Bugs
+----
+Please leave bug reports to https://github.com/4shadoww/hakkuframework.
