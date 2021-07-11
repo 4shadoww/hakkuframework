@@ -1,11 +1,13 @@
 # Copyright (C) 2015 – 2021 Noa-Emil Nissinen (4shadoww)
 import sys
-from core import colors
-import urllib.request
-import socket
-from core.hakkuframework import *
 import http.client
 import re
+import urllib.request
+import socket
+
+from core.hakkuframework import *
+from core import colors
+
 
 conf = {
     "name": "proxy_detector",
@@ -37,7 +39,7 @@ def run():
     commonports = ['80', '8080', '8888', '25', '3128', '8003', '9529', '8088', '8118', '4624', '9090', '82', '8090', '5555', '81', '7004', '9797', '7777', '8998', '9999', '10200']
     variables['target'][0] = variables['target'][0].replace("http://", "").replace("https://", "")
     if variables['target'][0] == 'google.com':
-        print_error('not valid address')
+        print_error('not a valid address')
         return
     try:
         try:
