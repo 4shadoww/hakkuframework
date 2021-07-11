@@ -75,9 +75,9 @@ class Cmethods:
     # Built in commands
 
     def exit(self, args):
-        if self.mm.moduleLoaded == 1:
-            self.mm.moduleLoaded = 0
-            self.mm.moduleName = ""
+        if self.mm.module_loaded == 1:
+            self.mm.module_loaded = 0
+            self.mm.module_name = ""
         else:
             sys.exit()
 
@@ -92,20 +92,20 @@ class Cmethods:
 
     def help(self, args):
 
-        if self.mm.moduleLoaded == 0:
-            print(helptable.generateTable(helpin.commands))
+        if self.mm.module_loaded == 0:
+            print(helptable.generate_table(helpin.commands))
         else:
             try: 
-                print(helptable.generatemTable(helpin.mcommands, self.modadd.customcommands))
+                print(helptable.generate_mtable(helpin.mcommands, self.modadd.customcommands))
             except AttributeError:
-                print(helptable.generateTable(helpin.mcommands))
+                print(helptable.generate_table(helpin.mcommands))
             try:
                 print('\n',self.modadd.help_notes,'\n')
             except AttributeError:
                 pass
 
     def version(self, args):
-        if self.mm.moduleLoaded == 1:
+        if self.mm.module_loaded == 1:
             try:
                 print(self.modadd.conf["name"]+" "+self.modadd.conf["version"])
             except:
@@ -126,7 +126,7 @@ class Cmethods:
         del network_scanner
 
     def about(self, args):
-        if self.mm.moduleLoaded == 1:
+        if self.mm.module_loaded == 1:
             try:
                 t = PrettyTable([self.modadd.conf["name"]+" "+self.modadd.conf["version"], ""])
                 t.add_row(["",""])
@@ -169,7 +169,7 @@ class Cmethods:
             print(info.about)
 
     def changelog(self, args):
-        if self.mm.moduleLoaded == 1:
+        if self.mm.module_loaded == 1:
             try:
                 print(self.modadd.changelog)
             except:
@@ -192,11 +192,11 @@ class Cmethods:
         if "modules."+args[0] not in sys.modules:
             init = True
 
-        if self.mm.moduleLoaded == 0:
+        if self.mm.module_loaded == 0:
             try:
                 self.modadd = importlib.import_module("modules."+args[0])
-                self.mm.moduleLoaded = 1
-                self.mm.setName(self.modadd.conf["name"])
+                self.mm.module_loaded = 1
+                self.mm.set_name(self.modadd.conf["name"])
                 try:
                     print(self.modadd.conf["message"])
                 except KeyError:
@@ -255,7 +255,7 @@ class Cmethods:
 
                 print(t)                
 
-            elif args[0] == "options" and self.mm.moduleLoaded == 1:
+            elif args[0] == "options" and self.mm.module_loaded == 1:
                 try:
                     moduleop.printoptions(self.modadd)
                 except:
@@ -270,15 +270,15 @@ class Cmethods:
             raise UnknownCommand("unknown command")
 
     def back(self, args):
-        if self.mm.moduleLoaded == 1:
-            self.mm.moduleLoaded = 0
-            self.mm.moduleName = ""
+        if self.mm.module_loaded == 1:
+            self.mm.module_loaded = 0
+            self.mm.module_name = ""
         else:
             raise UnknownCommand("unknown command")
 
     def reload(self, args):
         try:
-            if self.mm.moduleLoaded == 0:
+            if self.mm.module_loaded == 0:
                 try:
                     mod = "modules."+args[0]
                     if mod in sys.modules:
@@ -318,9 +318,9 @@ class Cmethods:
                             self.modadd.init()
                         except AttributeError:
                             pass
-                        print(colors.bold+"module "+ self.mm.moduleName +" reloaded"+colors.end)
+                        print(colors.bold+"module "+ self.mm.module_name +" reloaded"+colors.end)
                 except IndexError:
-                    mod = "modules."+self.mm.moduleName
+                    mod = "modules."+self.mm.module_name
                     if mod in sys.modules:
                         value_holder.save_values(sys.modules[mod].variables)
                         importlib.reload(sys.modules[mod])
@@ -329,7 +329,7 @@ class Cmethods:
                             self.modadd.init()
                         except AttributeError:
                             pass
-                        print (colors.bold+"module "+ self.mm.moduleName +" reloaded"+colors.end)
+                        print (colors.bold+"module "+ self.mm.module_name +" reloaded"+colors.end)
 
                     else:
                         modadd = importlib.import_module(mod)
@@ -337,7 +337,7 @@ class Cmethods:
                             self.modadd.init()
                         except AttributeError:
                             pass
-                        print(colors.bold+"module "+ self.mm.moduleName +" reloaded"+colors.end)
+                        print(colors.bold+"module "+ self.mm.module_name +" reloaded"+colors.end)
         except:
             print(colors.red+"faced unexpected error during reimporting:\n")
             traceback.print_exc()
@@ -347,7 +347,7 @@ class Cmethods:
 
     def run(self, args):
 
-        if self.mm.moduleLoaded == 1:
+        if self.mm.module_loaded == 1:
             try:
                 return self.modadd.run()
 
@@ -479,7 +479,7 @@ class Cmethods:
 
     def list(self, args):
         if len(args) != 0 and args[0] == "dependencies":
-            if self.mm.moduleLoaded == 0:
+            if self.mm.module_loaded == 0:
                 modules = glob.glob(getpath.modules()+"*.py")
                 dependencies = []
                 for module in modules:
@@ -505,7 +505,7 @@ class Cmethods:
             raise UnknownCommand("unknown command")
 
     def init(self, args):
-        if self.mm.moduleLoaded == 1:
+        if self.mm.module_loaded == 1:
             try:
                 self.modadd.init()
                 print("module initialized")
@@ -515,7 +515,7 @@ class Cmethods:
             raise UnknownCommand("unknown command")
 
     def redb(self, args):
-        if self.mm.moduleLoaded == 1:
+        if self.mm.module_loaded == 1:
             try:
                 moduleop.addtodb(self.modadd)
             except PermissionError:
