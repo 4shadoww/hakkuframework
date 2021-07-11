@@ -2,12 +2,17 @@ Hakku Framework
 ===============
 
 Hakku is a simple framework that is made for penetration testing tools.
-Hakku framework offers a simple structure, basic CLI, and useful features for penetration testing modules development.
+Hakku framework has a simple structure, basic CLI, and useful features for penetration testing modules development.
 
 Getting started
 ----------------------
 
-Documentation is available in Github wiki and in "docs" directory.
+Use the "help" command to see all available commands. Here is a Youtube video if you wish to see Hakku in action: https://www.youtube.com/watch?v=1R0slN0vVHU&t=15s
+
+Installion
+----------
+
+If you want to make an installation to your system, you can do it with the "install.py" script. However, this is not required and hakku can be run as "portable" from the directory.
 
 OS support
 ----------
@@ -35,10 +40,10 @@ Modules
 * network_kill
 * pma_scanner
 * port_scanner
-* proxy_scout
+* proxy_detector
 * whois
 * web_killer
-* web_scout
+* webserver_info
 * wifi_jammer
 * zip_cracker
 * rar_cracker
@@ -47,7 +52,7 @@ Modules
 Dependencies
 ------------
 
-All external python dependencies are included. Network scanner requires tcpdump.
+All external python dependencies are included except "NetfilterQueue". A "scan" command requires tcpdump.
 All module dependencies are listed below:
 
 - ethtool
@@ -57,8 +62,8 @@ All module dependencies are listed below:
 - xterm
 - driftnet
 - tcpdump
-- libnetfilter-queue-dev
-- python3.5-dev
+- libnetfilter-queue
+- python 3
 - hcitool
 - sslstrip
 - l2ping
