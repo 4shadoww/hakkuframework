@@ -7,7 +7,7 @@ Hakku framework has a simple structure, basic CLI, and useful features for penet
 Getting started
 ---------------
 
-Use the "help" command to see all available commands. Here is a Youtube video if you wish to see Hakku in action: https://www.youtube.com/watch?v=1R0slN0vVHU&t=15s
+Use the "help" command to see all available commands. Here is a video if you wish to see Hakku in action: https://vimeo.com/197610469
 
 Installation
 ------------
